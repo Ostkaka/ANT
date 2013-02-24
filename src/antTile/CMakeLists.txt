@@ -18,7 +18,7 @@ find_package(SFML REQUIRED audio graphics window system)
 # add include paths of external libraries
 include_directories(${SFML_INCLUDE_DIR})
 
-# add MGE library
+# add ANT library
 add_library(antTile ${CORE_HEADER} ${INCLUDES} ${SOURCES})
 
 # link SFML

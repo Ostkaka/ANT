@@ -1,5 +1,5 @@
 /*
-* This is the abstract app class in MGE that is used for building applications
+* This is the abstract app class in ANT that is used for building applications
 */
 #ifndef   IAPP_HPP
 	#define   IAPP_HPP

@@ -1,5 +1,5 @@
 /**
- * Provides the MGE namespace includes for the MGE Core includes and
+ * Provides the ANT namespace includes for the ANT Core includes and
  * variables.
  */
 
@@ -11,7 +11,7 @@
 /////////////////////////////////////////////////////////////////////////////
 //#include <ANT_config.hpp>
 
-// MGE includes
+// ANT includes
 #include <ant/interfaces/IApp.hpp>
 #include <ant/interfaces/IState.hpp>
 #include <ant/classes/StateManager.hpp>

@@ -1,5 +1,5 @@
 /*
-* This is the abstract IState class in MGE used as an interface
+* This is the abstract IState class in ANT used as an interface
 */
 
 #include <assert.h>

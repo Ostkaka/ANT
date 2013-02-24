@@ -1,5 +1,5 @@
 /**
- * Provides the MGE namespace includes for the MGE Core includes and
+ * Provides the ANT namespace includes for the ANT Core includes and
  * variables.
  */
 
@@ -12,7 +12,7 @@
 //#include <MGE/ANT_config.hpp>
 #include <antTile/Define.h>
 
-// MGE includes
+// ANT includes
 #include <antTile/CArea.h>
 #include <antTile/CMap.h>
 #include <antTile/CPlayer.h>

@@ -1,5 +1,5 @@
 /**
- * Provides the MGE namespace includes for the MGE Core includes and
+ * Provides the ANT namespace includes for the ANT Core includes and
  * variables.
  */
 

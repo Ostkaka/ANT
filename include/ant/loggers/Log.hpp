@@ -10,7 +10,7 @@
 
 /**
  * Define ANT_STRIP_LOG to the minimum log level you wish to include when
- * compiling the MGE Libraries or MGE based game engines, all others will be
+ * compiling the ANT Libraries or ANT based game engines, all others will be
  * stripped by the compiler and not included in the library or executable.
  */
 #ifndef ANT_STRIP_LOG
