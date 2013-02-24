@@ -4,7 +4,7 @@
 #ifndef  LOG_HPP
 #define   LOG_HPP
 
-#include <ant/Core_types.hpp>
+#include <ant/core_types.hpp>
 #include <ant/loggers/FatalLogger.hpp>
 #include <ant/loggers/ScopeLogger.hpp>
 
@@ -14,7 +14,7 @@
  * stripped by the compiler and not included in the library or executable.
  */
 #ifndef ANT_STRIP_LOG
-#define ANT_STRIP_LOG INFO_LEVEL
+#define ANT_STRIP_LOG INFO_LEVELi
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

@@ -23,7 +23,7 @@ find_package(SFML REQUIRED audio graphics window system)
 include_directories(${SFML_INCLUDE_DIR})
 
 # add ANT library
-add_library(antCore ${CORE_HEADER} ${INCLUDES} ${SOURCES})
+add_library(antCore ${CORE_HEADER} ${INCLUDES} ${SOURCES} ${ANT_INCLUDE_DIR}/ant_config.hpp)
 
 # link SFML
 target_link_libraries(antCore ${SFML_LIBRARIES})

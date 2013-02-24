@@ -13,7 +13,8 @@
 #include <ant/classes/AssetManager.hpp>
 #include <ant/classes/StateManager.hpp>
 #include <ant/classes/StatManager.hpp>
-#include <ant/Core_types.hpp>
+#include <ant/core_types.hpp>
+#include <ant_config.hpp>
 
 namespace ant
 {
