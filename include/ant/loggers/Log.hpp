@@ -14,7 +14,7 @@
  * stripped by the compiler and not included in the library or executable.
  */
 #ifndef ANT_STRIP_LOG
-#define ANT_STRIP_LOG INFO_LEVELi
+#define ANT_STRIP_LOG INFO_LEVEL
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
