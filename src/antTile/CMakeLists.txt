@@ -12,17 +12,11 @@ FILE( GLOB_RECURSE
 	${ANT_SOURCE_DIR}/antTile/*.cpp
 ) 
 
-# find external SFML libraries
-find_package(SFML REQUIRED audio graphics window system)
-
-# add include paths of external libraries
-include_directories(${SFML_INCLUDE_DIR})
-
-# add ANT library
-add_library(antTile ${CORE_HEADER} ${INCLUDES} ${SOURCES})
+# add ANT core library
+add_library(${ANTTILE_TARGET_NAME} ${CORE_HEADER} ${INCLUDES} ${SOURCES})
 
 # link SFML
-target_link_libraries(antTile ${SFML_LIBRARIES} antCore)
+target_link_libraries(${ANTTILE_TARGET_NAME} ${SFML_LIBRARIES} antCore)
 
 # Set properties for antTile
-SET_TARGET_PROPERTIES(antTile PROPERTIES LINKER_LANGUAGE CXX)
+SET_TARGET_PROPERTIES(${ANTTILE_TARGET_NAME} PROPERTIES LINKER_LANGUAGE CXX)

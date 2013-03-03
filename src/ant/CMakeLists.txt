@@ -1,9 +1,7 @@
 #Add the core library include header
 set(CORE_HEADER ${ANT_INCLUDE_DIR}/core_include.hpp)
 
-
 MESSAGE ( ${CORE_HEADER})
-
 
 # core library additional include files
 FILE( GLOB_RECURSE 
@@ -16,17 +14,11 @@ FILE( GLOB_RECURSE
 	${ANT_SOURCE_DIR}/ant/*.cpp
 ) 
 
-# find external SFML libraries
-find_package(SFML REQUIRED audio graphics window system)
-
-# add include paths of external libraries
-include_directories(${SFML_INCLUDE_DIR})
-
 # add ANT library
-add_library(antCore ${CORE_HEADER} ${INCLUDES} ${SOURCES} ${ANT_INCLUDE_DIR}/ant_config.hpp)
+add_library(${ANTCORE_TARGET_NAME} ${CORE_HEADER} ${INCLUDES} ${SOURCES} ${ANT_INCLUDE_DIR}/ant_config.hpp)
 
 # link SFML
-target_link_libraries(antCore ${SFML_LIBRARIES})
+target_link_libraries(${ANTCORE_TARGET_NAME} ${SFML_LIBRARIES})
 
 # Set properties for antCore
-SET_TARGET_PROPERTIES(antCore PROPERTIES LINKER_LANGUAGE CXX)
+SET_TARGET_PROPERTIES(${ANTCORE_TARGET_NAME} PROPERTIES LINKER_LANGUAGE CXX)

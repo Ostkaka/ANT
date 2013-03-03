@@ -37,11 +37,11 @@
 //
 //========================================================================
 
-#include <utils/WinInitialization.hpp>
+#include <ant/utils/WinInitialization.hpp>
 //#include "../GameCode4/BaseGameLogic.h"
 //#include "../Graphics3D/SceneNodes.h"
 //#include "../UserInterface/UserInterface.h"
-#include <utils/Types.hpp>
+#include <ant/utils/Types.hpp>
 #include <map>
 
 class FontHandler;
