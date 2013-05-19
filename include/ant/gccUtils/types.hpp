@@ -38,10 +38,7 @@
 //========================================================================
 
 #include <math.h>
-#include <ant_config.hpp>
-#include <ant/loggers/Log.hpp>
-#include <WinDef.h>
-//#include "../Debug/debugger.h"
+#include <windows.h>
 
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -51,13 +48,13 @@ class Point
 {
 public:
 	long x, y;
-
+	
 	// construction
 	Point(void) { x = y = 0; }
 	Point(const long newX, const long newY) { x = newX; y = newY; }
 	Point(const Point& newPoint) { x = newPoint.x; y = newPoint.y; }
 	Point(const Point* pNewPoint) { x = pNewPoint->x; y = pNewPoint->y; }
-	Point(const POINT& newPoint) { x = newPoint.x; y = newPoint.y; }
+  Point(const POINT& newPoint) { x = newPoint.x; y = newPoint.y; }
 
 	// assignment
 	Point& operator=(const Point& newPoint) { x = newPoint.x; y = newPoint.y; return (*this); }
@@ -81,7 +78,7 @@ public:
 	void SetX(const long newX) { x = newX; }
 	void SetY(const long newY) { y = newY; }
 	void Set(const long newX, const long newY) { x = newX; y = newY; }
-
+	
 	// somewhat hacky vector emulation (maybe I should just write my own vector class)
 	float Length() const { return sqrt((float)(x*x+y*y)); }
 };
@@ -96,16 +93,16 @@ class Rect
 {
 public:
 	long top, left, right, bottom;
-
+	
 	enum RectCorner { INVALID_CORNER = 0, TOPLEFT_CORNER, TOPRIGHT_CORNER, BOTTOMLEFT_CORNER, BOTTOMRIGHT_CORNER };
-
+	
 	//construction
 	Rect(void) { left = top = right = bottom = 0; }
 	Rect(long newLeft, long newTop, long newRight, long newBottom) { Set(newLeft,newTop,newRight,newBottom); }
 	Rect(const Rect& newRect) { left = newRect.left; top = newRect.top; right = newRect.right; bottom = newRect.bottom; }
 	Rect(Rect* pNewRect) { left = pNewRect->left; top = pNewRect->top; right = pNewRect->right; bottom = pNewRect->bottom; }
 	Rect(const Point& topLeft, const Point& bottomRight) { top = topLeft.y; left = topLeft.x; right = bottomRight.x; bottom = bottomRight.y; }
-	Rect(const RECT& newRect) { left = newRect.left; top = newRect.top; right = newRect.right; bottom = newRect.bottom; }
+    Rect(const RECT& newRect) { left = newRect.left; top = newRect.top; right = newRect.right; bottom = newRect.bottom; }
 
 	//assignment
 	Rect& operator=(const Rect& newRect) { left = newRect.left; top = newRect.top; right = newRect.right; bottom = newRect.bottom; return (*this); }
@@ -138,7 +135,7 @@ public:
 	bool IsWithin(const Point& other) const { return (other.x >= left && other.x <= right && other.y >= top && other.y <= bottom); }
 	bool IsValid(void) const { return (left <= right && top <= bottom); }
 	bool IsNull(void) const { return (left == 0 && right == 0 && top == 0 && bottom == 0); }
-
+	
 	// convenience functions
 	void ShiftX(int dx) { left += dx; right += dx; }
 	void ShiftY(int dy) { top += dy; bottom += dy; }
@@ -154,15 +151,15 @@ public:
 	{
 		if (IsValid())
 			return (Point(left + ((right - left) / 2), top + ((bottom - top) / 2)));
-		ELOGM("Attempting to get the center of an invalid Rect");
+		GCC_ERROR("Attempting to get the center of an invalid Rect");
 		return Point();
 	}
-	Point TopLeft(void) const { return Point(left, top); }
-	Point TopRight(void) const { return Point(right, top); }
-	Point BottomLeft(void) const { return Point(left, bottom); }
-	Point BottomRight(void) const { return Point(right, bottom); }
-	long GetWidth(void) const { return right - left; }
-	long GetHeight(void) const { return bottom - top; }
+    Point TopLeft(void) const { return Point(left, top); }
+    Point TopRight(void) const { return Point(right, top); }
+    Point BottomLeft(void) const { return Point(left, bottom); }
+    Point BottomRight(void) const { return Point(right, bottom); }
+    long GetWidth(void) const { return right - left; }
+    long GetHeight(void) const { return bottom - top; }
 	void Set(long newLeft, long newTop, long newRight, long newBottom) { left = newLeft; top = newTop; right = newRight; bottom = newBottom; }
 	void MoveDelta(long dx, long dy) { left += dx; top += dy; right += dx; bottom += dy; }
 	void MoveDelta(const Point deltaPoint) { MoveDelta(deltaPoint.x, deltaPoint.y); }

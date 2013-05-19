@@ -20,6 +20,29 @@
 /////////////////////////////////////////////////////////////////////////////
 // Logger Macros
 /////////////////////////////////////////////////////////////////////////////
+
+
+#ifdef DEBUG
+// This macro replaces GCC_ASSERT().
+#define ANT_ASSERT(expr,message) \
+	do \
+	{ \
+	if (!(expr)) \
+		{ \
+		if(!ant::ILogger::getLogger()) { \
+		/* Empty */ \
+		} else \
+		ant::ILogger::getLogger()->logMessage(ant::SeverityWarning, __FILE__, __LINE__, \
+		message); \
+		} \
+	} \
+	while (0) \
+
+#else
+	#define ANT_ASSERT(expr) do { (void)sizeof(expr); } while(0) 
+#endif
+
+
 /**
  * LOG_ON macro will enable all logging facilities for the severity level
  * that is compiled into the code (see ANT_STRIP_LOG)

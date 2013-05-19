@@ -37,6 +37,10 @@ SET( ANTTILE_TARGET_NAME "antTile")
 include_directories(
   "${PROJECT_SOURCE_DIR}/include"
 )
+# Visual studio specific
+if (MSVC)
+	add_definitions(-DUNICODE -D_UNICODE)
+endif(MSVC)
 
 # add include paths of external SFML libraries
 MESSAGE("Using dependecies dir: " ${ANT_DEPENDENCIES_DIR})
@@ -140,5 +144,3 @@ if(BUILD_EXAMPLES)
 	message("Configuring examples...")
     add_subdirectory(examples)
 endif()
-
-
