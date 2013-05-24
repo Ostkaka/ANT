@@ -117,7 +117,7 @@ void CEntity::onAnimate() {
 
 void CEntity::onRender(sf::RenderWindow & window) {
 	window.draw(mEntitySprite);
-	if(DEBUG){
+	/*if(DEBUG){
 		sf::RectangleShape rect(sf::RectangleShape(sf::Vector2f(bound.width,bound.height)));
 		rect.setPosition(sf::Vector2f(bound.left,bound.top));
 		rect.setOutlineThickness(1);
@@ -125,6 +125,7 @@ void CEntity::onRender(sf::RenderWindow & window) {
 		rect.setFillColor(sf::Color::Transparent);
 		window.draw(rect);
 	}
+	*/
 }
 
 void CEntity::onCleanup() {

@@ -13,7 +13,7 @@
 #include <map>
 #include <string>
 #include <vector>
-//#include <GQE/Config.hpp>
+#include <ant/ant_std.hpp>
 
 //define the resource dir
 //#define _RELEASE_GAME
@@ -28,6 +28,12 @@
 #define ERROR_LEVEL  2  ///< Defines the value for ant::SeverityError
 #define FATAL_LEVEL  3  ///< Defines the value for ant::Severity
 #define NO_LOG_LEVEL 4  ///< Defines the value for no logging
+
+/// Inline macro
+#define ANT_FORCE_INLINE _forceinline
+#define ANT_INLINE inline
+
+#define ANT_OVERRIDE override;
 
 namespace ant 
 {
@@ -90,6 +96,27 @@ namespace ant
 	class FileLogger;
 	class FatalLogger;
 
+	// Forward declarations for Actors
+	class Actor;
+	class ActorComponent;
+	class IProcess;
+	class ProcessManager;
+
+	// Declare id for actors
+	typedef unsigned int ActorId;
+
+	// Declare id for actor components
+	typedef unsigned int ComponentId;
+
+	// Declare default values
+	const ActorId INVALID_ACTOR_ID = 0;
+	const ComponentId INVALID_COMPONENT_ID = 0;
+
+	// Declare Pointer types
+	ANT_DECLARE_POINTER_TYPES(Actor)
+	ANT_DECLARE_POINTER_TYPES(ActorComponent)
+	ANT_DECLARE_POINTER_TYPES(IProcess)
+
 	/// Declare Asset ID typedef which is used for identifying Asset objects
   typedef std::string typeAssetID;
 
@@ -111,6 +138,11 @@ namespace ant
   /// Declare NameValueIter typedef which is used for name,value pair maps
   typedef std::map<const std::string, const std::string>::iterator typeNameValueIter;
 
+	/// Declare data types
+	typedef double Real;
+	typedef unsigned int UInt;
+	typedef double DeltaTime;
+	
 }
 
 #endif  //ANT_CORE_TYPES_HPP

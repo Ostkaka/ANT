@@ -6,6 +6,4 @@
 
 #define TILE_SIZE   16
 
-#define DEBUG false
-
 #endif
