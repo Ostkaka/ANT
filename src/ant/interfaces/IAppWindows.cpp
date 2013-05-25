@@ -45,7 +45,7 @@ namespace ant
 		// Note - it can be really useful to debug network code to have
 		// more than one instance of the game up at one time - so
 		// feel free to comment these lines in or out as you wish!
-		if (!IsOnlyInstance(VGetGameTitle()))
+		if (!IsOnlyInstance(getGameTitle()))
 			return false;
 #endif
 

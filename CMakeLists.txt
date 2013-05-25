@@ -16,6 +16,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/Modules/)
 
 # Build options
 set_option(BUILD_EXAMPLES TRUE BOOL "If example applications should be build" )
+set_option(BUILD_UNITTESTS TRUE BOOL "If unit tests should be buildt" )
 
 # setup version numbers - THis is not really needed
 set(ANT_VERSION_MAJOR 0)
@@ -135,6 +136,18 @@ else()
 	message(FATAL_ERROR "FASTDELEGATE: NOT FOUND")
 endif(FASTDELEGATE_FOUND)
 
+#find gtest -- FSS just include it in the source.... =( Need to to fix this later
+enable_testing()
+set(ENV{GTEST_ROOT} ${ANT_DEPENDENCIES_DIR})
+find_package(Gtest REQUIRED)
+if(GTEST_FOUND)
+	include_directories(${GTEST_INCLUDE_DIRS})
+	set(DEPENDECY_LIBS ${DEPENDECY_LIBS} ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES})
+	message("GTEST: FOUND")
+else()
+	message(FATAL_ERROR "GTEST: NOT FOUND")
+endif(GTEST_FOUND)
+
 # add the ANT subdirectory
 message("Configuring ANT...")
 add_subdirectory(src)
@@ -143,4 +156,10 @@ add_subdirectory(src)
 if(BUILD_EXAMPLES)
 	message("Configuring examples...")
     add_subdirectory(examples)
+endif()
+
+# add the unittest subdirectory
+if(BUILD_UNITTESTS)
+	message("Configuring unittests...")
+    add_subdirectory(unittests)
 endif()
