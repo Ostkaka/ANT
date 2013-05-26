@@ -68,7 +68,8 @@ if(DirectX_D3D11_FOUND)
 	include_directories(${DirectX_D3D11_INCLUDE_DIR})
 	# Just assume that dxerr has been found too
 	set(DEPENDECY_LIBS ${DEPENDECY_LIBS} 
-					${DirectX_D3DX11_LIBRARY} 
+					${DirectX_D3DX11_LIBRARY}
+					${DirectX_D3DX9_LIBRARY} 
 					${DirectX_DXERR_LIBRARY} 
 					${DirectX_DXGUID_LIBRARY}
 					${DirectX_COMPILER_LIBRARY}

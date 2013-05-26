@@ -43,26 +43,35 @@ include_directories(${PROJECT_SOURCE_DIR})
 ExternalProject_Get_Property(googletest source_dir)
 INCLUDE_DIRECTORIES(${source_dir}/include)
 
+# Get em all
+FILE(GLOB UNIT_TEST_FILES ${CMAKE_CURRENT_SOURCE_DIR}/unittest_*.cpp)
 
-# define the demo target
-add_executable(unittest_Process ${PROJECT_SOURCE_DIR}/main.cpp ${PROJECT_SOURCE_DIR}/unittests.hpp)
+# Loop every faking cpp file and create unittests!!!!!
+FOREACH(TESTFILE ${UNIT_TEST_FILES})
 
-# Create dependency of MainTest on googletest
-ADD_DEPENDENCIES(unittest_Process googletest)
+  # Get the name without the extension
+  GET_FILENAME_COMPONENT(NAME ${TESTFILE} NAME_WE)
 
-# Specify MainTest's link libraries
-ExternalProject_Get_Property(googletest binary_dir)
-TARGET_LINK_LIBRARIES(unittest_Process
-                      debug ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${CMAKE_FIND_LIBRARY_SUFFIXES}
-                      optimized ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${CMAKE_FIND_LIBRARY_SUFFIXES})
+  # define the demo target
+  add_executable(${NAME} ${PROJECT_SOURCE_DIR}/main.cpp ${PROJECT_SOURCE_DIR}/unittests.hpp)
 
+  # Create dependency of MainTest on googletest
+  ADD_DEPENDENCIES(${NAME} googletest)
 
-# Link dependencies
-ANT_LINK_LIBRARIES(unittest_Process ${DEPENDECY_LIBS})
+  # Specify MainTest's link libraries
+  ExternalProject_Get_Property(googletest binary_dir)
+  TARGET_LINK_LIBRARIES(${NAME}
+                        debug ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${CMAKE_FIND_LIBRARY_SUFFIXES}
+                        optimized ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${CMAKE_FIND_LIBRARY_SUFFIXES})
 
-# This is internal linking so no need to hassle here
-target_link_libraries(unittest_Process ${ANT_CORE_TARGET})
-target_link_libraries(unittest_Process ${ANT_TILE_TARGET})
+  # Link dependencies
+  ANT_LINK_LIBRARIES(${NAME} ${DEPENDECY_LIBS})
 
+  # This is internal linking so no need to hassle here
+  target_link_libraries(${NAME} ${ANT_CORE_TARGET})
+  target_link_libraries(${NAME} ${ANT_TILE_TARGET})
 
-add_test( runUnitTests unittest_Process)
+  # test!
+  add_test( runUnitTests ${NAME})
+
+ENDFOREACH(TESTFILE ${UNIT_TEST_FILES})
