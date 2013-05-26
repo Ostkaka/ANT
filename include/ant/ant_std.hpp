@@ -70,8 +70,6 @@ public:
 
 // DirectX Includes
 #include <dxut.h>
-#include <d3dx9tex.h>
-#include <dxut.h>
 #include <SDKmisc.h>
 
 #include <tinyxml.h>

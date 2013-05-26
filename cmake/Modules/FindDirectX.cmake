@@ -198,7 +198,6 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 		endif ()
 	endif ()
 
-
 	find_path (DirectX_D3D11_1_INCLUDE_DIR d3d11_1.h
 		PATHS ${DirectX_INC_SEARCH_PATH}
 		DOC "The directory where d3d11_1.h resides")
@@ -227,6 +226,29 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 		set (DirectX_D2D1_FOUND 1)
 	endif (DirectX_D2D1_INCLUDE_DIR AND DirectX_D2D1_LIBRARY)
 
+	find_library (DirectX_DXERR_LIBRARY dxerr
+		PATHS ${DirectX_LIB_SEARCH_PATH}
+		DOC "The directory where dxerr resides")
+
+	if (DirectX_DXERR_LIBRARY)
+		set (DirectX_DXERR_FOUND 1)
+	endif()
+
+	find_library (DirectX_DXGUID_LIBRARY dxguid
+	PATHS ${DirectX_LIB_SEARCH_PATH}
+	DOC "The directory where dxguid resides")
+
+	if (DirectX_DXGUID_LIBRARY)
+		set (DirectX_DXGUID_FOUND 1)
+	endif()
+
+	find_library(DirectX_COMPILER_LIBRARY d3dcompiler
+	PATHS ${DirectX_LIB_SEARCH_PATH}
+	DOC "The directory where d3dcompiler resides")
+
+	if (DirectX_COMPILER_LIBRARY)
+		set (DirectX_COMPILER_FOUND 1)
+	endif()
 
 	mark_as_advanced (
 		DirectX_D3D_INCLUDE_DIR
@@ -262,6 +284,9 @@ if (${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 		DirectX_D3D11_1_INCLUDE_DIR
 		DirectX_D2D1_INCLUDE_DIR
 		DirectX_D2D1_LIBRARY
+		DirectX_DXERR_LIBRARY
+		DirectX_DXGUID_LIBRARY
+		DirectX_COMPILER_LIBRARY
 	)
 
 
@@ -282,6 +307,9 @@ mark_as_advanced (
 	DirectX_D3DX11_FOUND
 	DirectX_D3D11_1_FOUND
 	DirectX_D2D1_FOUND
+	DirectX_DXERR_FOUND
+	DirectX_DXGUID_FOUND
+	DirectX_COMPILER_FOUND
 )
 
 
