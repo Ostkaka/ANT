@@ -45,6 +45,7 @@ endmacro()
 find_path(BULLET_INCLUDE_DIR NAMES btBulletCollisionCommon.h
   PATHS
     ${BULLET_ROOT}/include
+    ${BULLET_ROOT}/include/bullet
     ${BULLET_ROOT}/src
 )
 

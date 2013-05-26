@@ -9,6 +9,7 @@
 
 FIND_PATH(TINYXML_INCLUDE_DIR tinyxml.h
     $ENV{TINYXML_DIR}/include
+    $ENV{TINYXML_DIR}/include/tinyxml
     $ENV{TINYXML_DIR}
     ~/Library/Frameworks
     /Library/Frameworks

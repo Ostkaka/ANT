@@ -16,7 +16,7 @@ endif(WINDOWS)
 INCLUDE(ExternalProject)
 
 # Set default ExternalProject root directory
-SET_DIRECTORY_PROPERTIES(PROPERTIES EP_PREFIX ${CMAKE_BINARY_DIR}/ThirdParty)
+SET_DIRECTORY_PROPERTIES(PROPERTIES EP_PREFIX ${CMAKE_BINARY_DIR}/dependecies)
 
 # Add gtest
 ExternalProject_Add(
@@ -38,6 +38,7 @@ ExternalProject_Add(
 # add include paths of external libraries
 include_directories(${SFML_INCLUDE_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
+
 # Specify include dir
 ExternalProject_Get_Property(googletest source_dir)
 INCLUDE_DIRECTORIES(${source_dir}/include)
@@ -56,9 +57,12 @@ TARGET_LINK_LIBRARIES(unittest_Process
                       optimized ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${CMAKE_FIND_LIBRARY_SUFFIXES})
 
 
-target_link_libraries(unittest_Process ${DEPENDECY_LIBS})
-target_link_libraries(unittest_Process antCore)
-target_link_libraries(unittest_Process antTile)
+# Link dependencies
+ANT_LINK_LIBRARIES(unittest_Process ${DEPENDECY_LIBS})
+
+# This is internal linking so no need to hassle here
+target_link_libraries(unittest_Process ${ANT_CORE_TARGET})
+target_link_libraries(unittest_Process ${ANT_TILE_TARGET})
 
 
 add_test( runUnitTests unittest_Process)

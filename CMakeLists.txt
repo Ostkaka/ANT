@@ -8,17 +8,15 @@ cmake_minimum_required(VERSION 2.8)
 project(ant)
 
 # Include the macros file for this project
-include(${PROJECT_SOURCE_DIR}/cmake/macros.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/antMacros.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/HandleDependencies.cmake)
 
 # define the path of our additional CMake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/Modules/)
 
 # Build options
-set_option(BUILD_EXAMPLES TRUE BOOL "If example applications should be build" )
-set_option(BUILD_UNITTESTS TRUE BOOL "If unit tests should be buildt" )
-set_option(BUILD_STATIC_STD_LIBS FALSE BOOL "Set to TRUE to statically link to the standard libraries, FALSE to use them as DLLs")
-set_option(BUILD_SHARED_LIBS FALSE BOOL "Set to FALSE to build static libraries")
+option(BUILD_EXAMPLES "If example applications should be build" ON)
+option(BUILD_UNITTESTS "If unit tests should be buildt" ON)
 
 # setup version numbers - THis is not really needed
 set(ANT_VERSION_MAJOR 0)
