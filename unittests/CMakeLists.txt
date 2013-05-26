@@ -53,7 +53,7 @@ FOREACH(TESTFILE ${UNIT_TEST_FILES})
   GET_FILENAME_COMPONENT(NAME ${TESTFILE} NAME_WE)
 
   # define the demo target
-  add_executable(${NAME} ${PROJECT_SOURCE_DIR}/main.cpp ${PROJECT_SOURCE_DIR}/unittests.hpp)
+  add_executable(${NAME} ${TESTFILE} ${PROJECT_SOURCE_DIR}/unittests.hpp)
 
   # Create dependency of MainTest on googletest
   ADD_DEPENDENCIES(${NAME} googletest)
