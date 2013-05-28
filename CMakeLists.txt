@@ -15,6 +15,7 @@ include(${PROJECT_SOURCE_DIR}/cmake/HandleDependencies.cmake)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/Modules/)
 
 # Build options
+option(BUILD_TILE "If unit tests should be buildt" OFF)
 option(BUILD_EXAMPLES "If example applications should be build" ON)
 option(BUILD_UNITTESTS "If unit tests should be buildt" ON)
 
@@ -35,31 +36,38 @@ set( ANT_SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 SET( ANTCORE_TARGET_NAME "antCore")
 SET( ANTTILE_TARGET_NAME "antTile")
 
+set(ANT_LIBS ${ANT_LIBS} ${ANTCORE_TARGET_NAME} ${ANTTILE_TARGET_NAME})
+
 include_directories(
   "${PROJECT_SOURCE_DIR}/include"
 )
-# Visual studio specific
-if (MSVC)
-	add_definitions(-DUNICODE -D_UNICODE)
-endif(MSVC)
 
 # add include paths of external SFML libraries
 MESSAGE("Using dependecies dir: " ${ANT_DEPENDENCIES_DIR})
 
+
+set(DEPENDECY_LIBS ${DEPENDECY_LIBS})
+
 # find external SFML libraries
 find_package(SFML REQUIRED audio graphics window system)
-
-include_directories(${SFML_INCLUDE_DIR})
-
-set(DEPENDECY_LIBS ${SFML_MAIN_LIBRARY})
-
-# find SFML
+	set(DEPENDECY_LIBS ${SFML_MAIN_LIBRARY})
 IF(SFML_FOUND)
-include_directories(${SFML_INCLUDE_DIR})
+	include_directories(${SFML_INCLUDE_DIR})
+
 	message("SFML: FOUND")
 else()
 	message(FATAL_ERROR "SFML: NOT FOUND")
 endif(SFML_FOUND)
+
+message("Dep." ${DEPENDECY_LIBS})
+
+# Visual studio specific
+if (MSVC)
+	add_definitions(-DUNICODE -D_UNICODE)
+	set(CMAKE_DEBUG_POSTFIX "d")
+    add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
+    add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
+endif(MSVC)
 
 #find directX
 find_package(DirectX)
@@ -147,6 +155,7 @@ endif(FASTDELEGATE_FOUND)
 
 # add the ANT subdirectory
 message("Configuring ANT...")
+
 add_subdirectory(src)
 
 # add the examples subdirectory

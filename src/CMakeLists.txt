@@ -9,7 +9,10 @@ add_definitions(-DANT_EXPORTS)
 
 # add the modules subdirectories
 add_subdirectory(ant)
-add_subdirectory(antTile) 
+
+if(BUILD_TILE)
+	add_subdirectory(antTile) 
+endif(BUILD_TILE)
 
 # install Config header include file
 install(FILES ${ANT_INCLUDE_DIR}/ant_config.hpp

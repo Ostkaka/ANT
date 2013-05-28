@@ -65,11 +65,7 @@ FOREACH(TESTFILE ${UNIT_TEST_FILES})
                         optimized ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${CMAKE_FIND_LIBRARY_SUFFIXES})
 
   # Link dependencies
-  ANT_LINK_LIBRARIES(${NAME} ${DEPENDECY_LIBS})
-
-  # This is internal linking so no need to hassle here
-  target_link_libraries(${NAME} ${ANTCORE_TARGET_NAME})
-  target_link_libraries(${NAME} ${ANTTILE_TARGET_NAME})
+  ANT_LINK_LIBRARIES(${NAME} ${DEPENDECY_LIBS} ${ANT_LIBS})
 
   # test!
   add_test( runUnitTests ${NAME})

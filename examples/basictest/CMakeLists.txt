@@ -16,8 +16,7 @@ include_directories(${SFML_INCLUDE_DIR})
 # define the demo target
 add_executable(example_basictest ${SOURCE})
 
-target_link_libraries(example_basictest ${SFML_MAIN_LIBRARY})
-target_link_libraries(example_basictest antCore)
-target_link_libraries(example_basictest antTile)
+# link dependecies
+ANT_LINK_LIBRARIES(example_basictest ${DEPENDECY_LIBS} ${ANT_LIBS})
 
 install(TARGETS example_basictest RUNTIME DESTINATION examples/basictest COMPONENT examples)
