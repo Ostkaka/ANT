@@ -68,8 +68,8 @@ FOREACH(TESTFILE ${UNIT_TEST_FILES})
   ANT_LINK_LIBRARIES(${NAME} ${DEPENDECY_LIBS})
 
   # This is internal linking so no need to hassle here
-  target_link_libraries(${NAME} ${ANT_CORE_TARGET})
-  target_link_libraries(${NAME} ${ANT_TILE_TARGET})
+  target_link_libraries(${NAME} ${ANTCORE_TARGET_NAME})
+  target_link_libraries(${NAME} ${ANTTILE_TARGET_NAME})
 
   # test!
   add_test( runUnitTests ${NAME})
