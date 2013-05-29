@@ -19,4 +19,7 @@ add_executable(example_basictest ${SOURCE})
 # link dependecies
 ANT_LINK_LIBRARIES(example_basictest ${DEPENDECY_LIBS} ${ANT_LIBS})
 
+# Need to link SFML separately just cause it is easier
+target_link_libraries(example_basictest ${SFML_LIBRARIES})
+
 install(TARGETS example_basictest RUNTIME DESTINATION examples/basictest COMPONENT examples)

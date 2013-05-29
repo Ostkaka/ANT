@@ -18,5 +18,8 @@ add_library(${ANTTILE_TARGET_NAME} ${CORE_HEADER} ${INCLUDES} ${SOURCES})
 # link dependecies
 ANT_LINK_LIBRARIES(${ANTTILE_TARGET_NAME} ${DEPENDECY_LIBS} ${ANTCORE_TARGET_NAME})
 
+# Need to link SFML separately just cause it is easier
+target_link_libraries(${ANTTILE_TARGET_NAME} ${SFML_LIBRARIES})
+
 # Set properties for antTile
 SET_TARGET_PROPERTIES(${ANTTILE_TARGET_NAME} PROPERTIES LINKER_LANGUAGE CXX)

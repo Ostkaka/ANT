@@ -15,7 +15,7 @@ include(${PROJECT_SOURCE_DIR}/cmake/HandleDependencies.cmake)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/Modules/)
 
 # Build options
-option(BUILD_TILE "If unit tests should be buildt" OFF)
+option(BUILD_TILE "If unit tests should be buildt" ON)
 option(BUILD_EXAMPLES "If example applications should be build" ON)
 option(BUILD_UNITTESTS "If unit tests should be buildt" ON)
 
@@ -49,17 +49,14 @@ MESSAGE("Using dependecies dir: " ${ANT_DEPENDENCIES_DIR})
 set(DEPENDECY_LIBS ${DEPENDECY_LIBS})
 
 # find external SFML libraries
+set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML REQUIRED audio graphics window system)
-	set(DEPENDECY_LIBS ${SFML_MAIN_LIBRARY})
 IF(SFML_FOUND)
 	include_directories(${SFML_INCLUDE_DIR})
-
 	message("SFML: FOUND")
 else()
 	message(FATAL_ERROR "SFML: NOT FOUND")
 endif(SFML_FOUND)
-
-message("Dep." ${DEPENDECY_LIBS})
 
 # Visual studio specific
 if (MSVC)
@@ -96,7 +93,6 @@ if(ZLIB_FOUND)
 else()
 	message(FATAL_ERROR "ZLIB: NOT FOUND" ${ZLIB_INCLUDE_DIR} " :: " ${ZLIB_LIBRARY})
 endif(ZLIB_FOUND)
-include_directories(${ZLIB_INCLUDE_DIR})
 
 # find TinyXml
 #set(ENV{TINYXML_DIR} ${ANT_DEPENDENCIES_DIR})

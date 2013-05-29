@@ -20,7 +20,9 @@ add_library(${ANTCORE_TARGET_NAME} ${CORE_HEADER} ${INCLUDES} ${SOURCES} ${ANT_I
 # link SFML
 ANT_LINK_LIBRARIES(${ANTCORE_TARGET_NAME} ${DEPENDECY_LIBS})
 
+# Need to link SFML separately just cause it is easier
+target_link_libraries(${ANTCORE_TARGET_NAME} ${SFML_LIBRARIES})
+
 # Set properties for antCore
 SET_TARGET_PROPERTIES(${ANTCORE_TARGET_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
-message("libs: " ${ANT_LIBS})
