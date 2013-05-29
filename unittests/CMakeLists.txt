@@ -67,6 +67,9 @@ FOREACH(TESTFILE ${UNIT_TEST_FILES})
   # Link dependencies
   ANT_LINK_LIBRARIES(${NAME} ${DEPENDECY_LIBS} ${ANT_LIBS})
 
+  # Need to link SFML separately just cause it is easier
+  target_link_libraries(${NAME} ${SFML_LIBRARIES})
+
   # test!
   add_test( runUnitTests ${NAME})
 
