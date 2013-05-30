@@ -50,6 +50,11 @@ MESSAGE("Using dependecies dir: " ${ANT_DEPENDENCIES_DIR})
 
 set(DEPENDECY_LIBS ${DEPENDECY_LIBS})
 
+# TinyXML
+set(TINYXML_TARGET_NAME "TinyXml")
+include_directories(${PROJECT_SOURCE_DIR}/tinyxml)
+add_subdirectory(tinyxml)
+
 # find external SFML libraries
 #set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML REQUIRED audio graphics window system)
@@ -106,10 +111,6 @@ endif(ZLIB_FOUND)
 #else()
 #	message(FATAL_ERROR "TinyXml: NOT FOUND")
 #endif(TINYXML_FOUND)
-
-# TinyXML
-include_directories(${PROJECT_SOURCE_DIR}/tinyxml)
-add_subdirectory(tinyxml)
 
 # Do it for OGG
 set(ENV{OGGDIR} ${ANT_DEPENDENCIES_DIR})
