@@ -22,6 +22,7 @@ protected:
 
 		if (m_timeDelayedSoFar > m_timeToDelay)
 		{
+			std::cout << "Delay stopped!" << std::endl;
 			succeedAndStop();
 		}
 	}
@@ -53,6 +54,7 @@ protected:
 	virtual void onUpdate(ant::DeltaTime dt){
 		if (!m_executed)
 		{
+			std::cout << "KABOOOMM!" << std::endl;
 			m_executed = true;
 			succeedAndStop();
 		}
@@ -69,20 +71,22 @@ TEST(Test_ProcessManager, basicProcessTest)
 	ProcessManager manager;
 
 	// Setup the processes
-	IProcessStrongPtr pDelay(new DelayProcess(3)); // 3 secs
+	IProcessStrongPtr pDelay(new DelayProcess(2)); // 3 secs
 	IProcessStrongPtr pTag(new TagProcess()); // 3 secs
 
 	// Build network
 	pDelay->attachChild(pTag);
 	manager.attachProcess(pDelay);
 
-	// Both should be alive now!
-	EXPECT_EQ (pDelay->isAlive(),true);
-	EXPECT_EQ (pTag->isAlive(),true);
-
 	ant::DeltaTime time = 0;
 	ant::DeltaTime dt = 0.1;
 	ant::DeltaTime end = 4;
+
+	// update once!
+	manager.updateProcesses(dt);
+
+	// Delay process should be alive now!
+	EXPECT_EQ (pDelay->isAlive(),true);
 
 	// Loop in 4 seconds
 	while (time < end)
@@ -104,14 +108,6 @@ TEST(Test_ProcessManager, basicProcessTest)
 	// Are both dead?
 	EXPECT_EQ (pDelay->isDead(),true);
 	EXPECT_EQ (pTag->isDead(),true);
-
-}
-
-
-
-TEST(Test_ProcessManager, basicTest)
-{
-	EXPECT_EQ (18.0, 18.0);
 }
 
 int main(int argc, char **argv)

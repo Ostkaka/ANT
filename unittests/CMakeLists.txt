@@ -67,7 +67,7 @@ FOREACH(TESTFILE ${UNIT_TEST_FILES})
                         optimized ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${CMAKE_FIND_LIBRARY_SUFFIXES})
 
   # Link dependencies
-  ANT_LINK_LIBRARIES(${NAME} ${ANT_LIBS})
+  target_link_libraries(${NAME} ${ANT_LIBS})
 
   # Need to link SFML separately just cause it is easier
   target_link_libraries(${NAME} ${SFML_LIBRARIES})

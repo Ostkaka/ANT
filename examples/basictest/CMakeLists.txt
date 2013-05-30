@@ -12,7 +12,7 @@ include_directories(${SFML_INCLUDE_DIR})
 add_executable(example_basictest ${SOURCE})
 
 # link dependecies
-ANT_LINK_LIBRARIES(example_basictest ${ANT_LIBS})
+target_link_libraries(example_basictest ${ANT_LIBS})
 
 # properties
 SET_PROPERTY(TARGET example_basictest PROPERTY FOLDER "examples")
