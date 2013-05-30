@@ -5,7 +5,7 @@ project(unittests)
 set(SRCROOT ${PROJECT_SOURCE_DIR})
 
 # all source files
-FILE(GLOB SOURCE ${SRCROOT}/*.cpp ${SRCROOT}/*.hpp)
+FILE(GLOB GTEST_SOURCE ${SRCROOT}/*.cpp ${SRCROOT}/*.hpp)
 
 # find external SFML libraries
 if(WINDOWS)
@@ -39,6 +39,8 @@ ExternalProject_Add(
 include_directories(${SFML_INCLUDE_DIR})
 include_directories(${PROJECT_SOURCE_DIR})
 
+SET_PROPERTY(TARGET googletest PROPERTY FOLDER "external")
+
 # Specify include dir
 ExternalProject_Get_Property(googletest source_dir)
 INCLUDE_DIRECTORIES(${source_dir}/include)
@@ -65,12 +67,14 @@ FOREACH(TESTFILE ${UNIT_TEST_FILES})
                         optimized ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${CMAKE_FIND_LIBRARY_SUFFIXES})
 
   # Link dependencies
-  ANT_LINK_LIBRARIES(${NAME} ${DEPENDECY_LIBS} ${ANT_LIBS})
+  ANT_LINK_LIBRARIES(${NAME} ${ANT_LIBS})
 
   # Need to link SFML separately just cause it is easier
   target_link_libraries(${NAME} ${SFML_LIBRARIES})
 
   # test!
   add_test( runUnitTests ${NAME})
+
+  SET_PROPERTY(TARGET ${NAME} PROPERTY FOLDER "unittests")
 
 ENDFOREACH(TESTFILE ${UNIT_TEST_FILES})

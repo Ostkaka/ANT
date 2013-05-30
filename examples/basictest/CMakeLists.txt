@@ -17,9 +17,10 @@ include_directories(${SFML_INCLUDE_DIR})
 add_executable(example_basictest ${SOURCE})
 
 # link dependecies
-ANT_LINK_LIBRARIES(example_basictest ${DEPENDECY_LIBS} ${ANT_LIBS})
+ANT_LINK_LIBRARIES(example_basictest ${ANT_LIBS})
 
-# Need to link SFML separately just cause it is easier
-target_link_libraries(example_basictest ${SFML_LIBRARIES})
+SET_PROPERTY(TARGET example_basictest PROPERTY FOLDER "examples")
 
+#install target
 install(TARGETS example_basictest RUNTIME DESTINATION examples/basictest COMPONENT examples)
+

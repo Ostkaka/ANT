@@ -25,6 +25,9 @@ set(ANT_VERSION_MINOR 22)
 set(ANT_VERSION_PATCH 4)
 set(ANT_VERSION "${ANT_VERSION_MAJOR}.${ANT_VERSION_MINOR}.${ANT_VERSION_PATCH}")
 
+# Properties
+SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
+
 # Set dependencies dir
 SET( ENV{ANT_DEPENDENCIES_DIR} ${FULL_DEPENDENCIES_DIR})  # Set by handle HandleDependencies
 SET( ANT_DEPENDENCIES_DIR $ENV{ANT_DEPENDENCIES_DIR})
@@ -45,11 +48,10 @@ include_directories(
 # add include paths of external SFML libraries
 MESSAGE("Using dependecies dir: " ${ANT_DEPENDENCIES_DIR})
 
-
 set(DEPENDECY_LIBS ${DEPENDECY_LIBS})
 
 # find external SFML libraries
-set(SFML_STATIC_LIBRARIES TRUE)
+#set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML REQUIRED audio graphics window system)
 IF(SFML_FOUND)
 	include_directories(${SFML_INCLUDE_DIR})
@@ -104,6 +106,8 @@ endif(ZLIB_FOUND)
 #else()
 #	message(FATAL_ERROR "TinyXml: NOT FOUND")
 #endif(TINYXML_FOUND)
+
+# TinyXML
 include_directories(${PROJECT_SOURCE_DIR}/tinyxml)
 add_subdirectory(tinyxml)
 
