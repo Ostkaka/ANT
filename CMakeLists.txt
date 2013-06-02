@@ -25,6 +25,9 @@ set(ANT_VERSION_MINOR 22)
 set(ANT_VERSION_PATCH 4)
 set(ANT_VERSION "${ANT_VERSION_MAJOR}.${ANT_VERSION_MINOR}.${ANT_VERSION_PATCH}")
 
+# Set directory paths for data
+set( ANT_DATA_PATH "${PROJECT_SOURCE_DIR}/data")
+
 # Properties
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -35,6 +38,19 @@ SET( ANT_DEPENDENCIES_DIR $ENV{ANT_DEPENDENCIES_DIR})
 set( ANT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set( ANT_SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 
+# Offer the user the choice of overriding the installation directories
+set(INSTALL_LIB_DIR lib PATH "Installation directory for libraries")
+set(INSTALL_BIN_DIR bin PATH "Installation directory for executables")
+set(INSTALL_DATA_DIR bin PATH "Installation directory for data")
+set(INSTALL_INCLUDE_DIR include PATH  "Installation directory for header files")
+
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file (
+  "${PROJECT_SOURCE_DIR}/include/ant_config.hpp.in"
+  "${PROJECT_BINARY_DIR}/include/ant_config.hpp"
+  )
+
 # Set project targets
 SET( ANTCORE_TARGET_NAME "antCore")
 SET( ANTTILE_TARGET_NAME "antTile")
@@ -44,6 +60,19 @@ set(ANT_LIBS ${ANT_LIBS} ${ANTCORE_TARGET_NAME} ${ANTTILE_TARGET_NAME})
 include_directories(
   "${PROJECT_SOURCE_DIR}/include"
 )
+
+# Visual studio specific
+if (MSVC)
+	# This is ugly but set the compiler flags for RelDebInfo -- THIS CANNOT BE SET?!?
+	set ( CMAKE_CXX_FLAGS_RELWITHDEBINFO "/MD /Zi /Od" ) 
+
+	add_definitions(-DUNICODE -D_UNICODE)
+	set(CMAKE_DEBUG_POSTFIX "d")
+    add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
+    add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
+endif(MSVC)
+
+
 
 # add include paths of external SFML libraries
 MESSAGE("Using dependecies dir: " ${ANT_DEPENDENCIES_DIR})
@@ -64,14 +93,6 @@ IF(SFML_FOUND)
 else()
 	message(FATAL_ERROR "SFML: NOT FOUND")
 endif(SFML_FOUND)
-
-# Visual studio specific
-if (MSVC)
-	add_definitions(-DUNICODE -D_UNICODE)
-	set(CMAKE_DEBUG_POSTFIX "d")
-    add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
-    add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
-endif(MSVC)
 
 #find directX
 find_package(DirectX)

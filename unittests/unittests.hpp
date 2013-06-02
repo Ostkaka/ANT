@@ -2,6 +2,7 @@
 	#define UNITTESTS_HPP_
 
 #include <gtest/gtest.h>
+#include <ant/core_types.hpp>
 #include <ant/classes/ProcessManager.hpp>
 #include <ant/actors/Actor.hpp>
 #include <ant/actors/ActorComponent.hpp>
