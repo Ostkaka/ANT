@@ -9,7 +9,12 @@
 ////////////////////////////////////////////////////////////
 // Define the new operator
 ////////////////////////////////////////////////////////////
-//#define ANT_NEW new(_NORMAL_BLOCK,__FILE__.__LINE__)
-//#define SAFE_DELETE(p) {if(p) {delete p}; (p) = NULL;}
+
+#define ANT_VERSION_MAJOR @ANT_VERSION_MAJOR@
+#define ANT_VERSION_MINOR @ANT_VERSION_MINOR@
+#define ANT_VERSION_BUILD @ANT_VERSION_BUILD@
+#define ANT_VERSION @ANT_VERSION@
+
+#define ANT_DATA_PATH "@ANT_DATA_PATH@"
 
 #endif /*ANT_CONFIG_HPP_*/

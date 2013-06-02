@@ -64,6 +64,7 @@ extern HRESULT GenericToAnsiCch( CHAR* dest, const TCHAR* src, int charCount);
 extern HRESULT GenericToWideCch( WCHAR* dest, const TCHAR* src, int charCount); 
 extern HRESULT AnsiToGenericCch( TCHAR* dest, const CHAR* src, int charCount); 
 extern HRESULT WideToGenericCch( TCHAR* dest, const WCHAR* src, int charCount);
+extern std::wstring string2Wstring(const std::string& s);
 
 extern std::string ToStr(int num, int base = 10);
 extern std::string ToStr(unsigned int num, int base = 10);

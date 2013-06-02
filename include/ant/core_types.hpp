@@ -13,6 +13,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <ant_config.hpp>
 #include <ant/ant_std.hpp>
 
 //define the resource dir
