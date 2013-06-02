@@ -16,7 +16,7 @@ typedef unsigned char byte;
 
 
 ant::ZipFile::ZipFile()
-	:m_Entries(0),m_pFile(NULL),m_pDirData(NULL)
+	:m_numEntries(0),m_pFile(NULL),m_pDirData(NULL)
 {
 
 }
@@ -29,7 +29,7 @@ ant::ZipFile::~ZipFile()
 
 int ZipFile::getNumFiles() const
 {
-	return m_Entries;
+	return m_numEntries;
 }
 
 // --------------------------------------------------------------------------
@@ -189,7 +189,7 @@ bool ZipFile::init(const std::wstring &resFileName)
 	}
 	else
 	{
-		m_nEntries = dh.nDirEntries;
+		m_numEntries = dh.nDirEntries;
 	}
 
 	return success;
@@ -217,7 +217,7 @@ void ZipFile::end()
 {
 	m_ZipContentsMap.clear();
 	SAFE_DELETE_ARRAY(m_pDirData);
-	m_nEntries = 0;
+	m_numEntries = 0;
 }
 
 // --------------------------------------------------------------------------
@@ -225,13 +225,13 @@ void ZipFile::end()
 // Purpose:       Return the name of a file
 // Parameters:    The file index and the buffer where to store the filename
 // --------------------------------------------------------------------------
-std::string ZipFile::getFilename(int i)  const
+std::string ZipFile::getFileName(int i)  const
 {
 	std::string fileName = "";
-	if (i >=0 && i < m_nEntries)
+	if (i >=0 && i < m_numEntries)
 	{
 		char pszDest[_MAX_PATH];
-		memcpy(pszDest, m_papDir[i]->GetName(), m_papDir[i]->fnameLen);
+		memcpy(pszDest, m_papDir[i]->getName(), m_papDir[i]->fnameLen);
 		pszDest[m_papDir[i]->fnameLen] = '\0';
 		fileName = pszDest;
 	}
@@ -246,7 +246,7 @@ std::string ZipFile::getFilename(int i)  const
 // --------------------------------------------------------------------------
 int ZipFile::getFileLen(int i) const
 {
-	if (i < 0 || i >= m_nEntries)
+	if (i < 0 || i >= m_numEntries)
 		return -1;
 	else
 		return m_papDir[i]->ucSize;
@@ -259,7 +259,7 @@ int ZipFile::getFileLen(int i) const
 // --------------------------------------------------------------------------
 bool ZipFile::readFile(int i, void *pBuf)
 {
-	if (pBuf == NULL || i < 0 || i >= m_nEntries)
+	if (pBuf == NULL || i < 0 || i >= m_numEntries)
 		return false;
 
 	// Quick'n dirty read, the whole file at once.
@@ -333,7 +333,7 @@ bool ZipFile::readFile(int i, void *pBuf)
 // --------------------------------------------------------------------------
 bool ZipFile::readLargeFile(int i, void *pBuf, void (*progressCallback)(int, bool &))
 {
-	if (pBuf == NULL || i < 0 || i >= m_nEntries)
+	if (pBuf == NULL || i < 0 || i >= m_numEntries)
 		return false;
 
 	// Quick'n dirty read, the whole file at once.

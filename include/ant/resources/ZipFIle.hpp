@@ -58,7 +58,7 @@ namespace ant
 		/// Raw data
 		char * m_pDirData;
 		/// number of entries
-		int m_Entries;
+		int m_numEntries;
 		/// Pointer to dir entries in the pDirData
 		const TZipDirFileHeader **m_papDir;
 
