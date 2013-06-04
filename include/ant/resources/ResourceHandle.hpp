@@ -2,11 +2,14 @@
 	#define RESOURCEHANDLE_HPP_
 
 #include <ant/core_types.hpp>
+#include <ant/resources/Resource.hpp>
 
 // Forward declaration
-class ant::ResourceCache;
-class ant::Resource;
-class ant::IResourceExtraData;
+namespace ant
+{
+	class ResourceCache;
+	class IResourceExtraData;
+}
 
 namespace ant
 {
@@ -18,8 +21,9 @@ namespace ant
 	 */
 	class ResourceHandle
 	{
-	public:
 		friend class ResourceChache;
+	
+	public:
 
 		/// Default constructor
 		ResourceHandle(Resource &resource, char* buffer, ant::UInt size, ResourceCache * pResCache);
@@ -47,9 +51,9 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 	protected:
 		/// Resource identifier
-		Resource m_Resource;
+		Resource m_resource;
 		/// Raw resource data
-		char* m_buffer
+		char* m_buffer;
 		/// size if the data
 		ant::UInt m_size;
 		/// Pointer to the extra data
@@ -58,5 +62,39 @@ namespace ant
 		ResourceCache *m_pResCache;
 		
 	};
+
+	/*Implementation*/
+
+	ANT_INLINE ant::ResourceHandle::~ResourceHandle()
+	{
+		SAFE_DELETE_ARRAY(m_buffer);
+		//m_pResCache-> 
+	}
+
+	ANT_INLINE ant::UInt ant::ResourceHandle::getSize() const
+	{
+		return m_size;
+	}
+
+	ANT_INLINE char* ant::ResourceHandle::getBuffer() const
+	{
+		return m_buffer;
+	}
+
+	ANT_INLINE char* ant::ResourceHandle::getWritablebuffer()
+	{
+		return m_buffer;
+	}
+
+	ANT_INLINE ant::ResourceExtraDataStrongPtr ant::ResourceHandle::getExtraData()
+	{
+		return m_extra;
+	}
+
+	ANT_INLINE void ant::ResourceHandle::setExtraData( ResourceExtraDataStrongPtr extra )
+	{
+		m_extra = extra;
+	}
+
 }
 #endif
