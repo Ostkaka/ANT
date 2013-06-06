@@ -21,7 +21,7 @@ namespace ant
 	 */
 	class ResourceHandle
 	{
-		friend class ResourceChache;
+		friend class ResourceCache;
 	
 	public:
 
@@ -46,6 +46,11 @@ namespace ant
 		/// Sets the extra data of this resource
 		void setExtraData(ResourceExtraDataStrongPtr extra); //inline
 
+	protected:
+
+		/// Get the resource identifier for the handle
+		const Resource& getResource();
+
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
@@ -64,12 +69,6 @@ namespace ant
 	};
 
 	/*Implementation*/
-
-	ANT_INLINE ant::ResourceHandle::~ResourceHandle()
-	{
-		SAFE_DELETE_ARRAY(m_buffer);
-		//m_pResCache-> 
-	}
 
 	ANT_INLINE ant::UInt ant::ResourceHandle::getSize() const
 	{
@@ -96,5 +95,9 @@ namespace ant
 		m_extra = extra;
 	}
 
+	ANT_INLINE const ant::Resource& ant::ResourceHandle::getResource()
+	{
+		return m_resource;
+	}
 }
 #endif

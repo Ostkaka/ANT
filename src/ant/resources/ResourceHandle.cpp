@@ -1,4 +1,7 @@
 #include <ant/resources/ResourceHandle.hpp>
+#include <ant/resources/ResourceCache.cpp>
+
+using namespace ant;
 
 ant::ResourceHandle::ResourceHandle( Resource &resource, char* buffer, ant::UInt size, ResourceCache * pResCache )
 	:m_resource(resource)
@@ -7,6 +10,12 @@ ant::ResourceHandle::ResourceHandle( Resource &resource, char* buffer, ant::UInt
 	m_size = size;
 	m_extra = NULL;
 	m_pResCache = pResCache;
+}
+
+ant::ResourceHandle::~ResourceHandle()
+{
+	SAFE_DELETE_ARRAY(m_buffer);
+	m_pResCache->memoryHasBeenFreed(m_size);
 }
 
 

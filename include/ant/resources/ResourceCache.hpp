@@ -15,16 +15,75 @@ namespace ant
 	 */
 	class ResourceCache
 	{
+		friend class ResourceHandle;
+
 	public:
+
 		/// Default constructor
-		ResourceCache();
+		ResourceCache(const unsigned int sizeInMb, IResourceFile *file);
 	
 		/// Default destructor
-		~ResourceCache();
+		virtual ~ResourceCache();
+
+		/// Inits the resource cache
+		bool init();
+
+		/// Register a loader type with the resource cache
+		void registerLoader(IResourceLoaderStrongPtr loader);
+
+		/// Gets a resource handle from a resource identifier
+		ResourceHandleStrongPtr getResourceHandle(Resource *r);
+
+		/// Pre-loads resources with a given pattern into the cache
+		int preLoad(const std::string pattern, void (*progressCallback)(int,bool &));
+
+		/// Returns a vector with string identifiers that match the extension patten given
+		std::vector<std::string> match(const std::string pattern);
+
+		/// Flush the entire cache of all loaded resources
+		void flush();
 
 	protected:
+
+		ResourceHandleStrongPtr find(Resource *F);
+
+		ResourceHandleStrongPtr load(Resource *r);
+
+		void updateLRU(ResourceHandleStrongPtr handle);
+
+		bool makeRoom(ant::UInt size);
+
+		/// Try to allocate memory from the cache
+		char* allocateMemoery(ant::UInt size);
+
+		void free(ResourceHandleStrongPtr handle);
+
+		/// Remove the least used resource from the cache
+		void freeOneResource();
+
+		void memoryHasBeenFreed(ant::UInt size);
 	
-	private:
+		//////////////////////////////////////////////////////////////////////////
+		// Variables
+		//////////////////////////////////////////////////////////////////////////
+	protected:
+		/// Least recently used list
+		ResourceHandleList m_lruResources;
+
+		/// Map holding the total loaded resources of the cache
+		ResourceHandleMap m_resourceHandleMap;
+
+		/// Map holding the resource loaders of the cache
+		ResourceLoaders m_resourceLoaderMap;
+
+		/// The resource file that the cache is connected to
+		IResourceFile * m_file;
+
+		/// Cache size in bytes
+		ant::UInt m_cacheSize;
+
+		/// Currently allocated size in bytes
+		ant::UInt m_allocated;
 	};
 }
 

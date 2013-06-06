@@ -1,9 +1,7 @@
 #ifndef IRESOURCEFILE_HPP_
 	#define IRESOURCEFILE_HPP_
 
-// Forward declaration
-class ant::Resource;
-class std::string;
+#include <ant/core_types.hpp>
 
 namespace ant
 {
@@ -33,7 +31,7 @@ namespace ant
 		virtual int getNumResources() const = 0;
 
 		/// Returns the name of the resource in the file given an index
-		virtual std::string getResourceName() const = 0;
+		virtual std::string getResourceName(int i) const = 0;
 	};
 }
 

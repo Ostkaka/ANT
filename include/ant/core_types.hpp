@@ -101,10 +101,12 @@ namespace ant
 	class Actor;
 	class ActorComponent;
 	class IProcess;
+	class Resource;
 	class ProcessManager;
 	class ResourceHandle;
 	class ResourceCache;
 	class IResourceLoader;
+	class IResourceFile;
 
 	// Declare id for actors
 	typedef unsigned int ActorId;
@@ -122,6 +124,7 @@ namespace ant
 	ANT_DECLARE_POINTER_TYPES(IProcess)
 	ANT_DECLARE_POINTER_TYPES(ResourceHandle)
 	ANT_DECLARE_POINTER_TYPES(IResourceLoader)
+	ANT_DECLARE_POINTER_TYPES(IResourceFile)
 
 	/// Declare Asset ID typedef which is used for identifying Asset objects
   typedef std::string typeAssetID;

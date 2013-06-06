@@ -1,24 +1,28 @@
 #ifndef RESOURCEFILES_HPP_
-	#define RESOURCEZIPFILE_HPP_
+	#define RESOURCEFILES_HPP_
 
-/**
- * Class that implements IResourceFile for use with a zip file
- */
-class ResourceZipFile
+#include <ant/core_types.hpp>
+
+namespace ant
 {
 
-public:
-	/// Default constructor
-	ResourceZipFile();
+	/**
+	 * Class that implements IResourceFile for use with a zip file
+	 */
+	class ResourceZipFile
+	{
+
+	public:
+		/// Default constructor
+		ResourceZipFile();
 	
-	/// Default destructor
-	~ResourceZipFile();
+		/// Default destructor
+		~ResourceZipFile();
 
-protected:
+	protected:
 	
-private:
-};
-
-
+	private:
+	};
+}
 
 #endif

@@ -4,6 +4,8 @@
 #include <map>
 #include <cctype>			// for std::tolower
 
+using namespace ant;
+
 ant::Resource::Resource(const std::string& name)
 	:m_name(name)
 {

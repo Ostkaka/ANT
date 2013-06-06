@@ -1,7 +1,7 @@
 #ifndef RESOURCE_HPP_
 	#define RESOURCE_HPP_
 
-#include <string>
+#include <ant/core_types.hpp>
 
 namespace ant 
 {
@@ -17,6 +17,12 @@ namespace ant
 
 		/// Default destructor
 		~Resource();
+
+		/// Gets the string identifier for the resource
+		std::string getName() const;
+
+		/// Sets the string identifier for the resource
+		std::string setName(const std::string& name);
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
@@ -42,6 +48,10 @@ namespace ant
 		virtual std::string toString()=0;
 	};
 
+	/* Implementation */
+	ANT_INLINE std::string Resource::getName() const{ return m_name;	}
+
+	ANT_INLINE std::string Resource::setName(const std::string& name){ m_name = name; }
 
 }
 
