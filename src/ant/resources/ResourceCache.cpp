@@ -85,7 +85,7 @@ ant::ResourceHandleStrongPtr ant::ResourceCache::load( Resource *r )
 	char *rawBuffer = loader->useRawFile() ? allocateMemoery(allocSize) : GCC_NEW char[allocSize];
 	memset(rawBuffer, 0, allocSize);
 
-	if (rawBuffer==NULL || m_file->getResource(*r, rawBuffer)==0)
+	if (rawBuffer==NULL || m_file->getRawResource(*r, rawBuffer)==0)
 	{
 		// resource cache out of memory
 		return ResourceHandleStrongPtr();
