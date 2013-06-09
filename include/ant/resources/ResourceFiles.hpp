@@ -3,6 +3,7 @@
 
 #include <ant/core_types.hpp>
 #include <ant/resources/IResourceFile.hpp>
+#include <ant/resources/ZipFile.hpp>
 
 namespace ant
 {
@@ -24,22 +25,22 @@ namespace ant
 		virtual ~ResourceZipFile();
 
 		/// Tries to open the resource file
-		virtual bool open()=0;
+		virtual bool open();
 
 		/// Get the raw resource data size
-		virtual int getRawResourceSize(const Resource&)=0;
+		virtual int getRawResourceSize(const Resource&);
 
 		/// Get the raw resource of the handle
-		virtual int getRawResource(const Resource& r, char *buffer)=0;
+		virtual int getRawResource(const Resource& r, char *buffer);
 
 		/// Get the number of resources from the file
-		virtual int getNumResources() const = 0;
+		virtual int getNumResources() const;
 
 		/// Returns the name of the resource in the file given an index
-		virtual std::string getResourceName(int num) const = 0;
+		virtual std::string getResourceName(int num) const;
 
 		/// Returns true if file is using developer directories
-		virtual bool isUsingDevelopmentDirectories(void) const = 0;
+		virtual bool isUsingDevelopmentDirectories(void) const;
 
 
 		//////////////////////////////////////////////////////////////////////////
@@ -74,7 +75,7 @@ namespace ant
 		virtual bool open();
 
 		/// Get the raw resource data size
-		virtual int getRawResourceSize(const Resource&)0;
+		virtual int getRawResourceSize(const Resource&);
 
 		/// Get the raw resource of the handle
 		virtual int getRawResource(const Resource& r, char *buffer);
@@ -88,9 +89,12 @@ namespace ant
 		/// Returns true if file is using developer directories
 		virtual bool isUsingDevelopmentDirectories(void);
 
+		/// finds something
+		int find(const std::string &path);
+
 	protected:
 
-			void ReadAssetsDirectory(std::wstring fileSpec);
+			void readAssetsDirectory(std::wstring fileSpec);
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables

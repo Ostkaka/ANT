@@ -40,27 +40,36 @@ namespace ant
 		/// Returns a vector with string identifiers that match the extension patten given
 		std::vector<std::string> match(const std::string pattern);
 
+		/// Get the current allocated memory of the cache
+		ant::UInt getAllocatedMemory() const;
+
 		/// Flush the entire cache of all loaded resources
 		void flush();
 
 	protected:
 
+		/// Tries to find a resource handle form a resource specifier
 		ResourceHandleStrongPtr find(Resource *F);
 
+		/// Loads a resource handle form a resource specifier
 		ResourceHandleStrongPtr load(Resource *r);
 
+		/// Update lru by placing the specified handle in the front
 		void updateLRU(ResourceHandleStrongPtr handle);
 
+		/// Clears and makes room in the cache
 		bool makeRoom(ant::UInt size);
 
 		/// Try to allocate memory from the cache
 		char* allocateMemoery(ant::UInt size);
 
+		/// Free a loaded resource from the cache
 		void free(ResourceHandleStrongPtr handle);
 
 		/// Remove the least used resource from the cache
 		void freeOneResource();
 
+		/// Signal the memory has been freed
 		void memoryHasBeenFreed(ant::UInt size);
 	
 		//////////////////////////////////////////////////////////////////////////
@@ -85,6 +94,12 @@ namespace ant
 		/// Currently allocated size in bytes
 		ant::UInt m_allocated;
 	};
+
+	/**
+	 *  Implementation
+	 */
+	ANT_INLINE ant::UInt ResourceCache::getAllocatedMemory() const {return m_allocated;}
+
 }
 
 #endif

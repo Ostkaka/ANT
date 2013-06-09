@@ -34,7 +34,7 @@ namespace ant
 		virtual std::string getResourceName(int i) const = 0;
 
 		/// Returns true if file is using developer directories
-		virtual bool isUsingDevelopmentDirectories(void) = 0;
+		virtual bool isUsingDevelopmentDirectories(void) const = 0;
 	};
 }
 

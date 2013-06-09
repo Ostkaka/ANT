@@ -5,13 +5,14 @@
 #include <ant/resources/ResourceHandle.hpp>
 #include <ant/resources/Resource.hpp>
 #include <ant/gccUtils/String.hpp>
+#include <ant/utils/DataUtils.hpp>
 #include <cctype>			// for std::tolower
 
 using namespace ant;
 
 ant::ResourceCache::ResourceCache( const unsigned int sizeInMb, IResourceFile *file )
 {
-	m_cacheSize = sizeInMb * 1024 * 1024;				// total memory size
+	m_cacheSize = dataUtils::convertMB2Byte(sizeInMb); // total memory size
 	m_allocated = 0;														// total memory allocated
 	m_file = file;
 }
@@ -73,11 +74,18 @@ ant::ResourceHandleStrongPtr ant::ResourceCache::load( Resource *r )
 	}
 
 	// Check the loader
-	int rawSize = m_file->getRawResourceSize(*r);
 	if (!loader)
 	{
 		GCC_ASSERT(loader && _T("Default resource loader not found"));
 		return handle;
+	}
+
+	// Try to get the size of the resource
+	int rawSize = m_file->getRawResourceSize(*r);
+	if (rawSize < 0)
+	{
+		GCC_ASSERT(rawSize > 0 && "Resource size returned -1 - Resource is not found?");
+		return ResourceHandleStrongPtr();
 	}
 
 	// Allocate memory
@@ -91,23 +99,15 @@ ant::ResourceHandleStrongPtr ant::ResourceCache::load( Resource *r )
 		return ResourceHandleStrongPtr();
 	}
 
-	int rawsize = m_file->getRawResourceSize(*r);
-	if (rawsize < 0)
-	{
-		GCC_ASSERT(rawsize > 0 && "Resource size returned -1 - Resource is not found?");
-		return ResourceHandleStrongPtr();
-	}
-
 	char* buffer = NULL;
-	ant::UInt size = 0;
-
 	if (loader->useRawFile())
 	{
 		buffer = rawBuffer;
-		handle = ResourceHandleStrongPtr(GCC_NEW ResourceHandle(*r,buffer,size,this));
+		handle = ResourceHandleStrongPtr(GCC_NEW ResourceHandle(*r,buffer,rawSize,this));
 	}
 	else
 	{
+		ant::UInt size = 0;
 		size = loader->getLoadedResourceSize(rawBuffer,rawSize);
 		buffer = allocateMemoery(size);
 		if (rawBuffer==NULL ||buffer==NULL)
@@ -195,8 +195,7 @@ void ant::ResourceCache::flush()
 	while (!m_lruResources.empty())
 	{
 		ResourceHandleStrongPtr handle = *(m_lruResources.begin());
-		free(handle);
-		m_lruResources.pop_front();
+		free(handle);		
 	}
 }
 

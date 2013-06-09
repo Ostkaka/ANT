@@ -37,13 +37,6 @@ namespace ant
 	class IResourceExtraData
 	{
 	public:
-		
-		/// Default constructor
-		IResourceExtraData();
-		
-		/// Default destructor
-		~IResourceExtraData();
-
 		/// Converts the extra data to a string
 		virtual std::string toString()=0;
 	};
@@ -52,7 +45,6 @@ namespace ant
 	ANT_INLINE std::string Resource::getName() const{ return m_name;	}
 
 	ANT_INLINE std::string Resource::setName(const std::string& name){ m_name = name; }
-
 }
 
 #endif

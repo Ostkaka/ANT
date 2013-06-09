@@ -34,7 +34,7 @@
 #define ANT_FORCE_INLINE _forceinline
 #define ANT_INLINE inline
 
-#define ANT_OVERRIDE override;
+#define ANT_OVERRIDE override
 
 namespace ant 
 {
@@ -151,6 +151,7 @@ namespace ant
 	typedef double Real;
 	typedef unsigned int UInt;
 	typedef double DeltaTime;
+	typedef std::vector<std::string> StringVector;
 	
 }
 
