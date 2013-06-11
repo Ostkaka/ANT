@@ -97,17 +97,20 @@ namespace ant
 	class FileLogger;
 	class FatalLogger;
 
-	// Forward declarations for Actors
+	// Forward declarations for new framework
 	class Actor;
 	class ActorComponent;
+	class ProcessManager;
 	class IProcess;
 	class Resource;
-	class ProcessManager;
 	class ResourceHandle;
 	class ResourceCache;
 	class IResourceLoader;
 	class IResourceFile;
 
+	class IEventData;
+	class BaseEventData;
+	
 	// Declare id for actors
 	typedef unsigned int ActorId;
 
@@ -125,6 +128,9 @@ namespace ant
 	ANT_DECLARE_POINTER_TYPES(ResourceHandle)
 	ANT_DECLARE_POINTER_TYPES(IResourceLoader)
 	ANT_DECLARE_POINTER_TYPES(IResourceFile)
+	ANT_DECLARE_POINTER_TYPES(IEventData)
+
+	typedef unsigned long EventType;
 
 	/// Declare Asset ID typedef which is used for identifying Asset objects
   typedef std::string typeAssetID;
@@ -151,6 +157,7 @@ namespace ant
 	typedef double Real;
 	typedef unsigned int UInt;
 	typedef double DeltaTime;
+	typedef Real TimeStamp;
 	typedef std::vector<std::string> StringVector;
 	
 }
