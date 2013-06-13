@@ -31,7 +31,7 @@ namespace ant
 		/// Destructor
 		virtual ~IEventData(void) {}
 
-		/// Returns the eventtype of the object
+		/// Returns the event type of the object
 		virtual const EventType& getEventType(void) const = 0;
 
 		/// Get the timestamp when the event was created
@@ -39,21 +39,20 @@ namespace ant
 
 		// TODO - make this a class ISerializable
 		virtual void serialize(std::ostream& out) const = 0;  
-		virtual void deserialize(std::istream& in) const = 0;
+		virtual void deserialize(std::istream& in) = 0;
 
 		/// Makes a copy of the event data
 		virtual IEventDataStrongPtr copy() const = 0;
 
 		/// Returns the name of the event
-		virtual const char* getName(void) const = 0;
+		virtual std::string getName(void) const = 0;
 	};
 
 	/**
 	 * Class the implements a basic event data structure 
 	 */
 	class BaseEventData : public IEventData
-	{
-		
+	{	
 	public:
 
 		explicit BaseEventData(const float timeStamp = 0.0f) 
@@ -79,20 +78,44 @@ namespace ant
 	 */
 	class IEventManager 
 	{
+	public:
+
 		enum EventManagerConstants { EM_INFINITE = 0xffffffff};
 
+		/// Constructor
 		explicit IEventManager(const std::string& name, bool setGlobal);
+		
+		/// Destructor
 		virtual ~IEventManager(void);
 
+		/// Add a listener to the event manager that listens to an event of type is triggered. 
 		virtual bool addListener(const EventListenerDelegate& eDelegate, const EventType& type) = 0;
 
+		/// Removes a delegate / event type pairing from the event manager.
 		virtual bool removeListener(const EventListenerDelegate& eDelegate, const EventType& type) = 0;
 
+		/// Triggers an event IMMEDIATELY. Bypasses the queue and calls alls registered delegate functions
 		virtual bool triggerEvent(const IEventDataStrongPtr& pEvent) const = 0;
 
+		/// Queues and event in the event manager
 		virtual bool queueEvent(const IEventDataStrongPtr& pEvent)= 0;
 
 		// TODO - thread safe queue
+		/**
+		 *  Finds and removes the next available instance of the given event type and removes it
+		 *  from the processing queue. if allOfType is true, all events of that type is cleared
+		 *  Return true if succ, false if fail
+		 */
+		virtual bool abortEvent(const EventType& type, bool allOfType = false) = 0;
+
+		/**
+		 *  Processes any queued events. Can give optional time limiter to limit event handling time
+		 *  Returns true if all events in the queue were handled.
+		 */
+		virtual bool update(const ant::DeltaTime& dt = EM_INFINITE) = 0;
+
+		/// Returns the global static event manager of the framework
+		static IEventManager* instance(void);
 
 	};
 
