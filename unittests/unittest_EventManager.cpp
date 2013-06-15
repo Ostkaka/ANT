@@ -5,7 +5,7 @@
 
 using namespace ant;
 
-class EvtData_Test : public BaseEventData
+class EvtData_Test : public ant::BaseEventData
 {
 
 public:
@@ -41,18 +41,86 @@ public:
 		return "EvtData_Destroy_Actor";
 	}
 
+	void execute(){ m_executed = true;}
+
 	bool isExecuted(void) const { return m_executed; }
 
 protected:
 	bool m_executed;
 };
+const EventType EvtData_Test::sk_EventType(0xa3814acd);
 
+class Test_EventManager : public ::testing::Test
+{
+protected:
 
-using namespace ant;
+	Test_EventManager()
+	{
+		std::cout << "Constructor" << std::endl;
+	}
 
-TEST(Test_EventManager, EventListenerAddRemove)
+	virtual void SetUp() ANT_OVERRIDE
+	{
+		// Setup logger
+		Logger::Init("Test_EventManager.log");
+
+		TheEventManager.reset(new EventManager("TestEventManager",false));
+		std::cout << "Set up" << std::endl;
+	}
+
+	virtual void TearDown() ANT_OVERRIDE
+	{
+	}
+
+	virtual ~Test_EventManager() 
+	{
+		std::cout << "Destructor" << std::endl;
+	}
+
+protected:
+	shared_ptr<EventManager> TheEventManager;
+
+};
+
+class SimpleTester_Execute
+{
+public:
+	SimpleTester_Execute(){}
+	~SimpleTester_Execute(){}
+
+	void init(EventManager * manager)
+	{
+		GCC_ASSERT(manager);
+		if (manager)
+		{
+			// Create and insert the delegate
+			EventListenerDelegate delegateFunc = MakeDelegate(this,&SimpleTester_Execute::execute_TestEvent);
+
+			manager->addListener(delegateFunc,EvtData_Test::sk_EventType);
+		}
+	}
+
+	void execute_TestEvent(IEventDataStrongPtr pEvent)
+	{
+		shared_ptr<EvtData_Test> pCastedEvent = static_pointer_cast<EvtData_Test>(pEvent);
+
+		pCastedEvent->execute();
+	}
+};
+
+TEST_F(Test_EventManager, TestSimpleEvent)
 {	
+	// Create a tester and insert the manager
+	SimpleTester_Execute tester;
+	tester.init(TheEventManager.get());
 
+	// Create event and send it to the manager
+	IEventDataStrongPtr ev(GCC_NEW EvtData_Test());
+
+	TheEventManager->triggerEvent(ev);
+
+	// Event should have been executed
+	EXPECT_TRUE(((EvtData_Test*)(ev.get()))->isExecuted());
 }
 
 int main(int argc, char **argv)

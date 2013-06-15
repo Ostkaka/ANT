@@ -7,6 +7,7 @@ static IEventManager* g_eventManager = NULL;
 GenericObjectFactory<IEventData, EventType> EventFactory;
 
 ant::IEventManager::IEventManager( const std::string& name, bool setGlobal )
+	:m_name(name)
 {
 	if (setGlobal)
 	{

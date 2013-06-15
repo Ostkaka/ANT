@@ -38,8 +38,8 @@ namespace ant
 		virtual ant::TimeStamp getTimeStamp(void) const = 0;
 
 		// TODO - make this a class ISerializable
-		virtual void serialize(std::ostream& out) const = 0;  
-		virtual void deserialize(std::istream& in) = 0;
+		virtual void serialize(std::ostrstream& out) const = 0;  
+		virtual void deserialize(std::istrstream& in) = 0;
 
 		/// Makes a copy of the event data
 		virtual IEventDataStrongPtr copy() const = 0;
@@ -116,6 +116,10 @@ namespace ant
 
 		/// Returns the global static event manager of the framework
 		static IEventManager* instance(void);
+
+	protected:
+		/// Name of the event manager
+		std::string m_name;
 
 	};
 
