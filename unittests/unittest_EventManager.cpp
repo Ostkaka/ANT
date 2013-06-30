@@ -82,6 +82,53 @@ protected:
 
 };
 
+class SimpleTester_AddRemove
+{
+public:
+	SimpleTester_AddRemove()
+	{
+	}
+	
+	~SimpleTester_AddRemove()
+	{
+	}
+
+	bool addListener(EventManager * manager)
+	{
+		GCC_ASSERT(manager);
+		if (manager)
+		{
+			// Create and insert the delegate
+			EventListenerDelegate delegateFunc = MakeDelegate(this,&SimpleTester_AddRemove::execute_TestEvent);
+			this->m_manager = manager;
+			return manager->addListener(delegateFunc,EvtData_Test::sk_EventType);
+		}
+		return false;
+	}
+
+	bool removeListener(EventManager * manager)
+	{
+		GCC_ASSERT(manager);
+		if (manager)
+		{
+			// Create and insert the delegate
+			EventListenerDelegate delegateFunc = MakeDelegate(this,&SimpleTester_AddRemove::execute_TestEvent);
+			this->m_manager = manager;
+			return manager->removeListener(delegateFunc,EvtData_Test::sk_EventType);
+		}
+		return false;
+	}
+
+	void execute_TestEvent(IEventDataStrongPtr pEvent)
+	{
+		shared_ptr<EvtData_Test> pCastedEvent = static_pointer_cast<EvtData_Test>(pEvent);
+
+		pCastedEvent->execute();
+	}
+
+	EventManager * m_manager;
+};
+
 class SimpleTester_Execute
 {
 public:
@@ -121,6 +168,23 @@ TEST_F(Test_EventManager, TestSimpleEvent)
 
 	// Event should have been executed
 	EXPECT_TRUE(((EvtData_Test*)(ev.get()))->isExecuted());
+}
+
+TEST_F(Test_EventManager, TestAddRemove)
+{	
+	// Create a tester and insert the manager
+	SimpleTester_AddRemove * tester = new SimpleTester_AddRemove();
+	
+	// Test add/remove
+	EXPECT_TRUE(tester->addListener(TheEventManager.get()));
+	EXPECT_TRUE(tester->removeListener(TheEventManager.get()));
+	
+	// Send an event to manager, should not be executed
+	IEventDataStrongPtr ev(GCC_NEW EvtData_Test());
+	TheEventManager->triggerEvent(ev);
+	EXPECT_FALSE(((EvtData_Test*)(ev.get()))->isExecuted());
+
+	SAFE_DELETE(tester);
 }
 
 int main(int argc, char **argv)

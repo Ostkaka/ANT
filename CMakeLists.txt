@@ -84,6 +84,11 @@ set(TINYXML_TARGET_NAME "TinyXml")
 include_directories(${PROJECT_SOURCE_DIR}/tinyxml)
 add_subdirectory(tinyxml)
 
+#luaplusplus
+set( LUAPLUSPLUS_TARGET_NAME "luaplusplus" )
+include_directories(${PROJECT_SOURCE_DIR}/luaplusplus)
+add_subdirectory(luaplusplus)
+
 # find external SFML libraries
 #set(SFML_STATIC_LIBRARIES TRUE)
 find_package(SFML REQUIRED audio graphics window system)
