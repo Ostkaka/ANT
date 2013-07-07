@@ -1,6 +1,8 @@
 #ifndef LUASCRIPTEXPORTS_HPP_
 	#define LUASCRIPTEXPORTS_HPP_
 
+#include <LuaPlus.h>
+
 namespace ant
 {
 
@@ -24,7 +26,16 @@ namespace ant
 		/// Export to lua
 		static bool loadAndExecutreScriptResource(const char* scriptResource);
 
+		/// Process Manager
+		static void attachScriptProcess(LuaPlus::LuaObject scriptProcess);
+
+
+		// lua log
+		static void lualog(LuaPlus::LuaObject text);
+
 		/* Add new export functions as the development progresses */
+
+		
 
 	};
 }

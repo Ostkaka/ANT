@@ -1,6 +1,9 @@
 #include <ant/luascripting/LuaScriptExports.hpp>
 #include <ant/luascripting/LuaStateManager.hpp>
 #include <ant/resources/ResourceCacheManager.hpp>
+#include <ant/classes/ProcessManagerSingleton.hpp>
+#include <ant/classes/ProcessManager.hpp>
+#include <ant/interfaces/IProcess.hpp>
 #include <ant/resources/ResourceCache.hpp>
 #include <ant/resources/Resource.hpp>
 #include <ant/core_types.hpp>
@@ -9,17 +12,21 @@
 
 using namespace ant;
 
-
-
 void LuaScriptExports::registerScripts( void )
 {
 	LuaPlus::LuaObject globals = LuaStateManager::instance()->getGlobalVars();
 
-	// init
+	// Init
 	InternalLuaScriptExports::init();
 
-	// resource loading
+	// Resource loading
 	globals.RegisterDirect("loadAndExecuteScriptResource",InternalLuaScriptExports::loadAndExecutreScriptResource);	
+
+	// Process manager
+	globals.RegisterDirect("attachProcess",&InternalLuaScriptExports::attachScriptProcess);
+
+	// lua log
+	globals.RegisterDirect("log",&InternalLuaScriptExports::lualog);
 }
 
 void LuaScriptExports::unregisterScripts( void )
@@ -71,5 +78,32 @@ bool ant::InternalLuaScriptExports::loadAndExecutreScriptResource( const char* s
 	}
 	
 	return true;
+}
+
+void ant::InternalLuaScriptExports::attachScriptProcess( LuaPlus::LuaObject scriptProcess )
+{
+	LuaPlus::LuaObject temp = scriptProcess.Lookup("__object");
+	if (!temp.IsNil())
+	{
+		IProcessStrongPtr pProcess(static_cast<IProcess*>(temp.GetLightUserData()));
+		ProcessManagerSingleton::instance()->getProcessManager()->attachProcess(pProcess);
+	}
+	else
+	{
+		GCC_ERROR("Could not find __object in script proces");
+	}
+}
+
+void ant::InternalLuaScriptExports::lualog( LuaPlus::LuaObject text )
+{
+	if (text.IsConvertibleToString())
+	{
+		GCC_LOG("Lua",text.ToString());
+	}
+	else
+	{
+		GCC_LOG("Lua","<" + std::string(text.TypeName()) + ">");
+	}
+
 }
 

@@ -43,30 +43,30 @@
 -- Redifinition of require() and dofile().  This is needed to allow scripts to go through the resource system.
 -----------------------------------------------------------------------------------------------------------------------
 do
-	local OldRequire = require;  -- save the old require() function
+	local oldRequire = require;  -- save the old require() function
 	local resourceIdMap = {};  -- map of resource id's we've already loaded
 	
 	require = function(script)
 		-- If we haven't already loaded this file, try to load it now
 		if (not resourceIdMap[script]) then
-			if (LoadAndExecuteScriptResource(script)) then
+			if (loadAndExecuteScriptResource(script)) then
 				resourceIdMap[script] = true;
 			else
 				-- failed to load file through the resource system so fall back to the old method
-				OldRequire(script);
+				oldRequire(script);
 			end
 		end
 	end
 end
 
 do
-    local OldPrint = print;  -- save the old print() function
+    local oldPrint = print;  -- save the old print() function
     
     print = function(text)
 		if (text ~= nil) then
-			Log(text);
+			log(text);
 		else
-			Log("<nil>");
+			log("<nil>");
 		end
 	end
 end
@@ -241,13 +241,13 @@ function class(baseClass, body)
 	--						   automatically.  It's used in case the C++ side needs access to the leaf 
 	--						   subclass that is being instantiated.  For an example, see ScriptProcess 
 	--						   in C++.
-	ret.Create = function(self, constructionData, originalSubClass)
+	ret.create = function(self, constructionData, originalSubClass)
 		local obj;
 		if (self.__index ~= nil) then
 			if (originalSubClass ~= nil) then
-				obj = self.__index:Create(constructionData, originalSubClass);
+				obj = self.__index:create(constructionData, originalSubClass);
 			else
-				obj = self.__index:Create(constructionData, self);
+				obj = self.__index:create(constructionData, self);
 			end
 		else
 			obj = constructionData or {};
@@ -267,7 +267,7 @@ function class(baseClass, body)
 	end
 	
 	-- Returns true if otherClass appears in this objects class hierarchy anywhere.
-	ret.IsInstance = function(self, otherClass)
+	ret.isInstance = function(self, otherClass)
 		local cls = self.__index;
 		while cls do
 			if cls == otherClass then 
