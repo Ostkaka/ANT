@@ -88,7 +88,7 @@ ant::DevelopmentResourceZipFile::DevelopmentResourceZipFile( const std::wstring 
 	m_AssetsDir = dir;
 	int lastslash = m_AssetsDir.find_last_of(L"\\");
 	m_AssetsDir = m_AssetsDir.substr(0,lastslash);
-	m_AssetsDir += L"\\Assets\\";
+	m_AssetsDir += string2Wstring(ANT_DATA_PATH"\\");
 }
 
 ant::DevelopmentResourceZipFile::~DevelopmentResourceZipFile()

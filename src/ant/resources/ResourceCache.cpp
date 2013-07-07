@@ -281,4 +281,10 @@ void ant::ResourceCache::memoryHasBeenFreed( ant::UInt size )
 	m_allocated -= size;
 }
 
+bool ant::ResourceCache::isUsingDevelopmentDirectories( void ) const
+{
+	GCC_ASSERT(m_file); 
+	return m_file->isUsingDevelopmentDirectories(); 
+}
+
 

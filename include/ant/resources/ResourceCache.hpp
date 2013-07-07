@@ -46,6 +46,9 @@ namespace ant
 		/// Flush the entire cache of all loaded resources
 		void flush();
 
+		/// Returns true if cache uses developer directories
+		bool isUsingDevelopmentDirectories(void) const;
+
 	protected:
 
 		/// Tries to find a resource handle form a resource specifier

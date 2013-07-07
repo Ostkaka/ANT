@@ -39,6 +39,20 @@ namespace ant
 		virtual bool loadResource(char* rawBuffer, ant::UInt rawSize, ResourceHandleStrongPtr handle);
 
 	};
+
+	/**
+	 * This resource loader handles loading of script files
+	 */
+	class ScriptResourceLoader : public IResourceLoader
+	{
+	public:
+		virtual bool useRawFile() { return false; }
+		virtual bool discardRawBufferAfterLoad() { return true; }
+		virtual bool addNULLZero() { return true; }
+		virtual ant::UInt getLoadedResourceSize(char* rawBuffer, ant::UInt rawSize) { return rawSize; }
+		virtual bool loadResource(char *rawBuffer, unsigned int rawSize, ResourceHandleStrongPtr handle);
+		virtual std::string getPattern() { return "*.lua"; }
+	};
 }
 
 #endif
