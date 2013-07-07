@@ -64,7 +64,7 @@ bool ant::InternalLuaScriptExports::loadAndExecutreScriptResource( const char* s
 	}
 	else
 	{
-		std::string path(ANT_DATA_PATH"\\lua\\"); // TODO
+		std::string path(ANT_DATA_PATH"\\"); // TODO
 		path += scriptResource;
 		LuaStateManager::instance()->executeFile(path.c_str());
 		return true;
