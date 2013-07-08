@@ -74,9 +74,9 @@ bool ant::IScriptProcess::buildCppDataFromScript( LuaPlus::LuaObject scriptClass
 			const char* key = constructionDataIt.GetKey().GetString();
 			LuaPlus::LuaObject val = constructionDataIt.GetValue();
 
-			if (strcmp(key, "frequency") == 0 && val.IsInteger())
+			if (strcmp(key, "frequency") == 0 && val.IsNumber())
 			{
-				m_frequency = val.GetInteger();
+				m_frequency = val.GetFloat();
 			}
 			else
 			{

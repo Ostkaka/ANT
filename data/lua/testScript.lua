@@ -1,8 +1,12 @@
 print("Loading script");
 
+sParent = nil;
+sChild = nil;
+
 TestScriptProcess = class(ScriptProcess,
 {
 	count = 0;
+	finished = false;
 });
 
 function TestScriptProcess:onInit()
@@ -14,12 +18,13 @@ function TestScriptProcess:onUpdate(dt)
 	print("Count: " .. self.count);
 	
 	if self.count >= 5 then
-		self:succeed();
+		self:succeedAndStop();
 	end
 end
 
 function TestScriptProcess:onSuccess()
 	print("success!!");
+	self.finished = true;
 end
 
 function TestScriptProcess:onFail()
@@ -27,10 +32,10 @@ function TestScriptProcess:onFail()
 end
 
 function TestProcess()
-	parent = TestScriptProcess:create({frequency = 1});
-	child = TestScriptProcess:create({frequency = 0.5});
-	parent:attachChild(child);
-	attachProcess(parent);
+	sParent = TestScriptProcess:create({frequency = 1});
+	sChild = TestScriptProcess:create({frequency = 0.5});
+	sParent:attachChild(sChild);
+	attachProcess(sParent);
 end
 
 --RegisterListener();
