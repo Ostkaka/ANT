@@ -2,6 +2,7 @@
 	#define LUASCRIPTEXPORTS_HPP_
 
 #include <ant/eventsystem/EventManager.hpp>
+#include <ant/luascripting/ScriptEventListener.hpp>
 #include <LuaPlus.h>
 
 namespace ant
@@ -33,15 +34,22 @@ namespace ant
 		// Events
 		static bool queueEvent(EventType eventType, LuaPlus::LuaObject eventData);
 		static bool triggerEvent(EventType eventType, LuaPlus::LuaObject eventData);
-		static ScriptEventStrongPtr buildEvent(EventType eventType, LuaPlus::LuaObject eventData);
+		ant::Ulong registerEventListener(EventType eventType, LuaPlus::LuaObject callbackFunction);
+		static void removeEventListener(ant::Ulong listenerId);
 
 		// lua log
 		static void lualog(LuaPlus::LuaObject text);
 
 		/* Add new export functions as the development progresses */
 
-		
+	private:
+		static ScriptEventStrongPtr buildEvent(EventType eventType, LuaPlus::LuaObject eventData);
 
+		//////////////////////////////////////////////////////////////////////////
+		// Variables
+		//////////////////////////////////////////////////////////////////////////
+	protected:
+		static ScriptEventListenerManager* s_pScriptEventListenerMgr;
 	};
 }
 

@@ -19,7 +19,7 @@ LuaPlus::LuaObject ant::ScriptEvent::getEventData( void )
 
 ant::ScriptEvent::ScriptEvent( void )
 {
-	m_eventDataIsValid = true;
+	m_eventDataIsValid = false;
 }
 
 bool ant::ScriptEvent::setEventData( LuaPlus::LuaObject eventData )

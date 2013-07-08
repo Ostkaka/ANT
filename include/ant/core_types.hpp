@@ -158,6 +158,7 @@ namespace ant
 	/// Declare data types
 	typedef double Real;
 	typedef unsigned int UInt;
+	typedef unsigned long Ulong;
 	typedef double DeltaTime;
 	typedef Real TimeStamp;
 	typedef std::vector<std::string> StringVector;

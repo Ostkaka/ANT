@@ -6,6 +6,7 @@
 #include <ant/classes/ProcessManager.hpp>
 #include <ant/interfaces/IProcess.hpp>
 #include <ant/resources/ResourceCache.hpp>
+#include <ant/luascripting/ScriptEventListener.hpp>
 #include <ant/resources/Resource.hpp>
 #include <ant/core_types.hpp>
 #include <ant/ant_std.hpp>
@@ -26,7 +27,13 @@ void LuaScriptExports::registerScripts( void )
 	// Process manager
 	globals.RegisterDirect("attachProcess",&InternalLuaScriptExports::attachScriptProcess);
 
-	// lua log
+	// Event system
+	globals.RegisterDirect("registerEventListener", &InternalLuaScriptExports::registerEventListener);
+	globals.RegisterDirect("removeEventListener", &InternalLuaScriptExports::removeEventListener);
+	globals.RegisterDirect("queueEvent", &InternalLuaScriptExports::queueEvent);
+	globals.RegisterDirect("triggerEvent", &InternalLuaScriptExports::triggerEvent);
+
+	// Lua log
 	globals.RegisterDirect("log",&InternalLuaScriptExports::lualog);
 }
 
@@ -35,19 +42,22 @@ void LuaScriptExports::unregisterScripts( void )
 	InternalLuaScriptExports::destroy();
 }
 
-
 //////////////////////////////////////////////////////////////////////////
 // InternalLuaScriptExports
 //////////////////////////////////////////////////////////////////////////
 
 bool ant::InternalLuaScriptExports::init( void )
 {
+	GCC_ASSERT(s_pScriptEventListenerMgr == NULL);
+	s_pScriptEventListenerMgr = GCC_NEW ScriptEventListenerManager;
+
 	return true;
 }
 
 void ant::InternalLuaScriptExports::destroy( void )
 {
-
+	GCC_ASSERT(s_pScriptEventListenerMgr != NULL);
+	SAFE_DELETE(s_pScriptEventListenerMgr);
 }
 
 bool ant::InternalLuaScriptExports::loadAndExecutreScriptResource( const char* scriptResource )
@@ -95,18 +105,6 @@ void ant::InternalLuaScriptExports::attachScriptProcess( LuaPlus::LuaObject scri
 	}
 }
 
-void ant::InternalLuaScriptExports::lualog( LuaPlus::LuaObject text )
-{
-	if (text.IsConvertibleToString())
-	{
-		GCC_LOG("Lua",text.ToString());
-	}
-	else
-	{
-		GCC_LOG("Lua","<" + std::string(text.TypeName()) + ">");
-	}
-}
-
 bool ant::InternalLuaScriptExports::queueEvent( EventType eventType, LuaPlus::LuaObject eventData )
 {
 	ScriptEventStrongPtr pEvent(buildEvent(eventType,eventData));
@@ -129,6 +127,18 @@ bool ant::InternalLuaScriptExports::triggerEvent( EventType eventType, LuaPlus::
 	return false;
 }
 
+void ant::InternalLuaScriptExports::lualog( LuaPlus::LuaObject text )
+{
+	if (text.IsConvertibleToString())
+	{
+		GCC_LOG("Lua",text.ToString());
+	}
+	else
+	{
+		GCC_LOG("Lua","<" + std::string(text.TypeName()) + ">");
+	}
+}
+
 ant::ScriptEventStrongPtr ant::InternalLuaScriptExports::buildEvent( EventType eventType, LuaPlus::LuaObject eventData )
 {
 	// Create the event from the event type
@@ -145,5 +155,36 @@ ant::ScriptEventStrongPtr ant::InternalLuaScriptExports::buildEvent( EventType e
 	}
 
 	return pEvent;
+}
+
+ant::Ulong ant::InternalLuaScriptExports::registerEventListener( EventType eventType, LuaPlus::LuaObject callbackFunction )
+{
+	GCC_ASSERT(s_pScriptEventListenerMgr);
+
+	if (callbackFunction.IsFunction())
+	{
+		// Create the C++ listener proxy and set it to listen for the event
+		ScriptEventListener* pListener = GCC_NEW ScriptEventListener(eventType, callbackFunction);
+		s_pScriptEventListenerMgr->addListener(pListener);
+		IEventManager::instance()->addListener(pListener->getDelegate(), eventType);
+
+		// Convert the pointer to an unsigned log to use as a handle
+		ant::Ulong handle = reinterpret_cast<ant::Ulong>(pListener);
+		return handle;
+	}
+
+	GCC_ERROR("Attempting to register script event listener with invalid callback function");
+	return 0;
+}
+
+void ant::InternalLuaScriptExports::removeEventListener( ant::Ulong listenerId )
+{
+	GCC_ASSERT(s_pScriptEventListenerMgr);
+	GCC_ASSERT(listenerId != 0);
+
+	// Convert the listener id back to a pointer
+	ScriptEventListener* pListener = reinterpret_cast<ScriptEventListener*>(listenerId);
+	// the destructor will remove the listener
+	s_pScriptEventListenerMgr->destroyListener(pListener); 
 }
 
