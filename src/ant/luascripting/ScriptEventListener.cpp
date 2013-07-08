@@ -1,4 +1,6 @@
 #include <ant/luascripting/ScriptEventListener.hpp>
+#include <ant/luascripting/ScriptEvent.hpp>
+#include <ant/eventsystem/IEventManager.hpp>
 
 using namespace ant;
 
@@ -31,9 +33,11 @@ void ant::ScriptEventListener::scriptEventDelegate( IEventDataStrongPtr pEvent )
 	GCC_ASSERT(m_scriptCallbackFunction.IsFunction());
 
 	// Call the lua function
-	ScriptEventStrongPtr pScriptEvent = static_pointer_cast<ScriptEvent>(pEvent);
+	ScriptEventStrongPtr pScriptEvent = static_pointer_cast<ScriptEvent>(pEvent);	
 	LuaPlus::LuaFunction<void> luaCallback = m_scriptCallbackFunction;
-	luaCallback(pScriptEvent->getEventData());
+	
+	LuaPlus::LuaObject obj = pScriptEvent->getEventData();
+	//luaCallback(pScriptEvent->getEventData());
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -49,7 +49,7 @@ namespace ant
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
 	protected:
-		static ScriptEventListenerManager* s_pScriptEventListenerMgr;
+		static ScriptEventListenerManager* s_ScriptEventListenerMgrInstance;
 	};
 }
 
