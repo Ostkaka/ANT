@@ -6,32 +6,31 @@ TestScriptProcess = class(ScriptProcess,
 });
 
 function TestScriptProcess:onInit()
-	print("OnInit()");
+	print("onInit()");
 end
 
-function TestScriptProcess:onUpdate(deltaMs)
+function TestScriptProcess:onUpdate(dt)
 	self.count = self.count + 1;
 	print("Count: " .. self.count);
 	
 	if self.count >= 5 then
-		self:Succeed();
+		self:succeed();
 	end
 end
 
 function TestScriptProcess:onSuccess()
-	print("Success!!");
+	print("success!!");
 end
 
 function TestScriptProcess:onFail()
 	print("Something failed");
 end
 
-
 function TestProcess()
-	parent = TestScriptProcess:Create({frequency = 1});
-	child = TestScriptProcess:Create({frequency = 0.5});
-	parent:AttachChild(child);
-	AttachProcess(parent);
+	parent = TestScriptProcess:create({frequency = 1});
+	child = TestScriptProcess:create({frequency = 0.5});
+	parent:attachChild(child);
+	attachProcess(parent);
 end
 
 --RegisterListener();

@@ -21,6 +21,9 @@ namespace ant
 		/// Get instance
 		static ProcessManagerSingleton* instance(void);
 
+		/// Init the singleton and create internal process manager
+		void init(void);
+
 		/// Returns the cache used by the manager
 		ProcessManager* getProcessManager(void);
 

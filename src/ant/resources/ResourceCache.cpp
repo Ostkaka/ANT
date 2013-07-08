@@ -70,6 +70,7 @@ ant::ResourceHandleStrongPtr ant::ResourceCache::load( Resource *r )
 		if (WildcardMatch(tloader->getPattern().c_str(),r->getName().c_str()))
 		{
 			loader = tloader;
+			break;
 		}
 	}
 

@@ -5,6 +5,11 @@ using namespace ant;
 
 ProcessManagerSingleton* ProcessManagerSingleton::s_instance = NULL;
 
+ant::ProcessManagerSingleton::ProcessManagerSingleton()
+{
+	m_processManager = NULL;
+}
+
 ant::ProcessManagerSingleton::~ProcessManagerSingleton()
 {
 	clearProcessManager();
@@ -44,7 +49,12 @@ ProcessManager* ant::ProcessManagerSingleton::getProcessManager( void )
 	return m_processManager;
 }
 
-ant::ProcessManagerSingleton::ProcessManagerSingleton()
+void ant::ProcessManagerSingleton::init( void )
 {
-	m_processManager = NULL;
+	if (m_processManager)
+	{
+		GCC_WARNING("Overwriting process manager on ProcessmangerSingleton");
+		SAFE_DELETE(m_processManager);
+	}
+	m_processManager = GCC_NEW ProcessManager;
 }
