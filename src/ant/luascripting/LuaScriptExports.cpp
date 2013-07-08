@@ -1,5 +1,6 @@
 #include <ant/luascripting/LuaScriptExports.hpp>
 #include <ant/luascripting/LuaStateManager.hpp>
+#include <ant/luascripting/ScriptEvent.hpp>
 #include <ant/resources/ResourceCacheManager.hpp>
 #include <ant/classes/ProcessManagerSingleton.hpp>
 #include <ant/classes/ProcessManager.hpp>
@@ -104,6 +105,45 @@ void ant::InternalLuaScriptExports::lualog( LuaPlus::LuaObject text )
 	{
 		GCC_LOG("Lua","<" + std::string(text.TypeName()) + ">");
 	}
+}
 
+bool ant::InternalLuaScriptExports::queueEvent( EventType eventType, LuaPlus::LuaObject eventData )
+{
+	ScriptEventStrongPtr pEvent(buildEvent(eventType,eventData));
+	if (pEvent)
+	{
+		IEventManager::instance()->queueEvent(pEvent);
+		return true;
+	}
+	return false;
+}
+
+bool ant::InternalLuaScriptExports::triggerEvent( EventType eventType, LuaPlus::LuaObject eventData )
+{
+	// Set the event data that was passed in
+	ScriptEventStrongPtr pEvent(buildEvent(eventType,eventData));
+	if (pEvent)
+	{
+		return IEventManager::instance()->triggerEvent(pEvent);
+	}
+	return false;
+}
+
+ant::ScriptEventStrongPtr ant::InternalLuaScriptExports::buildEvent( EventType eventType, LuaPlus::LuaObject eventData )
+{
+	// Create the event from the event type
+	ScriptEventStrongPtr pEvent(ScriptEvent::createEventFromScript(eventType));
+	if (!pEvent)
+	{
+		return ScriptEventStrongPtr();
+	}
+
+	// Set the event data that was sent in. Return empty pointer if fails.
+	if (!pEvent->setEventData(eventData))
+	{
+		return ScriptEventStrongPtr();
+	}
+
+	return pEvent;
 }
 

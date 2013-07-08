@@ -110,7 +110,8 @@ namespace ant
 
 	class IEventData;
 	class BaseEventData;
-	
+	class ScriptEvent;
+
 	// Declare id for actors
 	typedef unsigned int ActorId;
 
@@ -129,6 +130,7 @@ namespace ant
 	ANT_DECLARE_POINTER_TYPES(IResourceLoader)
 	ANT_DECLARE_POINTER_TYPES(IResourceFile)
 	ANT_DECLARE_POINTER_TYPES(IEventData)
+	ANT_DECLARE_POINTER_TYPES(ScriptEvent)
 
 	typedef unsigned long EventType;
 

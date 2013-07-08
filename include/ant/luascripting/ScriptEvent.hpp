@@ -46,6 +46,7 @@ namespace ant
 
 		static void addCreationFunction(EventType type, CreateEventForScriptFunctionType pCreationFunctionPtr);
 	
+		// This is used to transport events from script to c++
 		static ScriptEvent* createEventFromScript(EventType type);
 
 	protected:

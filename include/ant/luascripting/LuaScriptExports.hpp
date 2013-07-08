@@ -1,6 +1,7 @@
 #ifndef LUASCRIPTEXPORTS_HPP_
 	#define LUASCRIPTEXPORTS_HPP_
 
+#include <ant/eventsystem/EventManager.hpp>
 #include <LuaPlus.h>
 
 namespace ant
@@ -28,7 +29,11 @@ namespace ant
 
 		/// Process Manager
 		static void attachScriptProcess(LuaPlus::LuaObject scriptProcess);
-
+	
+		// Events
+		static bool queueEvent(EventType eventType, LuaPlus::LuaObject eventData);
+		static bool triggerEvent(EventType eventType, LuaPlus::LuaObject eventData);
+		static ScriptEventStrongPtr buildEvent(EventType eventType, LuaPlus::LuaObject eventData);
 
 		// lua log
 		static void lualog(LuaPlus::LuaObject text);
