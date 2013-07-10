@@ -28,8 +28,8 @@ void LuaScriptExports::registerScripts( void )
 	globals.RegisterDirect("attachProcess",&InternalLuaScriptExports::attachScriptProcess);
 
 	// Event system
-	//globals.RegisterDirect("registerEventListener", &InternalLuaScriptExports::registerEventListener);
-	//globals.RegisterDirect("removeEventListener", &InternalLuaScriptExports::removeEventListener);
+	globals.RegisterDirect("registerEventListener", &InternalLuaScriptExports::registerEventListener);
+	globals.RegisterDirect("removeEventListener", &InternalLuaScriptExports::removeEventListener);
 	globals.RegisterDirect("queueEvent", &InternalLuaScriptExports::queueEvent);
 	globals.RegisterDirect("triggerEvent", &InternalLuaScriptExports::triggerEvent);
 

@@ -15,19 +15,25 @@ namespace ant
 	class ScriptEventListener
 	{
 	public:
+		/// Default constructor
 		explicit ScriptEventListener(const EventType& eventType, const LuaPlus::LuaObject& scriptCallbackFunction);
+		
+		/// Default deconstructor
 		~ScriptEventListener();
 		
 		/// Returns the delegate of the listener
 		EventListenerDelegate getDelegate(void);
 
+		/// Do the event delegate of the listener
 		void scriptEventDelegate(IEventDataStrongPtr pEvent);
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
 	protected:
+		/// The lua object that points to a function lua
 		LuaPlus::LuaObject m_scriptCallbackFunction;
+		/// This is the event-type that the listener listens to
 		EventType m_eventType;
 	};
 
@@ -52,6 +58,7 @@ namespace ant
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
 	protected:
+		/// Set that holds the listeners that serve as proxies to lua listeners
 		ScriptEventListenerSet m_listener;
 	};
 }

@@ -33,3 +33,17 @@ IEventManager* ant::IEventManager::instance( void )
 	GCC_ASSERT(g_eventManager);
 	return g_eventManager;
 }
+
+//////////////////////////////////////////////////////////////////////////
+// BaseEventData
+//////////////////////////////////////////////////////////////////////////
+
+void ant::BaseEventData::serialize( std::ostrstream &out ) const
+{
+
+}
+
+void ant::BaseEventData::deserialize( std::istrstream& in )
+{
+
+}

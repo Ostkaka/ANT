@@ -15,7 +15,7 @@ namespace ant
 	}
 
 	/**
-	 * This class handles the internal script exports to lua
+	 * This class handles the internal script exports to lua from the game framework
 	 */
 	class InternalLuaScriptExports
 	{
@@ -34,7 +34,7 @@ namespace ant
 		// Events
 		static bool queueEvent(EventType eventType, LuaPlus::LuaObject eventData);
 		static bool triggerEvent(EventType eventType, LuaPlus::LuaObject eventData);
-		ant::Ulong registerEventListener(EventType eventType, LuaPlus::LuaObject callbackFunction);
+		static ant::Ulong registerEventListener(EventType eventType, LuaPlus::LuaObject callbackFunction);
 		static void removeEventListener(ant::Ulong listenerId);
 
 		// lua log

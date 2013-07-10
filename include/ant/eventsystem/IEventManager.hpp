@@ -4,6 +4,7 @@
 #include <strstream>
 #include <FastDelegate.h>
 #include <ant/core_types.hpp>
+#include <ant/interfaces/ISerializable.hpp>
 
 namespace ant
 {
@@ -24,7 +25,7 @@ namespace ant
 	/**
 	 * Base interface for event objects
 	 */
-	class IEventData
+	class IEventData : public ISerializable
 	{
 	public:
 
@@ -37,15 +38,14 @@ namespace ant
 		/// Get the timestamp when the event was created
 		virtual ant::TimeStamp getTimeStamp(void) const = 0;
 
-		// TODO - make this a class ISerializable
-		virtual void serialize(std::ostrstream& out) const = 0;  
-		virtual void deserialize(std::istrstream& in) = 0;
-
 		/// Makes a copy of the event data
 		virtual IEventDataStrongPtr copy() const = 0;
 
 		/// Returns the name of the event
 		virtual std::string getName(void) const = 0;
+
+		// Serialization
+		ANT_DECLARE_ABSTRACT_SERIALIZABLE();
 	};
 
 	/**
@@ -65,8 +65,7 @@ namespace ant
 		ant::TimeStamp getTimeStamp(void) const { return m_timeStamp; }
 
 		// Serializing 
-		virtual void serialize(std::ostrstream &out) const	{ }
-		virtual void deserialize(std::istrstream& in) { }
+		ANT_DECLARE_SERIALIZABLE();
 
 	protected:
 		/// Timestamp of when the event was created
