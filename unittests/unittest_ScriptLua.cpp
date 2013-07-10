@@ -66,9 +66,6 @@ namespace
 
 			std::cout << "tear down" << std::endl;
 		}
-
-	protected:
-
 	};
 }
 
@@ -154,6 +151,7 @@ TEST_F(Test_LuaStateManager, ScriptProcess)
 		currT += dt;
 	}
 
+	// Get the process child
 	LuaPlus::LuaObject cProcess = LuaStateManager::instance()->getGlobalVars().GetByName("sChild");
 	ASSERT_TRUE(!cProcess.IsNil());
 	ASSERT_TRUE(cProcess.IsTable());
@@ -164,9 +162,7 @@ TEST_F(Test_LuaStateManager, ScriptProcess)
 
 	// It should be true since we looped after the execute
 	ASSERT_TRUE(cfinished.GetBoolean());
-
 }
-
 
 int main(int argc, char **argv)
 {

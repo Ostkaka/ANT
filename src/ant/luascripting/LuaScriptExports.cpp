@@ -188,5 +188,7 @@ void ant::InternalLuaScriptExports::removeEventListener( ant::Ulong listenerId )
 	ScriptEventListener* pListener = reinterpret_cast<ScriptEventListener*>(listenerId);
 	// the destructor will remove the listener
 	s_ScriptEventListenerMgrInstance->destroyListener(pListener); 
+
+	// TODO Err, should not the listener be removed form the global event listener here here?
 }
 

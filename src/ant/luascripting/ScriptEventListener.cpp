@@ -37,7 +37,7 @@ void ant::ScriptEventListener::scriptEventDelegate( IEventDataStrongPtr pEvent )
 	LuaPlus::LuaFunction<void> luaCallback = m_scriptCallbackFunction;
 	
 	LuaPlus::LuaObject obj = pScriptEvent->getEventData();
-	//luaCallback(pScriptEvent->getEventData());
+	luaCallback(pScriptEvent->getEventData());
 }
 
 //////////////////////////////////////////////////////////////////////////
