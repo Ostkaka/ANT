@@ -75,7 +75,7 @@ bool ant::ScriptEvent::buildEventFromScript( void )
 	return true;
 }
 
-void ScriptEvent::buildEventData(void)
+void ScriptEvent::buildEventData( void )
 {
 	m_eventData.AssignNil(LuaStateManager::instance()->getLuaState());
 }
