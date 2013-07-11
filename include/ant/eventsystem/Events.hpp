@@ -48,16 +48,25 @@ namespace ant
 		ant::DeltaTime m_deltaTime; 
 	};
 
+
+#pragma region Unittest_events
+
+	//////////////////////////////////////////////////////////////////////////
+	//
+	// UNITTEST events
+	// 
+	//////////////////////////////////////////////////////////////////////////
+
 	/**
 	 * This is a test event used by the unit test to verify the integrity of the system.
 	 */
-	class EvtData_Test : public ant::ScriptEvent
+	class EvtData_TestExecute : public ant::ScriptEvent
 	{
 
 	public:
 		static const EventType sk_EventType;
 
-		explicit EvtData_Test()
+		explicit EvtData_TestExecute()
 			: m_executed(false)
 		{		
 		}
@@ -69,7 +78,7 @@ namespace ant
 
 		virtual IEventDataStrongPtr copy(void) const ANT_OVERRIDE
 		{
-			return IEventDataStrongPtr ( GCC_NEW EvtData_Test ( ) );
+			return IEventDataStrongPtr ( GCC_NEW EvtData_TestExecute ( ) );
 		}
 
 		virtual void serialize(std::ostrstream &out) const ANT_OVERRIDE
@@ -107,11 +116,78 @@ namespace ant
 
 		bool isExecuted( void ) const { return m_executed; }
 
-		ANT_EXPORT_FOR_SCRIPT_EVENT(EvtData_Test);
+		ANT_EXPORT_FOR_SCRIPT_EVENT(EvtData_TestExecute);
 
 	protected:
 		bool m_executed;
 	};
+
+	/**
+	 * TEst to verify the Lua/C++ boundary communication
+	 */
+	class EvtData_TestToLua : public ant::ScriptEvent
+	{
+
+	public:
+		static const EventType sk_EventType;
+
+		explicit EvtData_TestToLua()
+			: m_number(0)
+		{		
+		}
+
+		virtual const EventType& getEventType(void) const ANT_OVERRIDE
+		{
+			return sk_EventType;
+		}
+
+		virtual IEventDataStrongPtr copy(void) const ANT_OVERRIDE
+		{
+			return IEventDataStrongPtr ( GCC_NEW EvtData_TestToLua ( ) );
+		}
+
+		virtual void serialize(std::ostrstream &out) const ANT_OVERRIDE
+		{
+			out << m_number;
+		}
+
+		virtual void deserialize(std::istrstream& in) ANT_OVERRIDE
+		{
+			in >> m_number;
+		}
+
+		virtual std::string getName( void ) const ANT_OVERRIDE
+		{
+			return "EvtData_Destroy_Actor";
+		}
+
+		virtual bool buildEventFromScript( void )
+		{
+			if (m_eventData.IsInteger())
+			{
+				m_number = m_eventData.GetInteger();
+				return true;
+			}
+			return false;
+		}
+
+		virtual void buildEventData( void )
+		{
+			m_eventData.AssignNewTable(LuaStateManager::instance()->getLuaState());
+			m_eventData.SetInteger("m_number", m_number);				
+		}
+
+		void add(){ m_number++;}
+
+		int getNumber( void ) const { return m_number; }
+
+		ANT_EXPORT_FOR_SCRIPT_EVENT(EvtData_TestExecute);
+
+	protected:
+		int m_number;
+	};
 }
+
+#pragma endregion
 
 #endif

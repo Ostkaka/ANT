@@ -1,5 +1,6 @@
 #include <unittests.hpp>
 #include <ant/luascripting/LuaStateManager.hpp>
+#include <ant/eventsystem/Events.hpp>
 #include <ant/resources/ResourceCacheManager.hpp>
 #include <ant/resources/ResourceCache.hpp>
 #include <ant/resources/IResourceFile.hpp>
@@ -22,6 +23,7 @@ namespace
 	protected:
 
 		IResourceFile * m_file;
+		shared_ptr<EventManager> TheEventManager;
 
 		Test_LuaStateManager()
 		{
@@ -32,9 +34,10 @@ namespace
 		{
 			// Setup logger
 			Logger::Init(ANT_DATA_PATH"\\default_logging.xml");
-
 			m_file = GCC_NEW DevelopmentResourceZipFile(L"Assets.zip", DevelopmentResourceZipFile::Editor);
+			TheEventManager.reset(new EventManager("TestEventManager",true));
 
+			// Resource manager
 			ResourceCacheManager::create();
 			ASSERT_TRUE(ResourceCacheManager::instance()->initResourceCache(50,m_file));		
 			
@@ -50,6 +53,14 @@ namespace
 			// Install the script loader
 			extern IResourceLoaderStrongPtr CreateScriptResourceLoader();
 			ResourceCacheManager::instance()->getResourceCache()->registerLoader(CreateScriptResourceLoader());
+
+			// Start by reading the pre-init file	
+			{
+				Resource resource(SCRIPT_PREINIT_FILE);
+				ResourceHandleStrongPtr pResourceHandle = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&resource);  
+			}
+
+			registerEngineScriptEvents();
 		}
 
 		virtual ~Test_LuaStateManager() 
@@ -63,24 +74,27 @@ namespace
 			LuaStateManager::destroy();
 			LuaScriptExports::unregisterScripts();
 			ProcessManagerSingleton::destroy();
-
-			std::cout << "tear down" << std::endl;
+			ScriptEvent::clearAllRegisterdScriptEvents();
+			std::cout << "Tear down" << std::endl;
 		}
 	};
 }
 
 TEST_F(Test_LuaStateManager, Init) 
 {
-	// Start by reading the pre-init file	
-	{
-		Resource resource(SCRIPT_PREINIT_FILE);
-		ResourceHandleStrongPtr pResourceHandle = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&resource);  
-	}
+
 	// Now, try to find the init functions in the lua state
 	LuaPlus::LuaObject obj = LuaStateManager::instance()->getGlobalVars().GetByName("class");
 
 	// The class function should have been imported by now
 	ASSERT_TRUE(obj.IsFunction());
+
+	// Se that the function for exporting eventlisteners are correctly exported
+	// Now, try to find the init functions in the lua state
+	LuaPlus::LuaObject ev = LuaStateManager::instance()->getGlobalVars().GetByName("registerEventListener");
+
+	// The class function should have been imported by now
+	ASSERT_TRUE(ev.IsFunction());
 
 	// Now, load the test file with the sample test script
 	{
@@ -95,11 +109,6 @@ TEST_F(Test_LuaStateManager, Init)
 
 TEST_F(Test_LuaStateManager, ScriptProcess) 
 {
-	// Start by reading the pre-init file	
-	{
-		Resource resource(SCRIPT_PREINIT_FILE);
-		ResourceHandleStrongPtr pResourceHandle = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&resource);  
-	}
 
 	// Now, load the test file with the sample test script
 	{
@@ -162,6 +171,30 @@ TEST_F(Test_LuaStateManager, ScriptProcess)
 
 	// It should be true since we looped after the execute
 	ASSERT_TRUE(cfinished.GetBoolean());
+}
+
+TEST_F(Test_LuaStateManager, ScriptEventListeners) 
+{
+
+	// Now, load the test file with the sample test script
+	{
+		Resource resource("lua\\testScript.lua");
+		ResourceHandleStrongPtr pResourceHandle = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&resource);  
+	}
+
+	// Now, create a test event that is sent to Lua and then sent back to C++
+	shared_ptr<EvtData_TestToLua> pEvent(GCC_NEW EvtData_TestToLua);
+	IEventManager::instance()->queueEvent(pEvent);
+
+	// Update the processes a step
+	IEventManager::instance()->update();
+
+	// This should have been handled one time. So the number should be 1
+	ASSERT_EQ(pEvent->getNumber(),1);
+
+	// One more time
+	IEventManager::instance()->update();
+	ASSERT_EQ(pEvent->getNumber(),2);
 }
 
 int main(int argc, char **argv)

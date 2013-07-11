@@ -49,6 +49,9 @@ namespace ant
 		// This is used to transport events from script to c++
 		static ScriptEvent* createEventFromScript(EventType type);
 
+		// Clear all the registered events
+		static void clearAllRegisterdScriptEvents(void);
+
 	protected:
 
 		virtual void buildEventData(void);

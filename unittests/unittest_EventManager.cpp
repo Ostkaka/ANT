@@ -35,7 +35,6 @@ protected:
 
 protected:
 	shared_ptr<EventManager> TheEventManager;
-
 };
 
 class SimpleTester_AddRemove
@@ -57,7 +56,7 @@ public:
 			// Create and insert the delegate
 			EventListenerDelegate delegateFunc = MakeDelegate(this,&SimpleTester_AddRemove::execute_TestEvent);
 			this->m_manager = manager;
-			return manager->addListener(delegateFunc,EvtData_Test::sk_EventType);
+			return manager->addListener(delegateFunc,EvtData_TestExecute::sk_EventType);
 		}
 		return false;
 	}
@@ -70,14 +69,14 @@ public:
 			// Create and insert the delegate
 			EventListenerDelegate delegateFunc = MakeDelegate(this,&SimpleTester_AddRemove::execute_TestEvent);
 			this->m_manager = manager;
-			return manager->removeListener(delegateFunc,EvtData_Test::sk_EventType);
+			return manager->removeListener(delegateFunc,EvtData_TestExecute::sk_EventType);
 		}
 		return false;
 	}
 
 	void execute_TestEvent(IEventDataStrongPtr pEvent)
 	{
-		shared_ptr<EvtData_Test> pCastedEvent = static_pointer_cast<EvtData_Test>(pEvent);
+		shared_ptr<EvtData_TestExecute> pCastedEvent = static_pointer_cast<EvtData_TestExecute>(pEvent);
 
 		pCastedEvent->execute();
 	}
@@ -98,14 +97,13 @@ public:
 		{
 			// Create and insert the delegate
 			EventListenerDelegate delegateFunc = MakeDelegate(this,&SimpleTester_Execute::execute_TestEvent);
-
-			manager->addListener(delegateFunc,EvtData_Test::sk_EventType);
+			manager->addListener(delegateFunc,EvtData_TestExecute::sk_EventType);
 		}
 	}
 
 	void execute_TestEvent(IEventDataStrongPtr pEvent)
 	{
-		shared_ptr<EvtData_Test> pCastedEvent = static_pointer_cast<EvtData_Test>(pEvent);
+		shared_ptr<EvtData_TestExecute> pCastedEvent = static_pointer_cast<EvtData_TestExecute>(pEvent);
 
 		pCastedEvent->execute();
 	}
@@ -118,12 +116,12 @@ TEST_F(Test_EventManager, TestSimpleEvent)
 	tester.init(TheEventManager.get());
 
 	// Create event and send it to the manager
-	IEventDataStrongPtr ev(GCC_NEW EvtData_Test());
+	IEventDataStrongPtr ev(GCC_NEW EvtData_TestExecute());
 
 	TheEventManager->triggerEvent(ev);
 
 	// Event should have been executed
-	EXPECT_TRUE(((EvtData_Test*)(ev.get()))->isExecuted());
+	EXPECT_TRUE(((EvtData_TestExecute*)(ev.get()))->isExecuted());
 }
 
 TEST_F(Test_EventManager, TestAddRemove)
@@ -136,9 +134,9 @@ TEST_F(Test_EventManager, TestAddRemove)
 	EXPECT_TRUE(tester->removeListener(TheEventManager.get()));
 	
 	// Send an event to manager, should not be executed
-	IEventDataStrongPtr ev(GCC_NEW EvtData_Test());
+	IEventDataStrongPtr ev(GCC_NEW EvtData_TestExecute());
 	TheEventManager->triggerEvent(ev);
-	EXPECT_FALSE(((EvtData_Test*)(ev.get()))->isExecuted());
+	EXPECT_FALSE(((EvtData_TestExecute*)(ev.get()))->isExecuted());
 
 	SAFE_DELETE(tester);
 }

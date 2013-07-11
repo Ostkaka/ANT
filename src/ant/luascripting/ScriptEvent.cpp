@@ -68,6 +68,11 @@ ScriptEvent* ant::ScriptEvent::createEventFromScript( EventType type )
 	}
 }
 
+void ant::ScriptEvent::clearAllRegisterdScriptEvents( void )
+{
+	s_creationFunctions.clear();
+}
+
 // This virtual function has to be implemented by base classes to converts data in m_eventData
 // to the internal type of event data in c++
 bool ant::ScriptEvent::buildEventFromScript( void )

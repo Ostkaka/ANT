@@ -9,6 +9,12 @@ TestScriptProcess = class(ScriptProcess,
 	finished = false;
 });
 
+function print_table( table )
+	for k,v in pairs(table) do
+		print(k,v)
+	end
+end
+
 function TestScriptProcess:onInit()
 	print("onInit()");
 end
@@ -38,6 +44,15 @@ function TestProcess()
 	attachProcess(sParent);
 end
 
---RegisterListener();
+-- Declare the event listener
+function TestEventListener(eventData)
+	print("Event recieved in lua: "..eventData);
+	eventData.m_number = eventData.m_number + 1;
+	queueEvent(EventType.EvtData_TestToLua,eventData);
+end
+
+Utils.DumpObject(EventType)
+
+registerEventListener(EventType.EvtData_TestToLua,TestEventListener);
 
 print("Script loaded");
