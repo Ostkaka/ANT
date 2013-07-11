@@ -133,9 +133,6 @@ TEST_F(Test_LuaStateManager, ScriptEventListeners)
 	// This should have been handled one time. So the number should be 1
 	ASSERT_EQ(listener.getNumberFromEvent(),1);
 
-	// One more time
-	IEventManager::instance()->update();
-	ASSERT_EQ(pEvent->getNumber(),2);
 }
 
 TEST_F(Test_LuaStateManager, Init) 
