@@ -75,9 +75,67 @@ namespace
 			LuaScriptExports::unregisterScripts();
 			ProcessManagerSingleton::destroy();
 			ScriptEvent::clearAllRegisterdScriptEvents();
+			Logger::Destroy();
 			std::cout << "Tear down" << std::endl;
 		}
 	};
+}
+
+/**
+ * Create listener that will be used to listen to script events
+ */
+class ScriptEventListener_TestToLua
+{
+	public:
+	
+		ScriptEventListener_TestToLua():m_number(0){};
+		
+		~ScriptEventListener_TestToLua(){};
+
+		void ListenerDelegate(IEventDataStrongPtr pEvent)
+		{
+			shared_ptr<EvtData_TestFromLua> pCastedEvent = static_pointer_cast<EvtData_TestFromLua>(pEvent);
+
+			m_number = pCastedEvent->getNumber();
+		}
+
+		int getNumberFromEvent()
+		{
+			return m_number;
+		}
+
+	protected:
+	
+	private:
+		int m_number;
+};
+
+TEST_F(Test_LuaStateManager, ScriptEventListeners) 
+{
+	// Now, load the test file with the sample test script
+	{
+		Resource resource("lua\\testScript.lua");
+		ResourceHandleStrongPtr pResourceHandle = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&resource);  
+	}
+
+	// Create listener that will recieve and event from lua
+	ScriptEventListener_TestToLua listener;
+	EventListenerDelegate delegateFunc = MakeDelegate(&listener,&ScriptEventListener_TestToLua::ListenerDelegate);
+	IEventManager::instance()->addListener(delegateFunc,EvtData_TestFromLua::sk_EventType);
+	 // Now, create a test event that is sent to Lua and then sent back to C++
+	shared_ptr<EvtData_TestToLua> pEvent(GCC_NEW EvtData_TestToLua);
+	IEventManager::instance()->queueEvent(pEvent);
+
+	// Update the processes a step. Two steps for the message to propagate all the way!
+	IEventManager::instance()->update();
+	IEventManager::instance()->update();
+
+	// This should have been handled one time. So the number should be 1
+	ASSERT_EQ(listener.getNumberFromEvent(),1);
+
+	// One more time
+	IEventManager::instance()->update();
+	ASSERT_EQ(pEvent->getNumber(),2);
 }
 
 TEST_F(Test_LuaStateManager, Init) 
@@ -171,30 +229,6 @@ TEST_F(Test_LuaStateManager, ScriptProcess)
 
 	// It should be true since we looped after the execute
 	ASSERT_TRUE(cfinished.GetBoolean());
-}
-
-TEST_F(Test_LuaStateManager, ScriptEventListeners) 
-{
-
-	// Now, load the test file with the sample test script
-	{
-		Resource resource("lua\\testScript.lua");
-		ResourceHandleStrongPtr pResourceHandle = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&resource);  
-	}
-
-	// Now, create a test event that is sent to Lua and then sent back to C++
-	shared_ptr<EvtData_TestToLua> pEvent(GCC_NEW EvtData_TestToLua);
-	IEventManager::instance()->queueEvent(pEvent);
-
-	// Update the processes a step
-	IEventManager::instance()->update();
-
-	// This should have been handled one time. So the number should be 1
-	ASSERT_EQ(pEvent->getNumber(),1);
-
-	// One more time
-	IEventManager::instance()->update();
-	ASSERT_EQ(pEvent->getNumber(),2);
 }
 
 int main(int argc, char **argv)

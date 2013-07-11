@@ -123,7 +123,7 @@ namespace ant
 	};
 
 	/**
-	 * TEst to verify the Lua/C++ boundary communication
+	 * Verify the Lua/C++ boundary communication
 	 */
 	class EvtData_TestToLua : public ant::ScriptEvent
 	{
@@ -161,27 +161,79 @@ namespace ant
 			return "EvtData_Destroy_Actor";
 		}
 
-		virtual bool buildEventFromScript( void )
-		{
-			if (m_eventData.IsInteger())
-			{
-				m_number = m_eventData.GetInteger();
-				return true;
-			}
-			return false;
-		}
-
 		virtual void buildEventData( void )
 		{
 			m_eventData.AssignNewTable(LuaStateManager::instance()->getLuaState());
 			m_eventData.SetInteger("m_number", m_number);				
 		}
 
-		void add(){ m_number++;}
+		void add(){ m_number++; }
 
 		int getNumber( void ) const { return m_number; }
 
-		ANT_EXPORT_FOR_SCRIPT_EVENT(EvtData_TestExecute);
+		ANT_EXPORT_FOR_SCRIPT_EVENT(EvtData_TestToLua);
+
+	protected:
+		int m_number;
+	};
+
+	/**
+	 * Verify the Lua/C++ boundary communication
+	 */
+	class EvtData_TestFromLua : public ant::ScriptEvent
+	{
+
+	public:
+		static const EventType sk_EventType;
+
+		explicit EvtData_TestFromLua()
+			: m_number(0)
+		{		
+		}
+
+		virtual const EventType& getEventType(void) const ANT_OVERRIDE
+		{
+			return sk_EventType;
+		}
+
+		virtual IEventDataStrongPtr copy(void) const ANT_OVERRIDE
+		{
+			return IEventDataStrongPtr ( GCC_NEW EvtData_TestToLua ( ) );
+		}
+
+		virtual void serialize(std::ostrstream &out) const ANT_OVERRIDE
+		{
+			out << m_number;
+		}
+
+		virtual void deserialize(std::istrstream& in) ANT_OVERRIDE
+		{
+			in >> m_number;
+		}
+
+		virtual std::string getName( void ) const ANT_OVERRIDE
+		{
+			return "EvtData_Destroy_Actor";
+		}
+
+		virtual bool buildEventFromScript( void )
+		{
+			if (m_eventData.IsTable())
+			{
+				if (m_eventData.GetByName("m_number").IsInteger())
+				{
+					m_number = m_eventData.GetByName("m_number").GetInteger();
+					return true;
+				}
+			}
+			return false;
+		}
+
+		void add(){ m_number++; }
+
+		int getNumber( void ) const { return m_number; }
+
+		ANT_EXPORT_FOR_SCRIPT_EVENT(EvtData_TestFromLua);
 
 	protected:
 		int m_number;

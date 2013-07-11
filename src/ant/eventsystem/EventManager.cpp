@@ -194,12 +194,12 @@ bool ant::EventManager::update( const ant::DeltaTime& maxDt /*= EM_INFINITE*/ )
 
 	// Send all events that could not be processed this update state to the next queue to be handled
 	// in the next update
-	bool queueEmpty = (m_eventQueues[m_activeEventQueue].empty());
+	bool queueEmpty = (m_eventQueues[queueToProcess].empty());
 	if (!queueEmpty)
 	{
-		while (!m_eventQueues[m_activeEventQueue].empty())
+		while (!m_eventQueues[queueToProcess].empty())
 		{
-			IEventDataStrongPtr pEvent = m_eventQueues[m_activeEventQueue].back();
+			IEventDataStrongPtr pEvent = m_eventQueues[queueToProcess].back();
 			m_eventQueues[queueToProcess].pop_back();
 			m_eventQueues[m_activeEventQueue].push_front(pEvent);
 		}

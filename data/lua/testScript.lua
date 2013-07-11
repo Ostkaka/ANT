@@ -46,9 +46,10 @@ end
 
 -- Declare the event listener
 function TestEventListener(eventData)
-	print("Event recieved in lua: "..eventData);
+	print("Inside TestEventListener")
+	print("Event recieved in lua: ");
 	eventData.m_number = eventData.m_number + 1;
-	queueEvent(EventType.EvtData_TestToLua,eventData);
+	queueEvent(EventType.EvtData_TestFromLua,eventData);
 end
 
 Utils.DumpObject(EventType)
