@@ -80,7 +80,7 @@ bool ant::BaseScriptComponent::init( TiXmlElement* pData )
 	}
 
 	// The scriptConstructor attribute will also cause a lua object ot be created if one was
-	// not created in the last step. Scriptconstructor string is then used as a function for 
+	// not created in the last step. ScriptConstructor string is then used as a function for 
 	// creating the object.
 	if (!m_constructorName.empty())
 	{
@@ -133,7 +133,7 @@ void ant::BaseScriptComponent::postInit( void )
 
 TiXmlElement* ant::BaseScriptComponent::generateXml( void )
 {
-	TiXmlElement* pBaseElement = GCC_NEW TiXmlElement(getName());
+	TiXmlElement* pBaseElement = GCC_NEW TiXmlElement(getName().c_str());
 
 	TiXmlElement* pScriptObjectElement = GCC_NEW TiXmlElement("ScriptObject");
 	if (!m_scriptObjectName.empty())
@@ -164,7 +164,25 @@ void ant::BaseScriptComponent::createScriptObject( void )
 
 LuaPlus::LuaObject ant::BaseScriptComponent::getActorId( void )
 {
+	LuaPlus::LuaObject ret;
+	ret.AssignInteger(LuaStateManager::instance()->getLuaState(),m_pOwner->getId());
+	return ret;
+}
 
+void ant::BaseScriptComponent::registerScriptFunctions( void )
+{
+	// create the metatable
+	LuaPlus::LuaObject metaTableObj = LuaStateManager::instance()->getGlobalVars().CreateTable(BASESCRIPTCOMPONENT_METATABLE_NAME);
+	metaTableObj.SetObject("__index", metaTableObj);
+
+	// Do the rest of the registering of the Lua export functions here
+}
+
+void ant::BaseScriptComponent::unregisterScriptFunctions( void )
+{
+	LuaPlus::LuaObject metaTableObj = LuaStateManager::instance()->getGlobalVars().Lookup(BASESCRIPTCOMPONENT_METATABLE_NAME);
+	if (!metaTableObj.IsNil())
+		metaTableObj.AssignNil(LuaStateManager::instance()->getLuaState());
 }
 
 
