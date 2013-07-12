@@ -133,7 +133,7 @@ void ant::BaseScriptComponent::postInit( void )
 
 TiXmlElement* ant::BaseScriptComponent::generateXml( void )
 {
-	TiXmlElement* pBaseElement = GCC_NEW TiXmlElement(getName().c_str());
+	TiXmlElement* pBaseElement = GCC_NEW TiXmlElement(getName());
 
 	TiXmlElement* pScriptObjectElement = GCC_NEW TiXmlElement("ScriptObject");
 	if (!m_scriptObjectName.empty())

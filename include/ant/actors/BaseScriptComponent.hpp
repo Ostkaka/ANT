@@ -47,7 +47,7 @@ namespace ant
 	public:
 
 		static const char* g_Name;
-		virtual const std::string& getName() const;
+		virtual const char* getName() const { return g_Name; } 
 
 	protected:
 		/// Following variables are functions names in lua declared by the xml
@@ -61,7 +61,7 @@ namespace ant
 	};
 
 	/// Implementation
-	ANT_INLINE const std::string& BaseScriptComponent::getName() const { return g_Name; }
+	//ANT_INLINE const std::string& BaseScriptComponent::getName() const { return g_Name; }
 }
 
 #endif

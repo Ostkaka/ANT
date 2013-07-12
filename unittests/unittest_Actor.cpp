@@ -1,8 +1,17 @@
 #include <unittests.hpp>
+#include <ant/actors/ActorFactory.hpp>
+#include <ant/actors/Actor.hpp>
+#include <ant/actors/BaseScriptComponent.hpp>
 
-TEST(ProcessManagerUT, testDelayProcess )
+/**
+ * This test handles the construction and manipulation of actors
+ */
+TEST(Test_Actor, initActors)
 {
-	EXPECT_EQ (18.0, 18.0);
+	
+
+
+
 }
 
 int main(int argc, char **argv)

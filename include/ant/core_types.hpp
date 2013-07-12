@@ -107,6 +107,7 @@ namespace ant
 	class ResourceCache;
 	class IResourceLoader;
 	class IResourceFile;
+	class IResourceExtraData;
 
 	class IEventData;
 	class BaseEventData;
@@ -128,10 +129,11 @@ namespace ant
 	ANT_DECLARE_POINTER_TYPES(IProcess)
 	ANT_DECLARE_POINTER_TYPES(ResourceHandle)
 	ANT_DECLARE_POINTER_TYPES(IResourceLoader)
+	ANT_DECLARE_POINTER_TYPES(IResourceExtraData)
 	ANT_DECLARE_POINTER_TYPES(IResourceFile)
 	ANT_DECLARE_POINTER_TYPES(IEventData)
 	ANT_DECLARE_POINTER_TYPES(ScriptEvent)
-
+	
 	typedef unsigned long EventType;
 
 	/// Declare Asset ID typedef which is used for identifying Asset objects
