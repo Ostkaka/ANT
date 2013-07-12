@@ -1,13 +1,20 @@
 #include <ant/actors/ActorFactory.hpp>
 #include <ant/actors/ActorComponent.hpp>
 #include <ant/actors/Actor.hpp>
+#include <ant/resources/XmlResource.hpp>
+#include <ant/resources/ResourceLoaders.hpp>
+#include <ant/actors/BaseScriptComponent.hpp>
+
 #include <tinyxml.h>
+
+using namespace ant;
 
 ant::ActorFactory::ActorFactory( void )
 {
 	m_lastActorId = INVALID_ACTOR_ID;
 
 	// TODO - Register game components when they are created
+	m_componentFactory.Register<BaseScriptComponent>(ActorComponent::getIdFromName(BaseScriptComponent::g_Name));
 }
 
 ant::ActorFactory::~ActorFactory()
@@ -18,7 +25,7 @@ ant::ActorFactory::~ActorFactory()
 ant::ActorStrongPtr ant::ActorFactory::createActor(const char* actorResource, TiXmlElement* overrides, const Mat4x4* initialTransform, const ActorId serversActorId)
 {
 	// Grab the root XML node
-	TiXmlElement* pRoot = NULL; //XmlResourceLoader::LoadAndReturnRootXmlElement(actorResource);
+	TiXmlElement* pRoot = XmlResourceLoader::loadAndReturnXmlElement(actorResource);
 	if (!pRoot)
 	{
 		GCC_ERROR("Failed to create actor from resource: " + std::string(actorResource));

@@ -46,7 +46,7 @@ namespace ant
 		virtual std::string getPattern();
 
 		/// Static helper function
-		static TiXmlElement* LoadAndReturnXmlElement(const char* resourceString);
+		static TiXmlElement* loadAndReturnXmlElement(const char* resourceString);
 
 	protected:
 		

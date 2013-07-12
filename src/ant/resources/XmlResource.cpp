@@ -10,7 +10,7 @@ using namespace ant;
 
 void ant::XmlResourceExtraData::parseXml( char* pRawbuffer )
 {
-
+	m_xmlDocument.Parse(pRawbuffer);
 }
 
 bool ant::XmlResourceLoader::loadResource( char *rawBuffer, ant::UInt rawSize, ResourceHandleStrongPtr handle )
@@ -28,7 +28,7 @@ bool ant::XmlResourceLoader::loadResource( char *rawBuffer, ant::UInt rawSize, R
 	return true;
 }
 
-TiXmlElement* ant::XmlResourceLoader::LoadAndReturnXmlElement( const char* resourceString )
+TiXmlElement* ant::XmlResourceLoader::loadAndReturnXmlElement( const char* resourceString )
 {
 	Resource resource(resourceString);
 	ResourceHandleStrongPtr pResourceHandle = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&resource);
