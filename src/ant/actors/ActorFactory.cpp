@@ -15,6 +15,8 @@ ant::ActorFactory::ActorFactory( void )
 
 	// TODO - Register game components when they are created
 	m_componentFactory.Register<BaseScriptComponent>(ActorComponent::getIdFromName(BaseScriptComponent::g_Name));
+
+	// TODO - Render components
 }
 
 ant::ActorFactory::~ActorFactory()

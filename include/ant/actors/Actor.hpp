@@ -101,7 +101,7 @@ namespace ant
 		template <class ComponentType>
 		weak_ptr<ComponentType> getComponent(const char *name)
 		{
-			ComponentId id = ActorComponent::GetIdFromName(name);
+			ComponentId id = ActorComponent::getIdFromName(name);
 			ActorComponents::iterator findIt = m_components.find(id);
 			if (findIt != m_components.end())
 			{

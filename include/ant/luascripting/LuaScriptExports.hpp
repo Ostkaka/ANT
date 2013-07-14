@@ -37,7 +37,10 @@ namespace ant
 		static ant::Ulong registerEventListener(EventType eventType, LuaPlus::LuaObject callbackFunction);
 		static void removeEventListener(ant::Ulong listenerId);
 
-		// lua log
+		// Actors
+		int createActor(const std::string& actorArchetype, LuaPlus::LuaObject luaPosition, LuaPlus::LuaObject luaRotation);
+
+		// Lua log
 		static void lualog(LuaPlus::LuaObject text);
 
 		/* Add new export functions as the development progresses */

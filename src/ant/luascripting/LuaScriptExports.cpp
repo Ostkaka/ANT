@@ -192,3 +192,8 @@ void ant::InternalLuaScriptExports::removeEventListener( ant::Ulong listenerId )
 	// TODO Err, should not the listener be removed form the global event listener here here?
 }
 
+int ant::InternalLuaScriptExports::createActor( const std::string& actorArchetype, LuaPlus::LuaObject luaPosition, LuaPlus::LuaObject luaRotation )
+{
+	return 0;
+}
+

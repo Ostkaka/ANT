@@ -26,7 +26,7 @@ namespace ant
 		ActorComponent();
 
 		/// Default Destructor
-		~ActorComponent();
+		virtual ~ActorComponent();
 	
 		virtual bool init(TiXmlElement* pData) = 0;
 

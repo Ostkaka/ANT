@@ -54,6 +54,7 @@ namespace ant
 	};
 
 	/// Implementation
+	ANT_INLINE std::string XmlResourceLoader::getPattern() { return "*.xml"; }
 	ANT_INLINE bool XmlResourceLoader::useRawFile() { return false; }
 	ANT_INLINE bool XmlResourceLoader::discardRawBufferAfterLoad() { return false; }
 	ANT_INLINE ant::UInt XmlResourceLoader::getLoadedResourceSize(char *rawBuffer, ant::UInt rawSize) { return rawSize; }

@@ -25,7 +25,7 @@ ant::BaseScriptComponent::~BaseScriptComponent( void )
 		func(m_scriptObject);
 	}
 
-	// clear the script obejct
+	// clear the script object
 	m_scriptObject.AssignNil(LuaStateManager::instance()->getLuaState());
 
 	// If we were given a path, remove it.
@@ -39,6 +39,7 @@ ant::BaseScriptComponent::~BaseScriptComponent( void )
 bool ant::BaseScriptComponent::init( TiXmlElement* pData )
 {
 	LuaStateManager * stateMgr = LuaStateManager::instance();
+	GCC_ASSERT(stateMgr);
 
 	// Load the <ScriptObject> tag and validate it
 	TiXmlElement* pScriptObjectElement = pData->FirstChildElement("ScriptObject");
@@ -171,7 +172,7 @@ LuaPlus::LuaObject ant::BaseScriptComponent::getActorId( void )
 
 void ant::BaseScriptComponent::registerScriptFunctions( void )
 {
-	// create the metatable
+	// Create the metatable
 	LuaPlus::LuaObject metaTableObj = LuaStateManager::instance()->getGlobalVars().CreateTable(BASESCRIPTCOMPONENT_METATABLE_NAME);
 	metaTableObj.SetObject("__index", metaTableObj);
 
