@@ -74,6 +74,14 @@ namespace ant
     // Values from +-100 to +-199 are reserved for File status responses
   };
 
+	/// Declare data types
+	typedef double Real;
+	typedef unsigned int UInt;
+	typedef unsigned long Ulong;
+	typedef double DeltaTime;
+	typedef Real TimeStamp;
+	typedef std::vector<std::string> StringVector;
+
 	// Forward declarations for interfaces
 	class IApp;
 	class IState;
@@ -108,20 +116,33 @@ namespace ant
 	class IResourceLoader;
 	class IResourceFile;
 	class IResourceExtraData;
+	class IGameLogic;
+
+	class IGamePhysics;
 
 	class IEventData;
 	class BaseEventData;
 	class ScriptEvent;
 
+	class IScreenElement;
+	class IGameView;
+
+	class GCCRandom;
+
 	// Declare id for actors
-	typedef unsigned int ActorId;
+	typedef UInt ActorId;
 
 	// Declare id for actor components
-	typedef unsigned int ComponentId;
+	typedef UInt ComponentId;
 
 	// Declare default values
 	const ActorId INVALID_ACTOR_ID = 0;
 	const ComponentId INVALID_COMPONENT_ID = 0;
+	typedef UInt GameViewId;
+	extern const GameViewId gc_InvalidGameViewId;
+
+	typedef std::list<shared_ptr<IScreenElement> > ScreenElementList;
+	typedef std::list<shared_ptr<IGameView> > GameViewList;
 
 	// Declare Pointer types
 	ANT_DECLARE_POINTER_TYPES(Actor)
@@ -133,7 +154,10 @@ namespace ant
 	ANT_DECLARE_POINTER_TYPES(IResourceFile)
 	ANT_DECLARE_POINTER_TYPES(IEventData)
 	ANT_DECLARE_POINTER_TYPES(ScriptEvent)
-	
+	ANT_DECLARE_POINTER_TYPES(IGameLogic)
+	ANT_DECLARE_POINTER_TYPES(IGamePhysics)
+	ANT_DECLARE_POINTER_TYPES(IGameView)
+
 	typedef unsigned long EventType;
 
 	/// Declare Asset ID typedef which is used for identifying Asset objects
@@ -156,14 +180,6 @@ namespace ant
 
   /// Declare NameValueIter typedef which is used for name,value pair maps
   typedef std::map<const std::string, const std::string>::iterator typeNameValueIter;
-
-	/// Declare data types
-	typedef double Real;
-	typedef unsigned int UInt;
-	typedef unsigned long Ulong;
-	typedef double DeltaTime;
-	typedef Real TimeStamp;
-	typedef std::vector<std::string> StringVector;
 	
 }
 

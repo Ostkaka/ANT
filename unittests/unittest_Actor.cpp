@@ -121,6 +121,9 @@ TEST_F(Test_Actor, initActors)
 	pActor->destroy();
 	ASSERT_EQ(pActor->getComponents()->size(),0);
 	
+	// Weak pointer should be expired
+	ASSERT_TRUE(comp.expired());
+
 	// Reset the actor pointer
 	pActor.reset();
 }
