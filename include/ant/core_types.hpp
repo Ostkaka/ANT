@@ -127,8 +127,6 @@ namespace ant
 	class IScreenElement;
 	class IGameView;
 
-	class GCCRandom;
-
 	// Declare id for actors
 	typedef UInt ActorId;
 

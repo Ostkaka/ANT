@@ -16,10 +16,11 @@ namespace ant
 	};
 
 	/**
-	 * Interfaces for a game view that describes how tha game looks for a ceartin type of participant, from AI to player
+	 * Interfaces for a game view that describes how that game looks for a certain type of participant, from AI to player
 	 */
 	class IGameView
 	{
+	public:
 		virtual HRESULT onRestore() = 0;
 
 		virtual void onRender() = 0;
@@ -30,7 +31,7 @@ namespace ant
 
 		virtual GameViewId getId() = 0;
 
-		virtual void onAttach(GameViewId id, ActorId id) = 0;
+		virtual void onAttach(GameViewId id, ActorId actorid) = 0;
 
 		virtual LRESULT CALLBACK onMsgProc(AppMsg msg) = 0;
 
