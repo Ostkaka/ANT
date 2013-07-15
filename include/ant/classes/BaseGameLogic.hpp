@@ -15,6 +15,7 @@ namespace ant
 	{
 		BGS_INVALID,
 		BGS_INIT,
+		BGS_SPAWNINGPLAYERS,
 		BGS_RUNNING
 	};
 
@@ -78,7 +79,7 @@ namespace ant
 		virtual ActorWeakPtr getActor(const ActorId id);
 
 		/// Modify an actor given an id and override it with given XML data
-		virtual ActorWeakPtr modifyActor(const ActorId id, TiXmlElement* overrides);
+		virtual void modifyActor(const ActorId id, TiXmlElement* overrides);
 
 		/// Loads a game
 		virtual bool loadGame(const char* levelResource) ANT_OVERRIDE;
@@ -100,6 +101,9 @@ namespace ant
 
 		/// Attach a process into the process manager inside the game logic
 		void attachProcesses(IProcessStrongPtr process);
+
+		// editor functions
+		std::string getActorXml(const ActorId id);
 
 	protected:
 		/// Create an actor factory

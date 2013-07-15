@@ -48,6 +48,135 @@ namespace ant
 		ant::DeltaTime m_deltaTime; 
 	};
 
+	//////////////////////////////////////////////////////////////////////////
+	// EvtData_New_Actor - Event that is fired when an actor is created
+	//////////////////////////////////////////////////////////////////////////
+	class EvtData_New_Actor : public BaseEventData
+	{
+		ActorId m_actorId;
+		GameViewId m_viewId;
+
+	public:
+		static const EventType sk_EventType;
+
+		EvtData_New_Actor(void)
+		{
+			m_actorId = INVALID_ACTOR_ID,
+			m_viewId = gc_InvalidGameViewId;
+		}
+
+		explicit EvtData_New_Actor(ActorId actorId, GameViewId viewId = gc_InvalidGameViewId)
+			:m_actorId(actorId), m_viewId(viewId)
+		{
+		}
+
+		virtual IEventDataStrongPtr copy(void) const
+		{
+			return IEventDataStrongPtr(GCC_NEW EvtData_New_Actor(m_actorId, m_viewId));
+		}
+
+		virtual const EventType& getEventType(void) const
+		{
+			return sk_EventType;
+		}
+
+		virtual void deserialize(std::istrstream& in)
+		{
+			in >> m_actorId;
+			in >> m_viewId;
+		}
+
+		virtual void serialize(std::ostrstream& out) const
+		{
+			out << m_actorId << "	";
+			out << m_viewId << "	";
+		}
+
+		virtual std::string getName(void) const
+		{
+			return "EvtData_New_Actor";
+		}
+
+		const ActorId getActorId(void) const
+		{
+			return m_actorId;
+		}
+
+		GameViewId getViewId(void) const
+		{
+			return m_viewId;
+		}
+	};
+
+
+	//////////////////////////////////////////////////////////////////////////
+	// EvtData_Environment_Loaded - this event is sent when a new game is started
+	//////////////////////////////////////////////////////////////////////////
+	class EvtData_Environment_Loaded : public BaseEventData
+	{
+	public:
+		static const EventType sk_EventType;
+
+		EvtData_Environment_Loaded(void)
+		{
+		}
+
+		virtual const EventType& getEventType(void) const	{ return sk_EventType; }
+		
+		virtual IEventDataStrongPtr copy(void) const
+		{ 
+			return IEventDataStrongPtr( GCC_NEW EvtData_Environment_Loaded( ) ); 
+		}
+		
+		virtual std::string getName(void) const  
+		{ 
+			return "EvtData_Environment_Loaded";  
+		}
+	};
+
+	//////////////////////////////////////////////////////////////////////////
+	// EvtData_Destroy_Actor - sent when actors are destroyed	
+	//////////////////////////////////////////////////////////////////////////
+	class EvtData_Destroy_Actor : public BaseEventData
+	{
+		ActorId m_id;
+
+	public:
+		static const EventType sk_EventType;
+
+		explicit EvtData_Destroy_Actor(ActorId id = INVALID_ACTOR_ID)
+			: m_id(id)
+		{
+		}
+
+		virtual const EventType& getEventType(void) const
+		{
+			return sk_EventType;
+		}
+
+		virtual IEventDataStrongPtr copy(void) const
+		{
+			return IEventDataStrongPtr ( GCC_NEW EvtData_Destroy_Actor ( m_id ) );
+		}
+
+		virtual void serialize(std::ostrstream &out) const
+		{
+			out << m_id;
+		}
+
+		virtual void deserialize(std::istrstream& in)
+		{
+			in >> m_id;
+		}
+
+		virtual std::string getName(void) const
+		{
+			return "EvtData_Destroy_Actor";
+		}
+
+		ActorId getId(void) const { return m_id; }
+	};
+
 #pragma region Unittest_events
 
 	//////////////////////////////////////////////////////////////////////////
