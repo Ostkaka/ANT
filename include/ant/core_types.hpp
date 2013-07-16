@@ -137,7 +137,7 @@ namespace ant
 	const ActorId INVALID_ACTOR_ID = 0;
 	const ComponentId INVALID_COMPONENT_ID = 0;
 	typedef UInt GameViewId;
-	extern const GameViewId gc_InvalidGameViewId;
+	const GameViewId gc_InvalidGameViewId = 0xffffffff;
 
 	typedef std::list<shared_ptr<IScreenElement> > ScreenElementList;
 	typedef std::list<shared_ptr<IGameView> > GameViewList;

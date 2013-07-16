@@ -69,7 +69,7 @@ namespace ant
 		virtual void removeGameView(IGameViewStrongPtr pView);
 
 		/// Create an actor
-		virtual ActorStrongPtr createActor(const std::string &actorResource, TiXmlElement *overrides, 
+		virtual ActorStrongPtr createActor(const std::string &actorResource, TiXmlElement *overrides=NULL, 
 			const Mat4x4* initialTransform=NULL, const ActorId serversActorId=INVALID_ACTOR_ID);
 
 		/// Destroy an actor given an id

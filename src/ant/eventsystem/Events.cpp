@@ -6,6 +6,9 @@ using namespace ant;
  * This is the declaration of the unique GUID:s of the event
  */
 const EventType EvtData_Update_Tick::sk_EventType(0xf0f5d183);
+const EventType EvtData_Environment_Loaded::sk_EventType(0x3673e27e);
+const EventType EvtData_Destroy_Actor::sk_EventType(0x372cc986);
+const EventType EvtData_New_Actor::sk_EventType(0x50a51f52);
 
 /**
  * Unit-test events
