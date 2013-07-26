@@ -1,0 +1,6 @@
+<Actor type="test" resource="actors\testActor.xml">
+    <BaseScriptComponent>
+        <ScriptObject constructor="addSphere" destructor="removeSphere" />
+        <ScriptData actorType="Sphere" />
+    </BaseScriptComponent>
+</Actor>
