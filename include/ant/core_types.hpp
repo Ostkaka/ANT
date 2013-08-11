@@ -156,6 +156,14 @@ namespace ant
 	ANT_DECLARE_POINTER_TYPES(IGamePhysics)
 	ANT_DECLARE_POINTER_TYPES(IGameView)
 
+	// 2D class pointer
+	ANT_DECLARE_POINTER_TYPES(ISFMLRenderer);
+	ANT_DECLARE_POINTER_TYPES(SFMLScene);
+	ANT_DECLARE_POINTER_TYPES(SFMLSceneNode);
+	ANT_DECLARE_POINTER_TYPES(ISFMLSceneNode);
+	ANT_DECLARE_POINTER_TYPES(ISFMLRenderComponent);
+	ANT_DECLARE_POINTER_TYPES(SFMLBaseRenderComponent);
+
 	typedef unsigned long EventType;
 
 	/// Declare Asset ID typedef which is used for identifying Asset objects

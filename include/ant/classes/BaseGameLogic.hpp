@@ -34,8 +34,8 @@ namespace ant
 		bool initialize(std::vector<std::string> &levels);
 
 	protected:
-		std::vector<Level> m_Levels;
-		int m_CurrentLevel;
+		std::vector<Level>	m_Levels;
+		int									m_CurrentLevel;
 	};
 
 	/**
