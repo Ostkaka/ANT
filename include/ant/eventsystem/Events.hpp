@@ -5,6 +5,7 @@
 #include <ant/luascripting/ScriptEvent.hpp>
 #include <ant/luascripting/LuaStateManager.hpp>
 #include <ant/core_types.hpp>
+#include <sfml/Graphics.hpp>
 
 namespace ant
 {
@@ -174,6 +175,179 @@ namespace ant
 		}
 
 		ActorId getId(void) const { return m_id; }
+	};
+
+	//////////////////////////////////////////////////////////////////////////
+	// EvtData_New_SFMLRender_Component - Event that is sent when a new render component was created
+	//////////////////////////////////////////////////////////////////////////
+	class EvtData_New_SFMLRender_Component : public BaseEventData
+	{
+		ActorId m_actorId;
+		SFMLSceneNodeStrongPtr m_pSceneNode;
+
+	public:
+		static const EventType sk_EventType;
+
+		EvtData_New_SFMLRender_Component(void) 
+		{
+			m_actorId = INVALID_ACTOR_ID;
+		}
+
+		explicit EvtData_New_SFMLRender_Component(ActorId actorId, SFMLSceneNodeStrongPtr pSceneNode) 
+			: m_actorId(actorId),
+			m_pSceneNode(pSceneNode)
+		{
+		}
+
+		virtual void serialize(std::ostrstream& out) const 
+		{
+			GCC_ERROR(getName() + std::string(" should not be serialzied!"));
+		}
+
+		virtual void deserialize(std::istrstream& in) 
+		{
+			GCC_ERROR(getName() + std::string(" should not be serialzied!"));
+		}
+
+		virtual const EventType& getEventType(void) const
+		{
+			return sk_EventType;
+		}
+
+		virtual IEventDataStrongPtr copy(void) const
+		{
+			return IEventDataStrongPtr(GCC_NEW EvtData_New_SFMLRender_Component(m_actorId, m_pSceneNode));
+		}
+
+		virtual std::string getName(void) const 
+		{
+			return "EvtData_New_Render_Component";
+		}
+
+		const ActorId getActorId(void) const
+		{
+			return m_actorId;
+		}
+
+		SFMLSceneNodeStrongPtr getSceneNode(void) const
+		{
+			return m_pSceneNode;
+		}
+	};
+
+	//////////////////////////////////////////////////////////////////////////
+	// EvtData_New_SFMLRender_Component - Event that is sent when a new render component was created
+	//////////////////////////////////////////////////////////////////////////
+	class EvtData_Modified_SFMLRender_Component : public BaseEventData
+	{
+		ActorId m_id;
+
+	public:
+		static const EventType sk_EventType;
+
+		virtual const EventType& getEventType(void) const
+		{
+			return sk_EventType;
+		}
+
+		EvtData_Modified_SFMLRender_Component(void)
+		{
+			m_id = INVALID_ACTOR_ID;
+		}
+
+		EvtData_Modified_SFMLRender_Component(ActorId id)
+			: m_id(id)
+		{
+		}
+
+		virtual void serialize(std::ostrstream &out) const
+		{
+			out << m_id;
+		}
+
+		virtual void deserialize(std::istrstream& in)
+		{
+			in >> m_id;
+		}
+
+		virtual IEventDataStrongPtr copy() const
+		{
+			return IEventDataStrongPtr(GCC_NEW EvtData_Modified_SFMLRender_Component(m_id));
+		}
+
+		virtual std::string getName(void) const
+		{
+			return "EvtData_Modified_Render_Component";
+		}
+
+		ActorId getActorId(void) const
+		{
+			return m_id;
+		}
+	};
+
+	//////////////////////////////////////////////////////////////////////////
+	// EvtData_Move_Actor - Event that is sent when a new render component was created
+	//////////////////////////////////////////////////////////////////////////
+	class EvtData_Move_Actor : public BaseEventData
+	{
+		ActorId m_id;
+		sf::Vector2f m_pos;
+		ant::Real m_rot;
+
+	public:
+		static const EventType sk_EventType;
+
+		virtual const EventType& getEventType(void) const
+		{
+			return sk_EventType;
+		}
+
+		EvtData_Move_Actor(void)
+		{
+			m_id = INVALID_ACTOR_ID;
+		}
+
+		EvtData_Move_Actor(ActorId id, const sf::Vector2f& pos, const ant::Real& rot)
+			: m_id(id), m_pos(pos), m_rot(rot)
+		{
+			//
+		}
+
+		virtual void serialize(std::ostrstream &out) const
+		{
+			GCC_ERROR(getName() + std::string(" should not be serialzied!"));
+		}
+
+		virtual void deserialize(std::istrstream& in)
+		{
+			GCC_ERROR(getName() + std::string(" should not be deserialzied!"));
+		}
+
+		virtual IEventDataStrongPtr copy() const
+		{
+			return IEventDataStrongPtr(GCC_NEW EvtData_Move_Actor(m_id, m_pos, m_rot));
+		}
+
+		virtual std::string getName(void) const
+		{
+			return "EvtData_Move_Actor";
+		}
+
+		ActorId getId(void) const
+		{
+			return m_id;
+		}
+
+		const sf::Vector2f& getPosition(void) const
+		{
+			return m_pos;
+		}
+
+		const ant::Real& getRotation(void) const
+		{
+			return m_rot;
+		}
 	};
 
 #pragma region Unittest_events
