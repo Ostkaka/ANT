@@ -4,6 +4,7 @@
 #include <ant/resources/XmlResource.hpp>
 #include <ant/resources/ResourceLoaders.hpp>
 #include <ant/actors/BaseScriptComponent.hpp>
+#include <ant/actors/TransformComponent.hpp>
 
 #include <tinyxml.h>
 
@@ -15,6 +16,7 @@ ant::ActorFactory::ActorFactory( void )
 
 	// TODO - Register game components when they are created
 	m_componentFactory.Register<BaseScriptComponent>(ActorComponent::getIdFromName(BaseScriptComponent::g_Name));
+	m_componentFactory.Register<TransformComponent>(ActorComponent::getIdFromName(TransformComponent::g_Name));
 
 	// TODO - Render components
 }
@@ -24,7 +26,7 @@ ant::ActorFactory::~ActorFactory()
 
 }
 
-ant::ActorStrongPtr ant::ActorFactory::createActor(const char* actorResource, TiXmlElement* overrides, const Mat4x4* initialTransform, const ActorId serversActorId)
+ant::ActorStrongPtr ant::ActorFactory::createActor(const char* actorResource, TiXmlElement* overrides, const sf::Vector2f* initPos, const ant::Real* initRot, const ActorId serversActorId)
 {
 	// Grab the root XML node
 	TiXmlElement* pRoot = XmlResourceLoader::loadAndReturnXmlElement(actorResource);
@@ -75,11 +77,19 @@ ant::ActorStrongPtr ant::ActorFactory::createActor(const char* actorResource, Ti
 
 	// This is a bit of a hack to get the initial transform of the transform component set before the 
 	// other components (like PhysicsComponent) read it.
-	/*shared_ptr<TransformComponent> pTransformComponent = MakeStrongPtr(pActor->GetComponent<TransformComponent>(TransformComponent::g_Name));
-	if (pInitialTransform && pTransformComponent)
+	shared_ptr<TransformComponent> pTransformComponent = MakeStrongPtr(pActor->getComponent<TransformComponent>(TransformComponent::g_Name));
+	if (pTransformComponent)
 	{
-		pTransformComponent->SetPosition(pInitialTransform->GetPosition());
-	}*/
+		if (initPos)
+		{
+			pTransformComponent->setPosition(*initPos);
+		}
+
+		if (initRot)
+		{
+			pTransformComponent->setRotation(*initRot);
+		}
+	}
 
 	// Now that the actor has been fully created, run the post init phase
 	pActor->postInit();

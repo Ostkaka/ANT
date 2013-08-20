@@ -22,8 +22,11 @@ namespace ant
 			virtual ActorWeakPtr getActor(const ActorId id) = 0;
 			
 			/// Creates an actor form from a actor resource with additional options
-			virtual ActorStrongPtr createActor(const std::string &actorResource, TiXmlElement* overrides=NULL, 
-				const Mat4x4 *initialTransform=NULL, const ActorId serversActorId=INVALID_ACTOR_ID)=0;
+			virtual ActorStrongPtr createActor(const std::string &actorResource, 
+				TiXmlElement *overrides, 
+				const sf::Vector2f* initialPos=NULL, 
+				const ant::Real* initRot=NULL, 
+				const ActorId serversActorId=INVALID_ACTOR_ID)=0;
 
 			/// Destroys actor in the game logic given an id
 			virtual void destroyActor(const ActorId id) = 0;

@@ -2,6 +2,7 @@
 	#define ACTORFACTORY_HPP_
 
 #include <ant/interfaces/GenericObjectFactory.hpp>
+#include <SFML/Graphics.hpp>
 #include <ant/ant_std.hpp>
 #include <ant/core_types.hpp>
 
@@ -28,7 +29,11 @@ namespace ant
 		~ActorFactory();
 
 		/// Create and actor from a resource
-		ActorStrongPtr createActor(const char* actorResource, TiXmlElement* overrides, const Mat4x4* initialTransform, const ActorId serversActorId);
+		ActorStrongPtr createActor(const char* actorResource, 
+			TiXmlElement* overrides, 
+			const sf::Vector2f* initPos=NULL, 
+			const ant::Real* initRot=NULL, 
+			const ActorId serversActorId=INVALID_ACTOR_ID);
 
 		/// Modifies Actors based on an XML file
 		void modifyActor(ActorStrongPtr pActor, TiXmlElement* overrides);

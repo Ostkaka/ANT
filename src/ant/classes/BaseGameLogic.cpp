@@ -205,11 +205,11 @@ void ant::BaseGameLogic::renderDiagnostics()
 	}
 }
 
-ant::ActorStrongPtr ant::BaseGameLogic::createActor( const std::string &actorResource, TiXmlElement *overrides, const Mat4x4* initialTransform/*=NULL*/, const ActorId serversActorId/*=INVALID_ACTOR_ID*/ )
+ant::ActorStrongPtr ant::BaseGameLogic::createActor( const std::string &actorResource, TiXmlElement *overrides, const sf::Vector2f* initialPos/*=NULL*/,const ant::Real* initRot/*=NULL*/ , const ActorId serversActorId/*=INVALID_ACTOR_ID*/ )
 {
 	GCC_ASSERT(m_actorFactory);
 	
-	ActorStrongPtr pActor = m_actorFactory->createActor(actorResource.c_str(), overrides, initialTransform, serversActorId);
+	ActorStrongPtr pActor = m_actorFactory->createActor(actorResource.c_str(), overrides, initialPos, initRot , serversActorId);
 
 	if (pActor)
 	{
