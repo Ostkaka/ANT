@@ -8,6 +8,7 @@
 #include <ant/gccUtils/Math.hpp>
 #include <ant/interfaces/IAppWindows.hpp>
 #include <ant/ant_std.hpp>
+#include <ant/gui/UserInterface.hpp>
 
 #define MAX_LOADSTRING 100
 
@@ -521,7 +522,7 @@ namespace ant
 				{
 					// Close the modal
 					// and keep posting close to the app
-					forceModalExit();
+					//forceModalExit();
 
 					// Reissue the close to the app
 

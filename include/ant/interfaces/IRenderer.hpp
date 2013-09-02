@@ -2,6 +2,7 @@
 	#define IRENDERER_HPP_
 
 #include <ant/core_types.hpp>
+#include <SFML/Graphics.hpp>
 
 namespace ant
 {
@@ -53,11 +54,13 @@ namespace ant
 	class ISFMLRenderer
 	{
 	public:
+		ISFMLRenderer();
 		virtual void setBackgroundColor(BYTE bgA, BYTE bgR, BYTE bgG, BYTE bgB )=0;
 		virtual HRESULT onRestore()=0;
 		virtual void shutDown()=0;
 		virtual bool preRender()=0;
 		virtual bool postRender()=0;
+		virtual void setView(sf::Vector2f pos, ant::Real angle);
 		/*virtual void calcLightning()=0;
 		virtual void setWorldTransform(const Mat4x4 *m)=0;
 		virtual void setViewTransform(const Mat4x4 *m)=0;

@@ -27,7 +27,6 @@ void ant::ActorComponent::onChanged( void )
 
 }
 
-
 ant::ComponentId ant::ActorComponent::getIdFromName( const std::string& componentStr )
 {
 	void* rawId = HashedString::hash_name(componentStr.c_str());

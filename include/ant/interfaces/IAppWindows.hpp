@@ -4,7 +4,7 @@
 #ifndef   IAPPWINDOWS_HPP
 	#define   IAPPWINDOWS_HPP
 
-#include <ant/gui/UserInterface.hpp>
+//#include <ant/gui/UserInterface.hpp>
 #include <ant/utils/WinInitialization.hpp>
 
 namespace ant
@@ -55,7 +55,7 @@ namespace ant
 		HWND getHwnd();
 		HINSTANCE instance() { return m_hInstance; }
 		bool hasModalDialog() { return m_HasModalDialog!=0; }
-		void forceModalExit() { PostMessage(getHwnd(), g_MsgEndModal, 0, g_QuitNoPrompt);	}
+		//void forceModalExit() { PostMessage(getHwnd(), g_MsgEndModal, 0, g_QuitNoPrompt);	}
 
 		LRESULT onAltEnter();
 

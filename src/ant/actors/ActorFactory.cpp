@@ -5,6 +5,7 @@
 #include <ant/resources/ResourceLoaders.hpp>
 #include <ant/actors/BaseScriptComponent.hpp>
 #include <ant/actors/TransformComponent.hpp>
+//#include <ant/graphicsSFML/SFMLRenderComponent.hpp>
 
 #include <tinyxml.h>
 

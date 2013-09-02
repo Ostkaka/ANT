@@ -79,7 +79,7 @@ namespace ant
 	typedef unsigned int UInt;
 	typedef unsigned long Ulong;
 	typedef double DeltaTime;
-	typedef Real TimeStamp;
+	typedef float TimeStamp;
 	typedef std::vector<std::string> StringVector;
 
 	// Forward declarations for interfaces
@@ -104,7 +104,7 @@ namespace ant
 	class ScopeLogger;
 	class FileLogger;
 	class FatalLogger;
-
+	// TODO format forward declarations
 	// Forward declarations for new framework
 	class Actor;
 	class ActorComponent;
@@ -117,15 +117,27 @@ namespace ant
 	class IResourceFile;
 	class IResourceExtraData;
 	class IGameLogic;
-
+	class BaseGameLogic;
 	class IGamePhysics;
+	class ProcessManager;	
 
+	class IEventManager;
+	class EventManager;
 	class IEventData;
 	class BaseEventData;
 	class ScriptEvent;
 
 	class IScreenElement;
 	class IGameView;
+
+	class ScreenElementSFMLScene;
+	class SFMLScene;
+	class ISFMLRenderer;
+	class SFMLBaseRenderComponent;
+	class ISFMLRenderComponent;
+	class SFMLCameraNode;
+	class ISFMLSceneNode;
+	class SFMLSceneNode;
 
 	// Declare id for actors
 	typedef UInt ActorId;
@@ -137,7 +149,7 @@ namespace ant
 	const ActorId INVALID_ACTOR_ID = 0;
 	const ComponentId INVALID_COMPONENT_ID = 0;
 	typedef UInt GameViewId;
-	const GameViewId gc_InvalidGameViewId = 0xffffffff;
+	const GameViewId ant_InvalidGameViewId = 0xffffffff;
 
 	typedef std::list<shared_ptr<IScreenElement> > ScreenElementList;
 	typedef std::list<shared_ptr<IGameView> > GameViewList;
@@ -153,17 +165,20 @@ namespace ant
 	ANT_DECLARE_POINTER_TYPES(IEventData)
 	ANT_DECLARE_POINTER_TYPES(ScriptEvent)
 	ANT_DECLARE_POINTER_TYPES(IGameLogic)
+	ANT_DECLARE_POINTER_TYPES(BaseGameLogic)
 	ANT_DECLARE_POINTER_TYPES(IGamePhysics)
 	ANT_DECLARE_POINTER_TYPES(IGameView)
 
 	// 2D class pointer
-	ANT_DECLARE_POINTER_TYPES(ISFMLRenderer);
-	ANT_DECLARE_POINTER_TYPES(SFMLScene);
-	ANT_DECLARE_POINTER_TYPES(SFMLSceneNode);
-	ANT_DECLARE_POINTER_TYPES(ISFMLSceneNode);
-	ANT_DECLARE_POINTER_TYPES(SFMLCameraNode);
-	ANT_DECLARE_POINTER_TYPES(ISFMLRenderComponent);
-	ANT_DECLARE_POINTER_TYPES(SFMLBaseRenderComponent);
+	ANT_DECLARE_POINTER_TYPES(ISFMLRenderer)
+	ANT_DECLARE_POINTER_TYPES(IScreenElement)
+	ANT_DECLARE_POINTER_TYPES(ScreenElementSFMLScene)
+	ANT_DECLARE_POINTER_TYPES(SFMLScene)
+	ANT_DECLARE_POINTER_TYPES(SFMLSceneNode)
+	ANT_DECLARE_POINTER_TYPES(ISFMLSceneNode)
+	ANT_DECLARE_POINTER_TYPES(SFMLCameraNode)
+	ANT_DECLARE_POINTER_TYPES(ISFMLRenderComponent)
+	ANT_DECLARE_POINTER_TYPES(SFMLBaseRenderComponent)
 
 	typedef unsigned long EventType;
 

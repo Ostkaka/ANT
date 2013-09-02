@@ -48,17 +48,18 @@ namespace ant
 
 		void setOwner(ActorStrongPtr actor);
 
+		//////////////////////////////////////////////////////////////////////////
+		// Variables
+		//////////////////////////////////////////////////////////////////////////
 	protected:
 		// Actor that owns this component
 		ActorStrongPtr m_pOwner;
-
 	};
 
 	/// Implementation
 	ANT_INLINE void ActorComponent::setOwner(ActorStrongPtr actor){m_pOwner = actor;}
 
 	ANT_INLINE ant::ComponentId ant::ActorComponent::getId( void ) const	{ return getIdFromName(getName());}
-
 }
 
 #endif

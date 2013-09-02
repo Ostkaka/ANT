@@ -29,7 +29,7 @@ namespace ant
 
 		virtual GameViewType getType() = 0;
 
-		virtual GameViewId getId() = 0;
+		virtual GameViewId getId() const = 0;
 
 		virtual void onAttach(GameViewId id, ActorId actorid) = 0;
 

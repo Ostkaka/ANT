@@ -75,7 +75,17 @@ namespace ant
        */
       virtual void gameLoop();
 
+			/**
+			 * Registers events for the game
+			 */
+			virtual void RegisterGameEvents(void){};
+
 	private:
+
+		/**
+		 * Registers engine specific events that consists of the backbone
+		 */
+		void RegisterEngineEvents(void);
 
 		/**
      * Initializes the Rendering window that
@@ -131,6 +141,18 @@ namespace ant
 		  sf::ContextSettings       mContextSettings;
 		  /// Window style to use when creating Render window
 		  unsigned long             mWindowStyle;
+
+			/// The game logic
+			BaseGameLogic*							m_gameLogic;
+
+			// Renderer
+			ISFMLRenderer*							m_renderer;
+
+			// Process manager
+			ProcessManager*							m_manager;
+
+			// EventManager
+			EventManager*								m_eventManager;
 
 		private:
 			/// Static instance variables assigned at creation

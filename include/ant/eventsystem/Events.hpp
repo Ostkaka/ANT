@@ -63,10 +63,10 @@ namespace ant
 		EvtData_New_Actor(void)
 		{
 			m_actorId = INVALID_ACTOR_ID,
-			m_viewId = gc_InvalidGameViewId;
+			m_viewId = ant_InvalidGameViewId;
 		}
 
-		explicit EvtData_New_Actor(ActorId actorId, GameViewId viewId = gc_InvalidGameViewId)
+		explicit EvtData_New_Actor(ActorId actorId, GameViewId viewId = ant_InvalidGameViewId)
 			:m_actorId(actorId), m_viewId(viewId)
 		{
 		}

@@ -2,13 +2,16 @@
 	#define ACTOR_HPP_
 
 #include <string>
-#include <ant/ant_std.hpp>
 #include <ant/core_types.hpp>
 
 // Forward declaration
 class TiXmlElement;
-class ant::ActorComponent;
-class ant::Actor;
+
+namespace ant
+{
+	class ActorComponent;
+	class Actor;
+}
 
 namespace ant
 {
