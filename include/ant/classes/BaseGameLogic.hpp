@@ -93,6 +93,9 @@ namespace ant
 		/// Logic update function
 		virtual void onUpdate(ant::DeltaTime time, ant::DeltaTime elapsedTime);
 
+		/// Get game views from the logic
+		GameViewList* getGameViews();
+
 		/// Change Game logic state 
 		virtual void changeState(BaseGameState newState);
 		const BaseGameState getState() const;
@@ -138,7 +141,6 @@ namespace ant
 		/// Game physics
 		bool m_renderDiagnostics;
 		IGamePhysicsStrongPtr m_gamePhysics;
-
 		/// The level manager of the game
 		LevelManager* m_levelManager;
 	};
@@ -161,6 +163,8 @@ namespace ant
 			m_processManager->attachProcess(process);
 		}
 	}
+
+	ANT_INLINE GameViewList* BaseGameLogic::getGameViews(){ return &m_gameViews; }
 }
 
 #endif

@@ -289,7 +289,7 @@ namespace ant
 	//////////////////////////////////////////////////////////////////////////
 	// EvtData_Move_Actor - Event that is sent when a new render component was created
 	//////////////////////////////////////////////////////////////////////////
-	class EvtData_Move_Actor : public BaseEventData
+	class EvtData_Move_SFMLActor : public BaseEventData
 	{
 		ActorId m_id;
 		sf::Vector2f m_pos;
@@ -303,12 +303,12 @@ namespace ant
 			return sk_EventType;
 		}
 
-		EvtData_Move_Actor(void)
+		EvtData_Move_SFMLActor(void)
 		{
 			m_id = INVALID_ACTOR_ID;
 		}
 
-		EvtData_Move_Actor(ActorId id, const sf::Vector2f& pos, const ant::Real& rot)
+		EvtData_Move_SFMLActor(ActorId id, const sf::Vector2f& pos, const ant::Real& rot)
 			: m_id(id), m_pos(pos), m_rot(rot)
 		{
 			//
@@ -326,12 +326,12 @@ namespace ant
 
 		virtual IEventDataStrongPtr copy() const
 		{
-			return IEventDataStrongPtr(GCC_NEW EvtData_Move_Actor(m_id, m_pos, m_rot));
+			return IEventDataStrongPtr(GCC_NEW EvtData_Move_SFMLActor(m_id, m_pos, m_rot));
 		}
 
 		virtual std::string getName(void) const
 		{
-			return "EvtData_Move_Actor";
+			return "EvtData_Move_SFMLActor";
 		}
 
 		ActorId getId(void) const

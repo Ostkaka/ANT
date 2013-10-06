@@ -47,7 +47,7 @@ namespace ant
 		}
 
 		// Don't handle any messages
-		virtual LRESULT CALLBACK onMsgProc( AppMsg msg ) ANT_OVERRIDE 
+		virtual LRESULT CALLBACK onMsgProc( sf::Event theEvent ) ANT_OVERRIDE 
 		{ 
 			return 0; 
 		}
@@ -56,6 +56,10 @@ namespace ant
 		{ 
 			return true; 
 		}
+
+		virtual int getZOrder() const { return 0; }
+
+		virtual void setZOrder(int const zOrder) { }
 
 		virtual void setVisible(bool visible) ANT_OVERRIDE { }
 

@@ -202,7 +202,6 @@ namespace ant
 
   /// Declare NameValueIter typedef which is used for name,value pair maps
   typedef std::map<const std::string, const std::string>::iterator typeNameValueIter;
-	
 }
 
 #endif  //ANT_CORE_TYPES_HPP

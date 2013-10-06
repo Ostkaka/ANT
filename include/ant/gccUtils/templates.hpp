@@ -284,3 +284,11 @@ public:
     }
 };
 
+/// Used for sorting shared pointer based on memory adress
+template<class T>
+struct SortBy_SharedPtr_Content
+{
+	bool operator()(const shared_ptr<T> &lhs, const shared_ptr<T> &rhs) const
+	{ return *lhs < *rhs; }
+};
+

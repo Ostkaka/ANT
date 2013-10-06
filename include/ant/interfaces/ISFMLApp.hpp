@@ -78,14 +78,14 @@ namespace ant
 			/**
 			 * Registers events for the game
 			 */
-			virtual void RegisterGameEvents(void){};
+			virtual void registerGameEvents(void){};
 
 	private:
 
 		/**
 		 * Registers engine specific events that consists of the backbone
 		 */
-		void RegisterEngineEvents(void);
+		void registerEngineEvents(void);
 
 		/**
      * Initializes the Rendering window that
@@ -132,15 +132,15 @@ namespace ant
 			// Variables
 			//////////////////////////////////////////////////////////////////////////
 		  /// Title to use for Window
-		  std::string               mTitle;
+		  std::string               m_title;
 		  /// Video Mode to use (width, height, bpp)
-		  sf::VideoMode             mVideoMode;
+		  sf::VideoMode             m_videoMode;
 		  /// Render window to draw to
-		  sf::RenderWindow          mWindow;
+		  sf::RenderWindow          m_window;
 		  /// Window settings to use when creating Render window
-		  sf::ContextSettings       mContextSettings;
+		  sf::ContextSettings       m_contextSettings;
 		  /// Window style to use when creating Render window
-		  unsigned long             mWindowStyle;
+		  unsigned long             m_windowStyle;
 
 			/// The game logic
 			BaseGameLogic*							m_gameLogic;
@@ -149,23 +149,23 @@ namespace ant
 			ISFMLRenderer*							m_renderer;
 
 			// Process manager
-			ProcessManager*							m_manager;
+			ProcessManager*							m_processManager;
 
 			// EventManager
 			EventManager*								m_eventManager;
 
 		private:
 			/// Static instance variables assigned at creation
-			static ISFMLApp*  gApp;
+			static ISFMLApp*  g_App;
 
 			/// Exit code that is returned upon existing the application
-			int						mExitCode; 
+			int						m_exitCode; 
 
 			/// TRUE if the app is still running
-			bool					mRunning;
+			bool					m_running;
 
 			/// Value that holds the update rate in milliseconds used for a fixed loop time
-			float					mUpdateRate;
+			float					m_updateRate;
 	};
 }
 

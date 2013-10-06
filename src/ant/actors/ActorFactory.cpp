@@ -5,7 +5,7 @@
 #include <ant/resources/ResourceLoaders.hpp>
 #include <ant/actors/BaseScriptComponent.hpp>
 #include <ant/actors/TransformComponent.hpp>
-//#include <ant/graphicsSFML/SFMLRenderComponent.hpp>
+#include <ant/graphicsSFML/SFMLRenderComponent.hpp>
 
 #include <tinyxml.h>
 
@@ -20,6 +20,7 @@ ant::ActorFactory::ActorFactory( void )
 	m_componentFactory.Register<TransformComponent>(ActorComponent::getIdFromName(TransformComponent::g_Name));
 
 	// TODO - Render components
+	m_componentFactory.Register<SFMLSpriteComponent>(ActorComponent::getIdFromName(SFMLSpriteComponent::g_Name));
 }
 
 ant::ActorFactory::~ActorFactory()
@@ -109,7 +110,6 @@ void ant::ActorFactory::modifyActor( ActorStrongPtr pActor, TiXmlElement* overri
 		if (pComponent)
 		{
 			pComponent->init(pNode);
-
 			pComponent->onChanged();		
 		}
 		else

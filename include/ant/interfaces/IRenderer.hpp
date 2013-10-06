@@ -53,8 +53,7 @@ namespace ant
 	//////////////////////////////////////////////////////////////////////////
 	class ISFMLRenderer
 	{
-	public:
-		ISFMLRenderer();
+	public:		
 		virtual void setBackgroundColor(BYTE bgA, BYTE bgR, BYTE bgG, BYTE bgB )=0;
 		virtual HRESULT onRestore()=0;
 		virtual void shutDown()=0;

@@ -23,16 +23,16 @@ namespace ant
 		bool loadGame(TiXmlElement *levelData);
 
 		// Virtual methods to control the layering of interface elements
-		virtual void pushElement(shared_ptr<IScreenElement> pElement);
+		virtual void pushElement(IScreenElementStrongPtr pElement);
 
-		virtual void removeElement(shared_ptr<IScreenElement> pElement);
+		virtual void removeElement(IScreenElementStrongPtr pElement);
 
 		void togglePause(bool active);
 
 		// TODO Audio
 
 		// Camera 
-		virtual void setCameraOffset(sf::Vector2f pos);
+		virtual void setCameraOffset(const sf::Vector2f& pos);
 
 		// Controller
 		virtual void setControllerActor(ActorId actorId);
@@ -42,19 +42,19 @@ namespace ant
 
 		virtual HRESULT onRestore() ANT_OVERRIDE;
 
-		virtual void onRender() ANT_OVERRIDE;
+		virtual void onRender(ant::DeltaTime fTime, ant::DeltaTime fElapsedTime) ANT_OVERRIDE;
 
 		virtual HRESULT onLostDevice() ANT_OVERRIDE;
+
+		virtual void onAttach(GameViewId id, ActorId actorid) ANT_OVERRIDE;
+
+		virtual LRESULT CALLBACK onMsgProc(sf::Event theEvent) ANT_OVERRIDE;
+
+		virtual void onUpdate(ant::DeltaTime dt) ANT_OVERRIDE;
 
 		virtual GameViewType getType() ANT_OVERRIDE;
 
 		virtual GameViewId getId() const ANT_OVERRIDE;
-
-		virtual void onAttach(GameViewId id, ActorId actorid) ANT_OVERRIDE;
-
-		virtual LRESULT CALLBACK onMsgProc(AppMsg msg) ANT_OVERRIDE;
-
-		virtual void onUpdate(ant::DeltaTime dt) ANT_OVERRIDE;
 
 	protected:
 		
@@ -80,10 +80,13 @@ namespace ant
 		ProcessManager* m_processManager;
 		ant::DeltaTime	m_currentTime;
 		ant::DeltaTime	m_lastDrawTime;
+		bool m_runfullSpeed;
 		bool m_realTime; 
+		ISFMLRendererStrongPtr m_renderer;
+		ScreenElementList m_ScreenElements;						// a game screen entity
 		//shared_ptr<IKeyboardHandler> m_KeyboardHandler;
 
-		BaseGameState m_BaseGameState; // Is this even nessecary?
+		BaseGameState m_BaseGameState;
 	};
 
 	// Implementation
@@ -106,7 +109,9 @@ namespace ant
 		m_actorId = actorid;
 	}
 
+	ANT_INLINE void SFMLHumanView::pushElement(IScreenElementStrongPtr pElement){ m_ScreenElements.push_front(pElement); }
 
+	ANT_INLINE void SFMLHumanView::removeElement(IScreenElementStrongPtr pElement){ m_ScreenElements.remove(pElement); }
 }
 
 #endif

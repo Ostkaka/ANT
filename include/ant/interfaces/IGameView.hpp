@@ -2,6 +2,7 @@
 	#define IGAMEVIEW_HPP_
 
 #include <ant/core_types.hpp>
+#include <SFML/Window.hpp>
 
 namespace ant
 {
@@ -23,7 +24,7 @@ namespace ant
 	public:
 		virtual HRESULT onRestore() = 0;
 
-		virtual void onRender() = 0;
+		virtual void onRender(ant::DeltaTime fTime, ant::DeltaTime fElapsedTime) = 0;
 
 		virtual HRESULT onLostDevice() = 0;
 
@@ -33,7 +34,7 @@ namespace ant
 
 		virtual void onAttach(GameViewId id, ActorId actorid) = 0;
 
-		virtual LRESULT CALLBACK onMsgProc(AppMsg msg) = 0;
+		virtual LRESULT CALLBACK onMsgProc(sf::Event theEvent) = 0;
 
 		virtual void onUpdate(ant::DeltaTime dt) = 0;
 

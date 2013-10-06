@@ -9,6 +9,7 @@
 #include <ant/gccUtils/Math.hpp>
 #include <ant/gccUtils/String.hpp>
 #include <ant/eventsystem/Events.hpp>
+#include <ant/classes/HumanView.hpp>
 
 using namespace ant;
 
@@ -114,7 +115,8 @@ bool ant::BaseGameLogic::loadGame( const char* levelResource )
 		shared_ptr<IGameView> pView = *it;
 		if (pView->getType() == GameView_Human)
 		{
-			// TODO - fix human view casting and class here
+			shared_ptr<SFMLHumanView> pHumanView = static_pointer_cast<SFMLHumanView, IGameView>(pView);
+			pHumanView->loadGame(root);
 		}
 	}
 
@@ -165,6 +167,7 @@ void ant::BaseGameLogic::onUpdate( ant::DeltaTime time, ant::DeltaTime elapsedTi
 		m_processManager->updateProcesses(dt);
 		if (m_gamePhysics)
 		{
+			// TODO Physics
 			//m_gamePhysics->onUpdate(dt);
 			//m_gamePhysics->synchVisibleScene();
 		}
