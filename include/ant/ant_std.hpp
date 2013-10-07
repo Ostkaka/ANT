@@ -84,7 +84,7 @@ using fastdelegate::MakeDelegate;
 // GameCode #includes
 #include <ant/debug\Logger.hpp>  // this should be the first of the gcc includes since it defines GCC_ASSERT()
 #include <ant/gccUtils/types.hpp>	
-#include <ant/gccUtils/templates.hpp>
+#include <ant/interfaces/GenericObjectFactory.hpp>
 #include <ant/Graphics3D\geometry.hpp>
 
 typedef D3DXCOLOR Color;

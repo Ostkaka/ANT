@@ -4,7 +4,7 @@
 using namespace ant;
 
 static IEventManager* g_eventManager = NULL;
-GenericObjectFactory<IEventData, EventType> EventFactory;
+GenericObjectFactory<IEventData, EventType> ant::g_EventFactory;
 
 ant::IEventManager::IEventManager( const std::string& name, bool setGlobal )
 	:m_name(name)

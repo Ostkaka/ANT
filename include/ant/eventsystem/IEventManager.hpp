@@ -5,6 +5,7 @@
 #include <FastDelegate.h>
 #include <ant/core_types.hpp>
 #include <ant/interfaces/ISerializable.hpp>
+#include <ant/interfaces/GenericObjectFactory.hpp>
 
 namespace ant
 {
@@ -12,15 +13,17 @@ namespace ant
 	/**
 	 * Typedefs
 	 */
+	typedef unsigned long EventType;
+	typedef shared_ptr<IEventData> IEventDataStrongPtr;
 	typedef fastdelegate::FastDelegate1<IEventDataStrongPtr> EventListenerDelegate;
-	//typedef concurrent_queue<IEventDataPtr> ThreadSafeEventQueue;
+//	typedef concurrent_queue<IEventDataStrongPtr> ThreadSafeEventQueue;
 
 	/**
 	 * Macros 
 	 */
-	extern GenericObjectFactory<IEventData, EventType> EventFactory;
-	#define REGISTER_EVENT(eventClass) EventFactory.register<eventClass>(eventClass::EventTypeId);
-	#define CREATE_EVENT(eventType) EventFactory.create(eventType);
+	extern GenericObjectFactory<IEventData, EventType> g_EventFactory;
+	#define REGISTER_EVENT(eventClass) g_EventFactory.Register<eventClass>(eventClass::sk_EventType);
+	#define CREATE_EVENT(eventType) g_EventFactory.Create(eventType);
 
 	/**
 	 * Base interface for event objects
@@ -119,10 +122,7 @@ namespace ant
 	protected:
 		/// Name of the event manager
 		std::string m_name;
-
 	};
-
 }
-
 
 #endif

@@ -3,7 +3,7 @@
 #include <ant/eventsystem/IEventManager.hpp>
 #include <ant/core_types.hpp>
 #include <ant/gui/UserInterface.hpp>
-#include <ant/gccUtils/templates.hpp>
+#include <ant/interfaces/GenericObjectFactory.hpp>
 
 #define SCREEN_REFRESH_RATE (1.0/60.0)
 

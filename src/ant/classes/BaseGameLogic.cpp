@@ -284,6 +284,12 @@ std::string ant::BaseGameLogic::getActorXml( const ActorId id )
 	return std::string();
 }
 
+void ant::BaseGameLogic::moveActorDelegate( IEventDataStrongPtr pEventData )
+{
+	shared_ptr<EvtData_Move_SFMLActor> pCastEventData = static_pointer_cast<EvtData_Move_SFMLActor>(pEventData);
+	moveActor(pCastEventData->getId(), pCastEventData->getPosition(), pCastEventData->getRotation());
+}
+
 ActorFactory* BaseGameLogic::createActorFactory(void)
 {
 	return GCC_NEW ActorFactory;

@@ -23,7 +23,7 @@ namespace ant
 		/// Get instance
 		static ResourceCacheManager* instance(void);
 
-		/// Inits the resource cache in the manager
+		/// Initialized the resource cache in the manager
 		bool initResourceCache( const unsigned int sizeInMb, IResourceFile *file );
 
 		/// Returns the cache used by the manager

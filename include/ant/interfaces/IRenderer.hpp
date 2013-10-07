@@ -59,7 +59,7 @@ namespace ant
 		virtual void shutDown()=0;
 		virtual bool preRender()=0;
 		virtual bool postRender()=0;
-		virtual void setView(sf::Vector2f pos, ant::Real angle);
+		virtual void setView(sf::Vector2f pos, ant::Real angle)=0;
 		/*virtual void calcLightning()=0;
 		virtual void setWorldTransform(const Mat4x4 *m)=0;
 		virtual void setViewTransform(const Mat4x4 *m)=0;

@@ -1,6 +1,7 @@
 #include <ant/eventsystem/EventManager.hpp>
 #include <ant/core_types.hpp>
 #include <ant/gccUtils/String.hpp>
+#include <SFML/System/Clock.hpp>
 #include <ant/debug/Logger.hpp>
 
 using namespace ant;
@@ -143,8 +144,9 @@ bool ant::EventManager::abortEvent( const EventType& type, bool allOfType /*= fa
 
 bool ant::EventManager::update( const ant::DeltaTime& maxDt /*= EM_INFINITE*/ )
 {
-	ant::UInt currMs = GetTickCount(); // What the hell is this for?!?!? This should be different!!
-	ant::DeltaTime maxMs = ((maxDt == EventManager::EM_INFINITE ? (EventManager::EM_INFINITE) : (maxDt + currMs)));
+	sf::Clock eventClock;
+	ant::DeltaTime currTime = eventClock.restart().asSeconds();
+	ant::DeltaTime maxMs = ((maxDt == EventManager::EM_INFINITE ? (EventManager::EM_INFINITE) : (maxDt + currTime)));
 
 	// Could include real-time events here - Do this later
 
@@ -183,9 +185,9 @@ bool ant::EventManager::update( const ant::DeltaTime& maxDt /*= EM_INFINITE*/ )
 			}
 		}
 
-		// Check if time ran out - This is useless
-		currMs = GetTickCount();
-		if (maxMs != IEventManager::EM_INFINITE && currMs >= maxMs)
+		// Check if time ran out
+		currTime = eventClock.getElapsedTime().asSeconds();
+		if (maxMs != IEventManager::EM_INFINITE && currTime >= maxMs)
 		{
 			GCC_LOG("EventManager","Aborting event processing due to timeout");
 			break;

@@ -6,6 +6,7 @@
 
 //#include <ant/gui/UserInterface.hpp>
 #include <ant/utils/WinInitialization.hpp>
+#include <ant/gccUtils/templates.hpp>
 
 namespace ant
 {

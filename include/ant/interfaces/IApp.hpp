@@ -92,7 +92,6 @@ namespace ant
        */
 			void quit(int exitCode = 1);
 
-
 		protected:
 
       /**
@@ -107,7 +106,7 @@ namespace ant
       virtual void initCustomAssetHandlers() = 0;
 
 			/*
-			* Inits the gamestates for the application
+			* Inits the game states for the application
 			*/
 			virtual void initCustomGameStates() = 0;
 			

@@ -1,4 +1,4 @@
-/*
+/**
 * This is the abstract app class in ANT that is used for building applications
 */
 #ifndef   ISFMLAPP_HPP
@@ -35,6 +35,11 @@ namespace ant
 			virtual void processArguments(int argc, char* argv[]);
 
 			/**
+			 * Inits the app instance
+			 */
+			bool init();
+
+			/**
 			* Valued of the exit-code given by the application by using quit.
 			*/
 			int run();
@@ -60,14 +65,12 @@ namespace ant
        */
 			void quit(int exitCode = 1);
 
-
 		protected:
 
       /**
        * Basic constructor
-       * @param[in] Title of the window
        */
-      ISFMLApp(const std::string theTitle = "MGE Application");
+      ISFMLApp(const std::string theTitle = "Ant Application");
 			
       /**
        * Responsible for monitoring IsRunning and exiting when the
@@ -78,9 +81,35 @@ namespace ant
 			/**
 			 * Registers events for the game
 			 */
-			virtual void registerGameEvents(void){};
+			virtual void registerGameEvents(void){}
+
+			/**
+      * ProcessInput is responsible for performing all input processing for
+      * the game loop.
+      */
+      virtual void processInput();
+
+			/**
+			 * Initializes the game logic and views. 
+			 */
+			virtual BaseGameLogic* initGameLogicAndView() = 0;
 
 	private:
+
+		/**
+		 * Initializes the resource global resource cache
+		 */
+		bool initResourceCache();
+
+		/**
+		 * Initializes the script engine 
+		 */
+		bool initScriptEngine();
+
+		/**
+		 * Initializes the event system
+		 */
+		bool initEventSystem();
 
 		/**
 		 * Registers engine specific events that consists of the backbone
@@ -92,6 +121,11 @@ namespace ant
      * will be used to display the games graphics.
      */
     void initRenderer();
+
+		/**
+		 * Renders the frame for the game, given that human views are connected to it
+		 */
+		void renderFrame(ant::DeltaTime fTime, ant::DeltaTime dt);
 
 		/**
      * Responsible for registering and loading the
@@ -142,14 +176,14 @@ namespace ant
 		  /// Window style to use when creating Render window
 		  unsigned long             m_windowStyle;
 
+			/// Settings for the application
+			//TODO - fix this
+
 			/// The game logic
 			BaseGameLogic*							m_gameLogic;
 
 			// Renderer
 			ISFMLRenderer*							m_renderer;
-
-			// Process manager
-			ProcessManager*							m_processManager;
 
 			// EventManager
 			EventManager*								m_eventManager;
@@ -163,6 +197,9 @@ namespace ant
 
 			/// TRUE if the app is still running
 			bool					m_running;
+
+			/// True if the application is initialized
+			bool					m_initialized;
 
 			/// Value that holds the update rate in milliseconds used for a fixed loop time
 			float					m_updateRate;

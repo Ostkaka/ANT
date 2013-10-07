@@ -6,17 +6,17 @@
 
 namespace ant
 {
-	/*
+	/**
 	* This template class is used by the actor factory to help create components 
 	* and the creation types of them
 	*/
 	template <class BaseType, class SubType>
-	BaseType* GenericObjectCreationFunction(void) { return new SubType; }
+	BaseType* GenericObjectCreationFunction( void ) { return new SubType; }
 
 	template <class BaseClass, class IdType>
 	class GenericObjectFactory
 	{
-		typedef BaseClass* (*ObjectCreationFunction)(void);
+		typedef BaseClass* (*ObjectCreationFunction)( void );
 		std::map<IdType, ObjectCreationFunction> m_creationFunctions;
 
 	public:

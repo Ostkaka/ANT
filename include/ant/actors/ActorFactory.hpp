@@ -1,10 +1,10 @@
 #ifndef ACTORFACTORY_HPP_
 	#define ACTORFACTORY_HPP_
 
-#include <ant/interfaces/GenericObjectFactory.hpp>
 #include <SFML/Graphics.hpp>
 #include <ant/ant_std.hpp>
 #include <ant/core_types.hpp>
+#include <ant/interfaces/GenericObjectFactory.hpp>
 
 // Forward declaration
 class TiXmlElement;

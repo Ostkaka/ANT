@@ -87,11 +87,14 @@ namespace ant
 		/// Loads a game
 		virtual bool loadGame(const char* levelResource) ANT_OVERRIDE;
 
-		/// Gets the level manager of the game logic
-		const LevelManager* getLevelManager();
-
 		/// Logic update function
 		virtual void onUpdate(ant::DeltaTime time, ant::DeltaTime elapsedTime);
+				
+		/// Function used to move actor in the game logic
+		virtual void moveActor(const ActorId id, const sf::Vector2f& pos, const ant::Real& rotation){}
+
+		/// Gets the level manager of the game logic
+		const LevelManager* getLevelManager();
 
 		/// Get game views from the logic
 		GameViewList* getGameViews();
@@ -117,6 +120,9 @@ namespace ant
 
 		/// Delegate function to load a game given XML data
 		virtual bool loadGameDelegate(TiXmlElement* levelData);
+
+		/// Move actor delegate
+		void moveActorDelegate(IEventDataStrongPtr pEventData);
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
