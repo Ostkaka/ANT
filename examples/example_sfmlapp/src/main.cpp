@@ -25,7 +25,7 @@ int main(int argc, char* argv[] ){
 
 	ant::SFMLApp * app = new(std::nothrow) ant::SFMLApp();
 
-	if (app->init())
+	if (!app->init())
 	{
 		std::cout << "Could not initialize app!" << std::endl;
 	}

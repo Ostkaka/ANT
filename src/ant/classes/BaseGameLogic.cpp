@@ -174,7 +174,7 @@ void ant::BaseGameLogic::onUpdate( ant::DeltaTime time, ant::DeltaTime elapsedTi
 		break;
 
 	default:
-		GCC_ERROR("Unrecognised state");
+		GCC_ERROR("Unrecognized state");
 	}
 
 	// Update all game views

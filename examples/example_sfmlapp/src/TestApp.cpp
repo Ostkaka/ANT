@@ -17,6 +17,9 @@ BaseGameLogic* ant::SFMLApp::initGameLogicAndView( void )
 	//shared_ptr<IGameView> menuView(GCC_NEW MainMenuView());
 	//m_pGame->VAddView(menuView);
 
+	// Should add a game view to the logic?
+
+
 	return m_gameLogic;
 }
 
