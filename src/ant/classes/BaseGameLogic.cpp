@@ -25,7 +25,7 @@ ant::BaseGameLogic::BaseGameLogic()
 	m_lifetime = 0;
 	m_processManager = GCC_NEW ProcessManager;
 	m_rng.Randomize();
-	m_gameState = BGS_RUNNING;
+	m_gameState = GAME_STATE_INIT;
 	m_actorFactory = NULL;
 
 	m_levelManager = GCC_NEW LevelManager;
@@ -161,20 +161,24 @@ void ant::BaseGameLogic::onUpdate( ant::DeltaTime time, ant::DeltaTime elapsedTi
 	ant::DeltaTime dt = elapsedTime;
 	m_lifetime += dt;
 
-	switch (m_gameState)
+	switch(m_gameState)
 	{
-	case BGS_RUNNING:
-		m_processManager->updateProcesses(dt);
-		if (m_gamePhysics)
-		{
-			// TODO Physics
-			//m_gamePhysics->onUpdate(dt);
-			//m_gamePhysics->synchVisibleScene();
-		}
-		break;
+		case GAME_STATE_INIT:
+			// Now, let's load the environment
+			changeGameState(GAME_STATE_LOADING_ENVIRONMENT);
+			break;
 
-	default:
-		GCC_ERROR("Unrecognized state");
+		case GAME_STATE_SPAWNING_ACTORS:
+			changeGameState(GAME_STATE_RUNNING);
+			break;
+
+		case GAME_STATE_RUNNING:
+			m_processManager->updateProcesses(dt);
+			// TODO Update physics! PHYSICS!
+			break;
+
+		default:
+			GCC_ERROR("Unrecognized state.");
 	}
 
 	// Update all game views
@@ -190,9 +194,18 @@ void ant::BaseGameLogic::onUpdate( ant::DeltaTime time, ant::DeltaTime elapsedTi
 	}
 }
 
-void ant::BaseGameLogic::changeState( BaseGameState newState )
+void ant::BaseGameLogic::changeGameState( BaseGameState newState )
 {
-	// Unsure the exact functionality of this function
+	if (newState == GAME_STATE_LOADING_ENVIRONMENT)
+	{
+		m_gameState = newState;
+		if (!this->loadGame("world/TestLevel.xml"))
+		{
+			GCC_ERROR("The game failed to load.");			
+		}
+	}
+
+	m_gameState = newState;
 }
 
 void ant::BaseGameLogic::toggleRenderDiagnostics()
@@ -217,10 +230,6 @@ ant::ActorStrongPtr ant::BaseGameLogic::createActor( const std::string &actorRes
 	if (pActor)
 	{
 		m_actors.insert(std::make_pair(pActor->getId(), pActor));
-		if (m_gameState==BGS_SPAWNINGPLAYERS || BGS_RUNNING)
-		{
-			// This should be filled when multi player is enabled. Send request new actor event here
-		}
 		return pActor;
 	}
 	else

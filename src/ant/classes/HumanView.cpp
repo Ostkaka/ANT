@@ -19,7 +19,7 @@ ant::SFMLHumanView::SFMLHumanView( ISFMLRendererStrongPtr renderer )
 
 	registerAllDelegates();
 
-	m_BaseGameState = BGS_INIT;
+	m_BaseGameState = GAME_STATE_INIT;
 
 	// Init the scene here
 	m_renderer = renderer;

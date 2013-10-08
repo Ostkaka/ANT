@@ -38,7 +38,7 @@ namespace ant
 			virtual void onUpdate(ant::DeltaTime time, ant::DeltaTime elapsedTime) = 0;
 
 			/// Changes the state in the game logic
-			virtual void changeState(enum BaseGameState newState) = 0;
+			virtual void changeGameState(enum BaseGameState newState) = 0;
 
 			/// Moves an actor given a matrix that describes the movement
 			//virtual void moveActor(const ActorId id, Mat4x4 const &mat) = 0;

@@ -13,10 +13,11 @@ namespace ant
 	/// Just some temporary enums till a better solution comes around
 	enum BaseGameState
 	{
-		BGS_INVALID,
-		BGS_INIT,
-		BGS_SPAWNINGPLAYERS,
-		BGS_RUNNING
+		GAME_STATE_INVALID,
+		GAME_STATE_INIT,
+		GAME_STATE_LOADING_ENVIRONMENT,
+		GAME_STATE_SPAWNING_ACTORS,
+		GAME_STATE_RUNNING
 	};
 
 	class LevelManager;
@@ -100,7 +101,7 @@ namespace ant
 		GameViewList* getGameViews();
 
 		/// Change Game logic state 
-		virtual void changeState(BaseGameState newState);
+		virtual void changeGameState(BaseGameState newState);
 		const BaseGameState getState() const;
 
 		/// Game physics

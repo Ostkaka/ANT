@@ -201,8 +201,8 @@ namespace ant
 			/// True if the application is initialized
 			bool					m_initialized;
 
-			/// Value that holds the update rate in milliseconds used for a fixed loop time
-			float					m_updateRate;
+			/// Value that holds the update rate in seconds used for a fixed loop time
+			ant::DeltaTime m_updateRate;
 	};
 }
 

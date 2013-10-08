@@ -16,7 +16,7 @@ namespace ant
 		virtual ~TestGameLogic();
 
 		// Overloads
-		virtual void changeState(BaseGameState newState) ANT_OVERRIDE; 
+		virtual void changeGameState(BaseGameState newState) ANT_OVERRIDE; 
 
 		virtual void addGameView(IGameViewStrongPtr pView, ActorId actorId=INVALID_ACTOR_ID) ANT_OVERRIDE;
 	

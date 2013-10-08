@@ -77,13 +77,13 @@ namespace ant
 
 	int IApp::run()
 	{
-		//Logger stuff
+		// Logger stuff
 		SLOG(App_Run,SeverityInfo) << std::endl;
 
-		//Set running as true
+		// Set running as true
 		mRunning = true;
 
-		//Register basic Assethandler
+		// Register basic Asset handler
 		mAssetManager.registerHandler(new(std::nothrow) TextureHandler());
 		mAssetManager.registerHandler(new(std::nothrow) MusicHandler());
 		mAssetManager.registerHandler(new(std::nothrow) SoundHandler());
@@ -92,7 +92,7 @@ namespace ant
 		// Register our App pointer with our StateManager
 		mStateManager.registerApp(this);
 
-		// Register Statmanager
+		// Register Stat manager
 		mStatManager.registerApp(this);
 
 		// Register custom asset classes
@@ -101,13 +101,13 @@ namespace ant
 		// Load the application setting file settings.cfg
 		initConfig();
 
-		// pens and init the render window
+		// Create and init the render window
 		initRenderer();
 
 		// Init the custom game states
 		initCustomGameStates();
 
-		// Init statmanager
+		// Init stat manager
 		mStatManager.init();
 
 		// Do gameLoop of the running flag is active

@@ -85,7 +85,8 @@ ant::ResourceHandleStrongPtr ant::ResourceCache::load( Resource *r )
 	int rawSize = m_file->getRawResourceSize(*r);
 	if (rawSize < 0)
 	{
-		GCC_ASSERT(rawSize > 0 && "Resource size returned -1 - Resource is not found?");
+		std::string errormsg = "Resource size returned -1 - Resource: " + r->getName() + " is not found?";
+		GCC_ASSERT(rawSize > 0 && errormsg.c_str());
 		return ResourceHandleStrongPtr();
 	}
 

@@ -16,9 +16,9 @@ ant::TestGameLogic::~TestGameLogic()
 	removeAllDelegates( );
 }
 
-void ant::TestGameLogic::changeState( BaseGameState newState ) 
+void ant::TestGameLogic::changeGameState( BaseGameState newState ) 
 {
-	// Nothing here
+	BaseGameLogic::changeGameState(newState);	
 }
 
 void ant::TestGameLogic::addGameView( IGameViewStrongPtr pView, ActorId actorId/*=INVALID_ACTOR_ID*/ ) 
