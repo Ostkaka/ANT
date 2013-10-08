@@ -1,5 +1,5 @@
 <Logging>
-    <Log tag="Script" debugger="1" file="Logger.xml"/>
-    <Log tag="Lua" debugger="1" file="Logger.xml"/>
-    <Log tag="Actor" debugger="1" file="Logger.xml"/>
+    <Log tag="Script" debugger="1" file="log.xml"/>
+    <Log tag="Lua" debugger="1" file="log.xml"/>
+    <Log tag="Actor" debugger="1" file="log.xml"/>
 </Logging>

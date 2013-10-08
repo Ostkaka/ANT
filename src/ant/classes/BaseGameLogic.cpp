@@ -13,6 +13,8 @@
 
 using namespace ant;
 
+#define DEFAULT_LEVEL "world\\TestLevel.xml"
+
 //////////////////////////////////////////////////////////////////////////
 //
 // BaseGameLogic implementation
@@ -199,10 +201,15 @@ void ant::BaseGameLogic::changeGameState( BaseGameState newState )
 	if (newState == GAME_STATE_LOADING_ENVIRONMENT)
 	{
 		m_gameState = newState;
-		if (!this->loadGame("world/TestLevel.xml"))
+		if (!this->loadGame(DEFAULT_LEVEL))
 		{
 			GCC_ERROR("The game failed to load.");			
 		}
+		else
+		{
+			changeGameState(GAME_STATE_SPAWNING_ACTORS);
+			return;
+		}		
 	}
 
 	m_gameState = newState;
