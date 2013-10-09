@@ -178,7 +178,8 @@ namespace ant
 	ANT_DECLARE_POINTER_TYPES(ISFMLSceneNode)
 	ANT_DECLARE_POINTER_TYPES(SFMLCameraNode)
 	ANT_DECLARE_POINTER_TYPES(ISFMLRenderComponent)
-	ANT_DECLARE_POINTER_TYPES(SFMLBaseRenderComponent)
+	ANT_DECLARE_POINTER_TYPES(TransformComponent)
+	typedef SFMLBaseRenderComponent* SFMLBaseRenderComponentWeakPtr;
 
 	typedef unsigned long EventType;
 

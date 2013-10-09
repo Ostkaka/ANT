@@ -67,6 +67,9 @@ namespace ant
 		virtual shared_ptr<IRenderState> prepareAlphaPass()=0;
 		virtual shared_ptr<IRenderState> prepareSkyBoxPass()=0;
 		virtual void drawLine(const Vec3& from,const Vec3& to,const Color& color)=0;*/
+
+		// Functions for drawing SFML primitives on the active window
+		virtual bool drawSprite(const sf::Sprite& sprite)=0;
 	};
 }
 

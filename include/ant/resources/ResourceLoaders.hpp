@@ -53,6 +53,7 @@ namespace ant
 		virtual bool loadResource(char *rawBuffer, unsigned int rawSize, ResourceHandleStrongPtr handle);
 		virtual std::string getPattern() { return "*.lua"; }
 	};
+
 }
 
 #endif

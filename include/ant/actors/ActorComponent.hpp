@@ -44,6 +44,8 @@ namespace ant
 
 		static ComponentId getIdFromName(const std::string& componentStr);
 
+		ActorWeakPtr getOwner() const;
+
 	private:
 
 		void setOwner(ActorStrongPtr actor);
@@ -57,9 +59,11 @@ namespace ant
 	};
 
 	/// Implementation
-	ANT_INLINE void ActorComponent::setOwner(ActorStrongPtr actor){m_pOwner = actor;}
+	ANT_INLINE void ant::ActorComponent::setOwner(ActorStrongPtr actor){m_pOwner = actor;}
 
 	ANT_INLINE ant::ComponentId ant::ActorComponent::getId( void ) const	{ return getIdFromName(getName());}
+
+	ANT_INLINE ant::ActorWeakPtr ant::ActorComponent::getOwner( void ) const	{ return m_pOwner;}
 }
 
 #endif
