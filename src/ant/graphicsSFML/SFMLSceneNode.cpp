@@ -27,6 +27,7 @@ ant::SFMLSceneNode::SFMLSceneNode( ActorId actorId, SFMLBaseRenderComponentWeakP
 	m_props.m_actorId = actorId;
 	m_props.m_name = (renderComponent) ? renderComponent->getName() : "SceneNode";
 	m_props.m_renderPass = renderPass;
+	m_baseRenderComponent=renderComponent;
 	setPosition(pos);
 	setRotation(rot);
 }
@@ -54,17 +55,20 @@ HRESULT ant::SFMLSceneNode::onRestore( SFMLScene *scene )
 
 HRESULT ant::SFMLSceneNode::preRender( SFMLScene *scene )
 {
-	ant::ActorStrongPtr p = MakeStrongPtr(m_baseRenderComponent->getOwner());
-	if (p)
+	// What about the move character delegate in the scene?
+	if (m_baseRenderComponent)
 	{
-		TransformComponentStrongPtr pt = MakeStrongPtr(p->getComponent<TransformComponent>(TransformComponent::g_Name));
-		if (pt)
+		ant::ActorStrongPtr p = MakeStrongPtr(m_baseRenderComponent->getOwner());
+		if (p)
 		{
-			setPosition(pt->getPostion());
-			setRotation(pt->getRotation());
-		}	
+			TransformComponentStrongPtr pt = MakeStrongPtr(p->getComponent<TransformComponent>(TransformComponent::g_Name));
+			if (pt)
+			{
+				setPosition(pt->getPostion());
+				setRotation(pt->getRotation());
+			}	
+		}
 	}
-
 	return S_OK;
 }
 
@@ -274,7 +278,13 @@ ant::SFMLSpriteNode::SFMLSpriteNode( ActorId actorId,
 	Resource r(m_textureName);
 	ResourceHandleStrongPtr h = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&r);
 	
-	if (m_texture.loadFromMemory(h->getBuffer(),h->getSize()))
+	// Is the buffer OK?
+	if (!h->getBuffer())
+	{
+		GCC_ERROR("Buffer from texture resource is bad");
+	}
+
+	if (!m_texture.loadFromMemory(h->getBuffer(),h->getSize()))
 	{		
 		GCC_ERROR("sf::Texture could not load buffer from memory: " + m_textureName);
 	}
@@ -283,7 +293,7 @@ ant::SFMLSpriteNode::SFMLSpriteNode( ActorId actorId,
 }
 
 HRESULT ant::SFMLSpriteNode::render( SFMLScene *scene ) 
-{
+{	
 	// First, set proper transformation
 	m_SFMLSprite.setPosition(getPosition());
 	m_SFMLSprite.setRotation(float(getRotation()));

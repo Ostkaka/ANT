@@ -77,6 +77,7 @@ HRESULT ant::SFMLScene::onUpdate( const ant::DeltaTime dt )
 
 ant::ISFMLSceneNodeStrongPtr ant::SFMLScene::findActor( ActorId actor )
 {
+	//TODO, lel this is O(n)
 	SFMLSceneActorMap::iterator it = m_actorMap.find(actor);
 	if (it==m_actorMap.end())
 	{
@@ -109,7 +110,7 @@ bool ant::SFMLScene::removeChild( ActorId id )
 
 void ant::SFMLScene::newRenderComponentDelegate( IEventDataStrongPtr eventData )
 {
-	shared_ptr<EvtData_New_SFMLRender_Component> pEventData = static_pointer_cast<EvtData_New_SFMLRender_Component>(pEventData);
+	shared_ptr<EvtData_New_SFMLRender_Component> pEventData = static_pointer_cast<EvtData_New_SFMLRender_Component>(eventData);
 
 	ActorId actorId = pEventData->getActorId();
 	SFMLSceneNodeStrongPtr sceneNode(pEventData->getSceneNode());

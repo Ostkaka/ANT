@@ -64,7 +64,7 @@ namespace ant
 		GCCRandom& getRNG(void);
 
 		/// Adds a game view to the game logic
-		virtual void addGameView(IGameViewStrongPtr pView, ActorId actorid);
+		virtual void addGameView(IGameViewStrongPtr pView, ActorId actorid=INVALID_ACTOR_ID);
 
 		/// Removes a game view to the game logic
 		virtual void removeGameView(IGameViewStrongPtr pView);

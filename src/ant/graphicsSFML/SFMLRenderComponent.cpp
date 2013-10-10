@@ -54,14 +54,11 @@ ant::SFMLSpriteComponent::SFMLSpriteComponent( void )
 
 bool ant::SFMLSpriteComponent::delegateInit( TiXmlElement *data )
 {
-	// Get the data from the xml 
-	TiXmlElement * firstelement = data->FirstChildElement("Sprite");
-
 	// Get texture resource path	
-	TiXmlElement* texNode = firstelement->FirstChildElement("Texture");
+	TiXmlElement* texNode = data->FirstChildElement("Texture");
 	if (texNode)
 	{
-		m_textureResource = texNode->Value();
+		m_textureResource = texNode->FirstChild()->Value();
 	}
 
 	return true;

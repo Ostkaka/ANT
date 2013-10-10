@@ -12,10 +12,10 @@ namespace ant
 	 */
 	class SFMLTextureResourceLoader : public IResourceLoader
 	{
-		virtual bool useRawFile() { return true; }
-		virtual bool discardRawBufferAfterLoad() { return false; }
-		virtual ant::UInt getLoadedResourceSize(char* rawBuffer, ant::UInt rawSize);
-		virtual bool loadResource(char *rawBuffer, unsigned int rawSize, ResourceHandleStrongPtr handle);
+		virtual bool useRawFile() ANT_OVERRIDE { return true; }
+		virtual bool discardRawBufferAfterLoad() ANT_OVERRIDE { return false; }
+		virtual ant::UInt getLoadedResourceSize(char* rawBuffer, ant::UInt rawSize) ANT_OVERRIDE;
+		virtual bool loadResource(char *rawBuffer, unsigned int rawSize, ResourceHandleStrongPtr handle) ANT_OVERRIDE;
 	};
 
 	/**

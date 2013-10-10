@@ -183,7 +183,7 @@ namespace ant
 			BaseGameLogic*							m_gameLogic;
 
 			// Renderer
-			ISFMLRenderer*							m_renderer;
+			ISFMLRendererStrongPtr		  m_renderer;
 
 			// EventManager
 			EventManager*								m_eventManager;

@@ -17,7 +17,7 @@ ant::ActorFactory::ActorFactory( void )
 
 	// TODO - Register game components when they are created
 	m_componentFactory.Register<BaseScriptComponent>(ActorComponent::getIdFromName(BaseScriptComponent::g_Name));
-	m_componentFactory.Register<TransformComponent>(ActorComponent::getIdFromName(TransformComponent::g_Name));
+	m_componentFactory.Register<TransformComponent>(ActorComponent::getIdFromName(TransformComponent::g_Name));	
 
 	// TODO - Render components
 	m_componentFactory.Register<SFMLSpriteComponent>(ActorComponent::getIdFromName(SFMLSpriteComponent::g_Name));
