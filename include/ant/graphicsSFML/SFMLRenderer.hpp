@@ -30,6 +30,8 @@ namespace ant
 		/// Functions used to draw primitives on the active render target
 		virtual bool drawSprite(const sf::Sprite& sprite);
 
+		virtual bool drawRectangle(const sf::RectangleShape& rectangle);
+
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
 		//////////////////////////////////////////////////////////////////////////

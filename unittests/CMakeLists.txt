@@ -48,7 +48,7 @@ INCLUDE_DIRECTORIES(${source_dir}/include)
 # Get em all
 FILE(GLOB UNIT_TEST_FILES ${CMAKE_CURRENT_SOURCE_DIR}/unittest_*.cpp)
 
-# Loop every faking cpp file and create unittests!!!!!
+# Loop every cpp file and create unittests
 FOREACH(TESTFILE ${UNIT_TEST_FILES})
 
   # Get the name without the extension

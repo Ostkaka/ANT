@@ -70,6 +70,7 @@ namespace ant
 
 		// Functions for drawing SFML primitives on the active window
 		virtual bool drawSprite(const sf::Sprite& sprite)=0;
+		virtual bool drawRectangle(const sf::RectangleShape& rectangle)=0;
 	};
 }
 

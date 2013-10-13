@@ -61,4 +61,11 @@ bool ant::SFMLRenderer::drawSprite( const sf::Sprite& sprite )
 	return true;
 }
 
+bool ant::SFMLRenderer::drawRectangle( const sf::RectangleShape& rectangle )
+{
+	GCC_ASSERT(m_window);
+	m_window->draw(rectangle);
+	return true;
+}
+
 

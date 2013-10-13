@@ -133,6 +133,7 @@ bool ant::BaseGameLogic::loadGame( const char* levelResource )
 	if (postLoadScript)
 	{
 		Resource resource(postLoadScript);
+		// THis will automaticlly load the post script to the lua manager
 		ResourceHandleStrongPtr pResourceHandle = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&resource);
 	}
 

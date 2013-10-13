@@ -7,6 +7,7 @@ using namespace ant;
 
 const char* SFMLSpriteComponent::g_Name = "SFMLSpriteComponent";
 const char* SFMLBackgroundSpriteComponent::g_Name = "SFMLBackgroundSpriteComponent";
+const char* SFMLRectanglePrimitiveComponent::g_Name = "SFMLRectanglePrimitiveComponent";
 
 //////////////////////////////////////////////////////////////////////////
 // Base Render Component
@@ -55,6 +56,8 @@ ant::SFMLSpriteComponent::SFMLSpriteComponent( void )
 
 bool ant::SFMLSpriteComponent::delegateInit( TiXmlElement *data )
 {
+	GCC_ASSERT(data);
+
 	// Get texture resource path	
 	TiXmlElement* texNode = data->FirstChildElement("Texture");
 	if (texNode)
@@ -89,9 +92,8 @@ void ant::SFMLSpriteComponent::createInheritedXmlElements( TiXmlElement* pBaseEl
 	// TODO create inherited XML stuff in 
 }
 
-
 //////////////////////////////////////////////////////////////////////////
-// Background Render Component
+// SFMLBackgroundSpriteComponent
 //////////////////////////////////////////////////////////////////////////
 
 ant::SFMLBackgroundSpriteComponent::SFMLBackgroundSpriteComponent( void )
@@ -107,13 +109,15 @@ ant::SFMLSceneNodeStrongPtr ant::SFMLBackgroundSpriteComponent::createSceneNode(
 	if (pTransformComponent)
 	{
 		SFMLBaseRenderComponentWeakPtr weakThis(this);
-		return SFMLSceneNodeStrongPtr(GCC_NEW SFMLSpriteNode(m_pOwner->getId(),weakThis,m_textureResource,RenderPass_BackGround,pTransformComponent->getPostion(),pTransformComponent->getRotation()));	
+		return SFMLSceneNodeStrongPtr(GCC_NEW SFMLBackgroundSpriteNode(m_pOwner->getId(),weakThis,m_textureResource,RenderPass_BackGround,pTransformComponent->getPostion(),pTransformComponent->getRotation()));	
 	}
 	return SFMLSceneNodeStrongPtr();
 }
 
 bool ant::SFMLBackgroundSpriteComponent::delegateInit( TiXmlElement *data ) 
 {
+	GCC_ASSERT(data);
+
 	// Get texture resource path	
 	TiXmlElement* texNode = data->FirstChildElement("Texture");
 	if (texNode)
@@ -131,6 +135,60 @@ bool ant::SFMLBackgroundSpriteComponent::delegateInit( TiXmlElement *data )
 }
 
 void ant::SFMLBackgroundSpriteComponent::createInheritedXmlElements( TiXmlElement* pBaseElement ) 
+{
+	// TODO, spawn XML
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// SFMLRectanglePrimitiveComponent
+//////////////////////////////////////////////////////////////////////////
+
+ant::SFMLRectanglePrimitiveComponent::SFMLRectanglePrimitiveComponent( void )
+{
+
+}
+
+ant::SFMLSceneNodeStrongPtr ant::SFMLRectanglePrimitiveComponent::createSceneNode( void ) 
+{
+	// Try to get the transform component here. Is this an ugly hack?
+	TransformComponentStrongPtr pTransformComponent = MakeStrongPtr(m_pOwner->getComponent<TransformComponent>(TransformComponent::g_Name));
+
+	if (pTransformComponent)
+	{
+		SFMLBaseRenderComponentWeakPtr weakThis(this);
+		return SFMLSceneNodeStrongPtr(GCC_NEW SFMLRectanglePrimitiveNode(m_pOwner->getId(), weakThis, m_size,m_filled, RenderPass_Actor,pTransformComponent->getPostion(),pTransformComponent->getRotation()));	
+	}
+	return SFMLSceneNodeStrongPtr();
+}
+
+bool ant::SFMLRectanglePrimitiveComponent::delegateInit( TiXmlElement *data ) 
+{
+	GCC_ASSERT(data);
+
+	TiXmlElement* posElement = data->FirstChildElement("Size");
+	if (posElement)
+	{
+		ant::Real x;
+		ant::Real y;
+
+		posElement->Attribute("x",&x);
+		posElement->Attribute("y",&y);
+		m_size.x = float(x);
+		m_size.y = float(y);
+	}
+
+	// Get texture resource path	
+	TiXmlElement* texNode = data->FirstChildElement("Filled");
+	if (texNode)
+	{
+		m_filled = (bool)(atoi(texNode->FirstChild()->Value()));
+	}
+
+	return true;
+}
+
+void ant::SFMLRectanglePrimitiveComponent::createInheritedXmlElements( TiXmlElement* pBaseElement ) 
 {
 	// TODO, spawn XML
 }

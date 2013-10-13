@@ -254,6 +254,32 @@ namespace ant
 		ant::Real   m_scale;
 	};
 
+	/**
+	 * Rectangle primitive drawn with SFML
+	 */
+	class SFMLRectanglePrimitiveNode : public SFMLSceneNode
+	{
+	public:
+		SFMLRectanglePrimitiveNode(ActorId actorId, 
+			SFMLBaseRenderComponentWeakPtr renderComponent, 
+			const sf::Vector2f& size,
+			const bool& filled,
+			SFMLRenderPass renderPass, 
+			const sf::Vector2f& pos, 
+			const ant::Real& rot);
+
+		virtual HRESULT render(SFMLScene *scene) ANT_OVERRIDE; 		
+
+		virtual HRESULT onRestore(SFMLScene *scene) ANT_OVERRIDE;
+
+		//////////////////////////////////////////////////////////////////////////
+		// Variables
+		//////////////////////////////////////////////////////////////////////////
+	protected:
+		sf::Vector2f       m_size;
+		bool               m_filled;
+		sf::RectangleShape m_rectangleShape;
+	};
 }
 
 #endif

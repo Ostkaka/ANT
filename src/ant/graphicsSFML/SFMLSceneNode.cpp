@@ -170,11 +170,11 @@ ant::SFMLRootNode::SFMLRootNode()
 {
 	m_Children.reserve(RenderPass_Last);
 
-	shared_ptr<SFMLSceneNode> skyGroup(GCC_NEW SFMLSceneNode(INVALID_ACTOR_ID,  NULL,  RenderPass_BackGround, sf::Vector2f(),ant::Real(0)));
-	m_Children.push_back(skyGroup);	// RenderPass_Sky = 2
-
 	shared_ptr<SFMLSceneNode> staticGroup(GCC_NEW SFMLSceneNode(INVALID_ACTOR_ID,  NULL,  RenderPass_Static, sf::Vector2f(),ant::Real(0)));
 	m_Children.push_back(staticGroup); // RenderPass_Static = 0
+
+	shared_ptr<SFMLSceneNode> skyGroup(GCC_NEW SFMLSceneNode(INVALID_ACTOR_ID,  NULL,  RenderPass_BackGround, sf::Vector2f(),ant::Real(0)));
+	m_Children.push_back(skyGroup);	// RenderPass_Sky = 2
 
 	shared_ptr<SFMLSceneNode> actorGroup(GCC_NEW SFMLSceneNode(INVALID_ACTOR_ID,  NULL,  RenderPass_Actor, sf::Vector2f(),ant::Real(0)));
 	m_Children.push_back(actorGroup);	// RenderPass_Actor = 1
@@ -312,6 +312,10 @@ HRESULT ant::SFMLSpriteNode::onRestore( SFMLScene *scene )
 	// TODO - do nothing until I get to know what this is
 }
 
+////////////////////////////////////////////////////
+// SFMLBackgroundSpriteNode
+////////////////////////////////////////////////////
+
 ant::SFMLBackgroundSpriteNode::SFMLBackgroundSpriteNode( ActorId actorId, 
 	SFMLBaseRenderComponentWeakPtr renderComponent, 
 	const std::string& textureName, 
@@ -353,4 +357,42 @@ HRESULT ant::SFMLBackgroundSpriteNode::onRestore( SFMLScene *scene )
 {
 	return SFMLSceneNode::onRestore(scene);
 	// TODO - do nothing until I get to know what this is
+}
+
+//////////////////////////////////////////////////////////////////////////
+// SFMLBackgroundSpriteNode
+//////////////////////////////////////////////////////////////////////////
+
+ant::SFMLRectanglePrimitiveNode::SFMLRectanglePrimitiveNode( ActorId actorId, 
+	SFMLBaseRenderComponentWeakPtr renderComponent, 
+	const sf::Vector2f& size,
+	const bool& filled,
+	SFMLRenderPass renderPass, 
+	const sf::Vector2f& pos, 
+	const ant::Real& rot )
+	:SFMLSceneNode(actorId,renderComponent,renderPass,pos,rot),
+	m_size(size),
+	m_filled(filled)
+{
+		sf::Color color(255,0,0,255);
+		m_rectangleShape.setSize(m_size);
+		if (m_filled)
+		{
+			m_rectangleShape.setFillColor(color);
+			m_rectangleShape.setOutlineColor(color);
+		}			
+}
+
+HRESULT ant::SFMLRectanglePrimitiveNode::render( SFMLScene *scene ) 
+{
+	m_rectangleShape.setPosition(getPosition());
+	m_rectangleShape.setRotation(float(getRotation()));	
+
+	scene->getRenderer()->drawRectangle(m_rectangleShape);
+	return true;
+}
+
+HRESULT ant::SFMLRectanglePrimitiveNode::onRestore( SFMLScene *scene ) 
+{
+	return SFMLSceneNode::onRestore(scene);
 }

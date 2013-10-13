@@ -128,17 +128,6 @@ else()
 	message(FATAL_ERROR "ZLIB: NOT FOUND" ${ZLIB_INCLUDE_DIR} " :: " ${ZLIB_LIBRARY})
 endif(ZLIB_FOUND)
 
-# find TinyXml
-#set(ENV{TINYXML_DIR} ${ANT_DEPENDENCIES_DIR})
-#find_package(TINYXML)
-#if(TINYXML_FOUND)
-#	message("TinyXml: FOUND")
-#	include_directories(${TINYXML_INCLUDE_DIR})
-#	set(DEPENDECY_LIBS ${DEPENDECY_LIBS} ${TINYXML_LIBRARY})
-#else()
-#	message(FATAL_ERROR "TinyXml: NOT FOUND")
-#endif(TINYXML_FOUND)
-
 # Do it for OGG
 set(ENV{OGGDIR} ${ANT_DEPENDENCIES_DIR})
 find_package(OGG)
@@ -150,7 +139,7 @@ else()
 	message(FATAL_ERROR "OGG: NOT FOUND")
 endif(OGG_FOUND)
 
-#find bullet
+# find bullet
 set(BULLET_ROOT ${ANT_DEPENDENCIES_DIR})
 find_package(BULLET COMPONENTS BulletDynamics BulletCollision LinearMath BulletMath REQUIRED)
 
@@ -162,15 +151,6 @@ else()
 	message(FATAL_ERROR "BULLET: NOT FOUND")
 endif(BULLET_FOUND)
 
-#find lua
-#set(ENV{LUA_DIR} ${ANT_DEPENDENCIES_DIR})
-#find_package(Lua51)
-#if(LUA_FOUND)
-#	message("LUA: FOUND")
-#else()
-#	message(FATAL_ERROR "LUA: NOT FOUND")
-#endif(LUA_FOUND)
-
 #find fastdelegate
 set(ENV{FASTDELEGATE_DIR} ${ANT_DEPENDENCIES_DIR})
 find_package(FASTDELEGATE)
@@ -180,6 +160,29 @@ if(FASTDELEGATE_FOUND)
 else()
 	message(FATAL_ERROR "FASTDELEGATE: NOT FOUND")
 endif(FASTDELEGATE_FOUND)
+
+# Add Box2d
+ExternalProject_Add(
+    box2d
+    SVN_REPOSITORY http://box2d.googlecode.com/svn/trunk/ box2d-read-only
+    TIMEOUT 10
+    # Force separate output paths for debug and release builds to allow easy
+    # identification of correct lib in subsequent TARGET_LINK_LIBRARIES commands
+    CMAKE_ARGS -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=DebugLibs
+               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=ReleaseLibs
+               -Dgtest_force_shared_crt=ON
+    # Disable install step
+    INSTALL_COMMAND ""
+    # Wrap download, configure and build steps in a script to log output
+    LOG_DOWNLOAD ON
+    LOG_CONFIGURE ON
+    LOG_BUILD ON)
+
+SET_PROPERTY(TARGET box2d PROPERTY FOLDER "external")
+ExternalProject_Get_Property(box2d source_dir)
+INCLUDE_DIRECTORIES(${source_dir}/include)
+
+set(DEPENDECY_LIBS ${DEPENDECY_LIBS} ${BULLET_LIBRARIES})
 
 # add the ANT subdirectory
 message("Configuring ANT...")

@@ -22,6 +22,7 @@ ant::ActorFactory::ActorFactory( void )
 	// TODO - Render components	
 	m_componentFactory.Register<SFMLSpriteComponent>(ActorComponent::getIdFromName(SFMLSpriteComponent::g_Name));
 	m_componentFactory.Register<SFMLBackgroundSpriteComponent>(ActorComponent::getIdFromName(SFMLBackgroundSpriteComponent::g_Name));	
+	m_componentFactory.Register<SFMLRectanglePrimitiveComponent>(ActorComponent::getIdFromName(SFMLRectanglePrimitiveComponent::g_Name));	
 }
 
 ant::ActorFactory::~ActorFactory()
