@@ -357,6 +357,8 @@ HRESULT ant::SFMLBackgroundSpriteNode::onRestore( SFMLScene *scene )
 {
 	return SFMLSceneNode::onRestore(scene);
 	// TODO - do nothing until I get to know what this is
+
+	// TODO, find the rendering dimension for the window to scale the sprite to it
 }
 
 //////////////////////////////////////////////////////////////////////////

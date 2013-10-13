@@ -11,6 +11,12 @@ project(ant)
 include(${PROJECT_SOURCE_DIR}/cmake/antMacros.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/HandleDependencies.cmake)
 
+# Enable ExternalProject CMake module
+INCLUDE(ExternalProject)
+
+# Set default ExternalProject root directory
+SET_DIRECTORY_PROPERTIES(PROPERTIES EP_PREFIX ${CMAKE_BINARY_DIR}/dependecies)
+
 # define the path of our additional CMake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/Modules/)
 
@@ -164,13 +170,14 @@ endif(FASTDELEGATE_FOUND)
 # Add Box2d
 ExternalProject_Add(
     box2d
-    SVN_REPOSITORY http://box2d.googlecode.com/svn/trunk/ box2d-read-only
+    SVN_REPOSITORY http://box2d.googlecode.com/svn/trunk/Box2D
     TIMEOUT 10
+    #Set CMakeLists path
+
     # Force separate output paths for debug and release builds to allow easy
     # identification of correct lib in subsequent TARGET_LINK_LIBRARIES commands
     CMAKE_ARGS -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=DebugLibs
                -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=ReleaseLibs
-               -Dgtest_force_shared_crt=ON
     # Disable install step
     INSTALL_COMMAND ""
     # Wrap download, configure and build steps in a script to log output
@@ -182,7 +189,9 @@ SET_PROPERTY(TARGET box2d PROPERTY FOLDER "external")
 ExternalProject_Get_Property(box2d source_dir)
 INCLUDE_DIRECTORIES(${source_dir}/include)
 
-set(DEPENDECY_LIBS ${DEPENDECY_LIBS} ${BULLET_LIBRARIES})
+MEssage("Release: " ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES})
+
+#set(DEPENDECY_LIBS ${DEPENDECY_LIBS} ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES} ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES})
 
 # add the ANT subdirectory
 message("Configuring ANT...")

@@ -45,6 +45,9 @@ void ant::SFMLRenderer::setView( sf::Vector2f pos, ant::Real angle )
 	view.setRotation(float(angle));
 	m_centerView = view;
 
+	// Set the view size to window size also	
+	m_centerView.setSize(float(m_window->getSize().x),float(m_window->getSize().y));
+
 	m_window->setView(view);
 }
 
