@@ -152,7 +152,6 @@ namespace ant
 
 	// Implementation
 	ANT_INLINE bool SFMLRootNode::isVisible(SFMLScene *pScene) const {return true;}
-
 	
 	/**
 	 * A scene node that functions as a camera, setting the view of the scene according to a position
@@ -188,7 +187,6 @@ namespace ant
 		shared_ptr<SFMLSceneNode>			m_target;
 		bool													m_active;		
 		sf::Vector2f									m_cameraOffset;
-
 	};
 
 	// Implementation
@@ -219,6 +217,9 @@ namespace ant
 
 		virtual HRESULT onRestore(SFMLScene *scene) ANT_OVERRIDE;
 
+		//////////////////////////////////////////////////////////////////////////
+		// Variables
+		//////////////////////////////////////////////////////////////////////////
 	protected:
 		std::string m_textureName;
 		sf::Texture m_texture;

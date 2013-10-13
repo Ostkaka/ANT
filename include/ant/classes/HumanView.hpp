@@ -5,11 +5,14 @@
 #include <ant/interfaces/IGameView.hpp>
 #include <ant/classes/BaseGameLogic.hpp>
 #include <ant/gui/UserInterface.hpp>
+#include <ant/interfaces/InputHandlers.hpp>
 #include <SFML/Graphics.hpp>
 
 namespace ant
 {
-
+	/**
+	 * Basic human view for displaying a game logic 
+	 */
 	class SFMLHumanView : public IGameView
 	{
 		friend class ISFMLApp;
@@ -28,8 +31,6 @@ namespace ant
 		virtual void removeElement(IScreenElementStrongPtr pElement);
 
 		void togglePause(bool active);
-
-		// TODO Audio
 
 		// Camera 
 		virtual void setCameraOffset(const sf::Vector2f& pos);
@@ -73,20 +74,19 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 
 	protected:
-		GameViewId	m_viewId;
-		ActorId			m_actorId;		
+		GameViewId	                    m_viewId;
+		ActorId			                    m_actorId;		
 		ScreenElementSFMLSceneStrongPtr m_Scene;			
-		shared_ptr<SFMLCameraNode> m_Camera;		
-		ProcessManager* m_processManager;
-		ant::DeltaTime	m_currentTime;
-		ant::DeltaTime	m_lastDrawTime;
-		bool m_runfullSpeed;
-		bool m_realTime; 
-		ISFMLRendererStrongPtr m_renderer;
-		ScreenElementList m_ScreenElements;						// a game screen entity
-		//shared_ptr<IKeyboardHandler> m_KeyboardHandler;
-
-		BaseGameState m_BaseGameState;
+		shared_ptr<SFMLCameraNode>      m_Camera;		
+		ProcessManager*                 m_processManager;
+		ant::DeltaTime	                m_currentTime;
+		ant::DeltaTime	                m_lastDrawTime;
+		bool                            m_runfullSpeed;
+		bool                            m_realTime; 
+		ISFMLRendererStrongPtr          m_renderer;
+		ScreenElementList               m_ScreenElements;						// a game screen entity
+		IKeyboardHandlerStrongPtr       m_KeyboardHandler;
+		BaseGameState                   m_BaseGameState;
 	};
 
 	// Implementation

@@ -120,12 +120,12 @@ namespace ant
 	class BaseGameLogic;
 	class IGamePhysics;
 	class ProcessManager;	
-
 	class IEventManager;
 	class EventManager;
 	class IEventData;
 	class BaseEventData;
 	class ScriptEvent;
+	class IKeyboardHandler;
 
 	class IScreenElement;
 	class IGameView;
@@ -179,6 +179,7 @@ namespace ant
 	ANT_DECLARE_POINTER_TYPES(SFMLCameraNode)
 	ANT_DECLARE_POINTER_TYPES(ISFMLRenderComponent)
 	ANT_DECLARE_POINTER_TYPES(TransformComponent)
+	ANT_DECLARE_POINTER_TYPES(IKeyboardHandler)
 	typedef SFMLBaseRenderComponent* SFMLBaseRenderComponentWeakPtr;
 
 	typedef unsigned long EventType;
@@ -203,6 +204,8 @@ namespace ant
 
   /// Declare NameValueIter typedef which is used for name,value pair maps
   typedef std::map<const std::string, const std::string>::iterator typeNameValueIter;
+
+	typedef BYTE CharCode;
 }
 
 #endif  //ANT_CORE_TYPES_HPP

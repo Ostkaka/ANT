@@ -16,12 +16,11 @@ BaseGameLogic* ant::SFMLApp::initGameLogicAndView( void )
 	m_gameLogic->init();
 	
 	GCC_ASSERT(m_renderer);
-	IGameViewStrongPtr playaView(GCC_NEW TestGameView(m_renderer));
+	shared_ptr<TestGameView> playaView(GCC_NEW TestGameView(m_renderer));
 
 	m_gameLogic->addGameView(playaView);
 
 	// Should add a game view to the logic?
-
 
 	return m_gameLogic;
 }

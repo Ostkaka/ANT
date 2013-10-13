@@ -4,6 +4,7 @@
 #include <ant/core_types.hpp>
 #include <ant/gui/UserInterface.hpp>
 #include <ant/interfaces/GenericObjectFactory.hpp>
+#include <iostream>
 
 #define SCREEN_REFRESH_RATE (1.0/60.0)
 
@@ -153,14 +154,26 @@ LRESULT CALLBACK ant::SFMLHumanView::onMsgProc( sf::Event theEvent )
 
 	LRESULT result = 0;
 	switch(theEvent.type)
-	{
-		// TODO - add controller here for handling stuff
+	{	
 		// TODO - add console
+		case sf::Event::KeyPressed:
+			if (m_KeyboardHandler)
+			{
+				std::cout << "press! " << std::endl;
+				result = m_KeyboardHandler->onKeyDown(convertSFMLKeyCodeToCharCode(theEvent.key.code));
+			}
+			break;
+		case sf::Event::KeyReleased:
+			if (m_KeyboardHandler)
+			{
+				result = m_KeyboardHandler->onKeyUp(convertSFMLKeyCodeToCharCode(theEvent.key.code));
+			}
+			break;
 		default:
-			return 0;
+				return 0;
 	}
 
-	return 0;
+	return result;
 }
 
 void ant::SFMLHumanView::registerAllDelegates( void )
