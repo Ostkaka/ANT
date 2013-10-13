@@ -53,6 +53,8 @@ namespace ant
 	 */
 	class SFMLSpriteComponent : public SFMLBaseRenderComponent
 	{
+		friend class SFMLSpriteNode;
+
 	public:
 		/// Default constructor
 		SFMLSpriteComponent(void);
@@ -75,6 +77,40 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 	protected:		
 		std::string m_textureResource;	
+		ant::Real   m_scale;
+	public:
+		static const char *g_Name;
+	};
+
+	/**
+	 * Simple background component 
+	 */
+	class SFMLBackgroundSpriteComponent : public SFMLBaseRenderComponent
+	{		
+
+	public:
+		/// Default constructor
+		SFMLBackgroundSpriteComponent(void);
+
+		virtual const char *getName() const { return g_Name; }
+
+	protected:
+		// factory method to create the appropriate scene node
+		virtual SFMLSceneNodeStrongPtr createSceneNode(void) ANT_OVERRIDE;  
+
+		/// Loads data to the scene node from the <SceneNode> tag
+		virtual bool delegateInit(TiXmlElement *data) ANT_OVERRIDE;
+
+		/// Functions that subclasses implement that extends XML generation for child-classes
+		virtual void createInheritedXmlElements(TiXmlElement* pBaseElement) ANT_OVERRIDE;
+
+	private:
+		//////////////////////////////////////////////////////////////////////////
+		// Variables
+		//////////////////////////////////////////////////////////////////////////
+	protected:		
+		std::string m_textureResource;	
+		ant::Real   m_scale;
 	public:
 		static const char *g_Name;
 	};

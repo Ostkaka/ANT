@@ -5,11 +5,13 @@
 #include <ant/resources/ResourceCacheManager.hpp>
 #include <ant/resources/ResourceCache.hpp>
 #include <ant/resources/XmlResource.hpp>
+#include <ant/actors/TransformComponent.hpp>
 #include <ant/actors/Actor.hpp>
 #include <ant/gccUtils/Math.hpp>
 #include <ant/gccUtils/String.hpp>
 #include <ant/eventsystem/Events.hpp>
 #include <ant/classes/HumanView.hpp>
+#include <iostream>
 
 using namespace ant;
 
@@ -35,11 +37,14 @@ ant::BaseGameLogic::BaseGameLogic()
 	//m_pLevelManager->Initialize(g_pApp->m_ResCache->Match("world\\*.xml")); // This is not good at all
 
 	registerEngineScriptEvents();
+	registerAllDelegates();
 }
 
 ant::BaseGameLogic::~BaseGameLogic()
 {
-	// Remove game views
+	removeAllDelegates();
+
+	// Destroy all game views
 	while(!m_gameViews.empty())
 		m_gameViews.pop_front();
 
@@ -54,8 +59,6 @@ ant::BaseGameLogic::~BaseGameLogic()
 	}
 	m_actors.clear();
 
-	//THIS event should not really exist
-	//IEventManager::instance()->removeListener(MakeDelegate(this,&BaseGameLogic::requestDestroyActorDelegate,EvtData_Request_Destroy_Actor::sk_EventType))
 }
 
 bool ant::BaseGameLogic::init( void )
@@ -304,6 +307,37 @@ void ant::BaseGameLogic::moveActorDelegate( IEventDataStrongPtr pEventData )
 {
 	shared_ptr<EvtData_Move_SFMLActor> pCastEventData = static_pointer_cast<EvtData_Move_SFMLActor>(pEventData);
 	moveActor(pCastEventData->getId(), pCastEventData->getPosition(), pCastEventData->getRotation());
+}
+
+void ant::BaseGameLogic::registerAllDelegates()
+{
+	IEventManager* pGlobalEventManager = IEventManager::instance();	
+	pGlobalEventManager->addListener(MakeDelegate(this, &BaseGameLogic::moveActorDelegate), EvtData_Move_SFMLActor::sk_EventType);
+}
+
+void ant::BaseGameLogic::removeAllDelegates()
+{
+	IEventManager* pGlobalEventManager = IEventManager::instance();		
+	pGlobalEventManager->removeListener(MakeDelegate(this, &BaseGameLogic::moveActorDelegate), EvtData_Move_SFMLActor::sk_EventType);
+}
+
+void ant::BaseGameLogic::moveActor( const ActorId id, const sf::Vector2f& pos, const ant::Real& rotation )
+{
+	// Try to get the transform component for the actor and move
+	ActorStrongPtr pActor = MakeStrongPtr(getActor(id));
+	if (pActor)
+	{
+		TransformComponentStrongPtr pTransform = MakeStrongPtr(pActor->getComponent<TransformComponent>(TransformComponent::g_Name));
+		if (pTransform)
+		{			
+			pTransform->setPosition(pos);
+			pTransform->setRotation(rotation);
+		}
+	}
+	else
+	{
+		GCC_WARNING("Trying to move actor with id: " + ToStr(id) + " but could not find it in gamne logic!" );
+	}
 }
 
 ActorFactory* BaseGameLogic::createActorFactory(void)

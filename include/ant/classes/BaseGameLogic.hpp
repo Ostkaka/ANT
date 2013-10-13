@@ -92,7 +92,7 @@ namespace ant
 		virtual void onUpdate(ant::DeltaTime time, ant::DeltaTime elapsedTime);
 				
 		/// Function used to move actor in the game logic
-		virtual void moveActor(const ActorId id, const sf::Vector2f& pos, const ant::Real& rotation){}
+		virtual void moveActor(const ActorId id, const sf::Vector2f& pos, const ant::Real& rotation);
 
 		/// Gets the level manager of the game logic
 		const LevelManager* getLevelManager();
@@ -124,6 +124,10 @@ namespace ant
 
 		/// Move actor delegate
 		void moveActorDelegate(IEventDataStrongPtr pEventData);
+
+	private:
+		void registerAllDelegates();
+		void removeAllDelegates();
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables

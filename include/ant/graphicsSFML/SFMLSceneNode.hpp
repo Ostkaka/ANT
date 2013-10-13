@@ -223,7 +223,35 @@ namespace ant
 	protected:
 		std::string m_textureName;
 		sf::Texture m_texture;
-		sf::Sprite m_SFMLSprite;
+		sf::Sprite  m_SFMLSprite;
+		ant::Real   m_scale;
+	};
+
+		/**
+	 * Node that contains and draws a background sprite 
+	 */
+	class SFMLBackgroundSpriteNode : public SFMLSceneNode
+	{
+	public:
+		SFMLBackgroundSpriteNode(ActorId actorId, 
+			SFMLBaseRenderComponentWeakPtr renderComponent, 
+			const std::string& textureName,
+			SFMLRenderPass renderPass, 
+			const sf::Vector2f& pos, 
+			const ant::Real& rot);
+
+		virtual HRESULT render(SFMLScene *scene) ANT_OVERRIDE; 		
+
+		virtual HRESULT onRestore(SFMLScene *scene) ANT_OVERRIDE;
+
+		//////////////////////////////////////////////////////////////////////////
+		// Variables
+		//////////////////////////////////////////////////////////////////////////
+	protected:
+		std::string m_textureName;
+		sf::Texture m_texture;
+		sf::Sprite  m_SFMLSprite;
+		ant::Real   m_scale;
 	};
 
 }

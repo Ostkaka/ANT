@@ -6,6 +6,7 @@
 using namespace ant;
 
 const char* SFMLSpriteComponent::g_Name = "SFMLSpriteComponent";
+const char* SFMLBackgroundSpriteComponent::g_Name = "SFMLBackgroundSpriteComponent";
 
 //////////////////////////////////////////////////////////////////////////
 // Base Render Component
@@ -61,6 +62,12 @@ bool ant::SFMLSpriteComponent::delegateInit( TiXmlElement *data )
 		m_textureResource = texNode->FirstChild()->Value();
 	}
 
+	TiXmlElement* scaleNode = data->FirstChildElement("Scale");
+	if (scaleNode)
+	{
+		m_scale = atoi(scaleNode->FirstChild()->Value());
+	}
+
 	return true;
 }
 
@@ -72,13 +79,58 @@ ant::SFMLSceneNodeStrongPtr ant::SFMLSpriteComponent::createSceneNode( void )
 	if (pTransformComponent)
 	{
 		SFMLBaseRenderComponentWeakPtr weakThis(this);
-
-		return SFMLSceneNodeStrongPtr(GCC_NEW SFMLSpriteNode(m_pOwner->getId(),weakThis,m_textureResource,RenderPass_Static,pTransformComponent->getPostion(),pTransformComponent->getRotation()));
+		return SFMLSceneNodeStrongPtr(GCC_NEW SFMLSpriteNode(m_pOwner->getId(),weakThis,m_textureResource,RenderPass_Actor,pTransformComponent->getPostion(),pTransformComponent->getRotation()));	
 	}
 	return SFMLSceneNodeStrongPtr();
 }
 
 void ant::SFMLSpriteComponent::createInheritedXmlElements( TiXmlElement* pBaseElement )
 {
-	// TODO create inherited xml stuff in 
+	// TODO create inherited XML stuff in 
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// Background Render Component
+//////////////////////////////////////////////////////////////////////////
+
+ant::SFMLBackgroundSpriteComponent::SFMLBackgroundSpriteComponent( void )
+{
+
+}
+
+ant::SFMLSceneNodeStrongPtr ant::SFMLBackgroundSpriteComponent::createSceneNode( void ) 
+{
+	// Try to get the transform component here. Is this an ugly hack?
+	TransformComponentStrongPtr pTransformComponent = MakeStrongPtr(m_pOwner->getComponent<TransformComponent>(TransformComponent::g_Name));
+
+	if (pTransformComponent)
+	{
+		SFMLBaseRenderComponentWeakPtr weakThis(this);
+		return SFMLSceneNodeStrongPtr(GCC_NEW SFMLSpriteNode(m_pOwner->getId(),weakThis,m_textureResource,RenderPass_BackGround,pTransformComponent->getPostion(),pTransformComponent->getRotation()));	
+	}
+	return SFMLSceneNodeStrongPtr();
+}
+
+bool ant::SFMLBackgroundSpriteComponent::delegateInit( TiXmlElement *data ) 
+{
+	// Get texture resource path	
+	TiXmlElement* texNode = data->FirstChildElement("Texture");
+	if (texNode)
+	{
+		m_textureResource = texNode->FirstChild()->Value();
+	}
+
+	TiXmlElement* scaleNode = data->FirstChildElement("Scale");
+	if (scaleNode)
+	{
+		m_scale = atoi(scaleNode->FirstChild()->Value());
+	}
+
+	return true;
+}
+
+void ant::SFMLBackgroundSpriteComponent::createInheritedXmlElements( TiXmlElement* pBaseElement ) 
+{
+	// TODO, spawn XML
 }

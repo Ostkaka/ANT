@@ -154,12 +154,10 @@ LRESULT CALLBACK ant::SFMLHumanView::onMsgProc( sf::Event theEvent )
 
 	LRESULT result = 0;
 	switch(theEvent.type)
-	{	
-		// TODO - add console
+	{			
 		case sf::Event::KeyPressed:
 			if (m_KeyboardHandler)
 			{
-				std::cout << "press! " << std::endl;
 				result = m_KeyboardHandler->onKeyDown(convertSFMLKeyCodeToCharCode(theEvent.key.code));
 			}
 			break;

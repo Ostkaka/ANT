@@ -2,6 +2,7 @@
 #include <ant/graphicsSFML/SFMLSceneNode.hpp>
 #include <ant/eventsystem/Events.hpp>
 #include <ant/core_types.hpp>
+#include <iostream>
 
 using namespace ant;
 
@@ -13,7 +14,7 @@ ant::SFMLScene::SFMLScene( ISFMLRendererStrongPtr renderer )
 	IEventManager* pEventMgr = IEventManager::instance();
 	pEventMgr->addListener(MakeDelegate(this, &SFMLScene::newRenderComponentDelegate), EvtData_New_SFMLRender_Component::sk_EventType);
 	pEventMgr->addListener(MakeDelegate(this, &SFMLScene::destroyActorDelegate), EvtData_Destroy_Actor::sk_EventType);
-	pEventMgr->addListener(MakeDelegate(this, &SFMLScene::moveActorDelegate), EvtData_Move_SFMLActor::sk_EventType);
+	//pEventMgr->addListener(MakeDelegate(this, &SFMLScene::moveActorDelegate), EvtData_Move_SFMLActor::sk_EventType);
 	pEventMgr->addListener(MakeDelegate(this, &SFMLScene::modifiedRenderComponentDelegate), EvtData_Modified_SFMLRender_Component::sk_EventType);
 }
 
@@ -22,7 +23,7 @@ ant::SFMLScene::~SFMLScene()
 	IEventManager* pEventMgr = IEventManager::instance();
 	pEventMgr->removeListener(MakeDelegate(this, &SFMLScene::newRenderComponentDelegate), EvtData_New_SFMLRender_Component::sk_EventType);
 	pEventMgr->removeListener(MakeDelegate(this, &SFMLScene::destroyActorDelegate), EvtData_Destroy_Actor::sk_EventType);
-	pEventMgr->removeListener(MakeDelegate(this, &SFMLScene::moveActorDelegate), EvtData_Move_SFMLActor::sk_EventType);
+	//pEventMgr->removeListener(MakeDelegate(this, &SFMLScene::moveActorDelegate), EvtData_Move_SFMLActor::sk_EventType);
 	pEventMgr->removeListener(MakeDelegate(this, &SFMLScene::modifiedRenderComponentDelegate), EvtData_Modified_SFMLRender_Component::sk_EventType);
 }
 
@@ -75,7 +76,7 @@ HRESULT ant::SFMLScene::onUpdate( const ant::DeltaTime dt )
 	return m_root->onUpdate(this, 0.016);
 }
 
-ant::ISFMLSceneNodeStrongPtr ant::SFMLScene::findActor( ActorId actor )
+ant::ISFMLSceneNodeStrongPtr ant::SFMLScene::findActor( ActorId actor ) 
 {
 	//TODO, lel this is O(n)
 	SFMLSceneActorMap::iterator it = m_actorMap.find(actor);

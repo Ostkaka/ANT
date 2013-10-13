@@ -42,8 +42,8 @@ namespace ant
 	{
 		RenderPass_0,
 		RenderPass_Static = RenderPass_0,
-		RenderPass_Actor,
 		RenderPass_BackGround,
+		RenderPass_Actor,
 		RenderPass_NotRendered,
 		RenderPass_Last
 	};

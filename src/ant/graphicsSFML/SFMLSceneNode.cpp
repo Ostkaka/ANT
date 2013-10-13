@@ -8,6 +8,7 @@
 #include <ant/resources/Resource.hpp>
 #include <ant/graphicsSFML/SFMLRenderer.hpp>
 #include <ant/graphicsSFML/SFMLScene.hpp>
+#include <iostream>
 
 using namespace ant;
 
@@ -169,14 +170,14 @@ ant::SFMLRootNode::SFMLRootNode()
 {
 	m_Children.reserve(RenderPass_Last);
 
+	shared_ptr<SFMLSceneNode> skyGroup(GCC_NEW SFMLSceneNode(INVALID_ACTOR_ID,  NULL,  RenderPass_BackGround, sf::Vector2f(),ant::Real(0)));
+	m_Children.push_back(skyGroup);	// RenderPass_Sky = 2
+
 	shared_ptr<SFMLSceneNode> staticGroup(GCC_NEW SFMLSceneNode(INVALID_ACTOR_ID,  NULL,  RenderPass_Static, sf::Vector2f(),ant::Real(0)));
 	m_Children.push_back(staticGroup); // RenderPass_Static = 0
 
 	shared_ptr<SFMLSceneNode> actorGroup(GCC_NEW SFMLSceneNode(INVALID_ACTOR_ID,  NULL,  RenderPass_Actor, sf::Vector2f(),ant::Real(0)));
 	m_Children.push_back(actorGroup);	// RenderPass_Actor = 1
-
-	shared_ptr<SFMLSceneNode> skyGroup(GCC_NEW SFMLSceneNode(INVALID_ACTOR_ID,  NULL,  RenderPass_BackGround, sf::Vector2f(),ant::Real(0)));
-	m_Children.push_back(skyGroup);	// RenderPass_Sky = 2
 
 	shared_ptr<SFMLSceneNode> invisibleGroup(GCC_NEW SFMLSceneNode(INVALID_ACTOR_ID,  NULL,  RenderPass_NotRendered, sf::Vector2f(),ant::Real(0)));
 	m_Children.push_back(invisibleGroup);	// RenderPass_NotRendered = 3
@@ -253,11 +254,14 @@ HRESULT ant::SFMLCameraNode::setView( SFMLScene * pScene )
 		sf::Vector2f pos = m_target->getNodeProps()->getPosition();
 		ant::Real rot = m_target->getNodeProps()->getRotation();
 
+		// Add the camera offset also
+		pos += m_cameraOffset;
+
 		setPosition(pos);
 		setRotation(rot);
 	}
-
-	// TODO set position and such for renderer
+	
+	// Set view to scene
 	pScene->getRenderer()->setView(getPosition(), getRotation());
 	return S_OK;
 }
@@ -272,8 +276,8 @@ ant::SFMLSpriteNode::SFMLSpriteNode( ActorId actorId,
 	const sf::Vector2f& pos, 
 	const ant::Real& rot )
 	:SFMLSceneNode(actorId,renderComponent,renderPass,pos,rot),
-	m_textureName(textureName)
-{
+	m_textureName(textureName)	
+{	
 	// Now, get the buffer from the resource cache
 	Resource r(m_textureName);
 	ResourceHandleStrongPtr h = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&r);
@@ -296,13 +300,56 @@ HRESULT ant::SFMLSpriteNode::render( SFMLScene *scene )
 {	
 	// First, set proper transformation
 	m_SFMLSprite.setPosition(getPosition());
-	m_SFMLSprite.setRotation(float(getRotation()));
+	m_SFMLSprite.setRotation(float(getRotation()));	
 
 	// Tell the renderer to draw the sprite
 	return scene->getRenderer()->drawSprite(m_SFMLSprite);
 }
 
 HRESULT ant::SFMLSpriteNode::onRestore( SFMLScene *scene ) 
+{
+	return SFMLSceneNode::onRestore(scene);
+	// TODO - do nothing until I get to know what this is
+}
+
+ant::SFMLBackgroundSpriteNode::SFMLBackgroundSpriteNode( ActorId actorId, 
+	SFMLBaseRenderComponentWeakPtr renderComponent, 
+	const std::string& textureName, 
+	SFMLRenderPass renderPass, 
+	const sf::Vector2f& pos, 
+	const ant::Real& rot )
+	:SFMLSceneNode(actorId,renderComponent,renderPass,pos,rot),
+	m_textureName(textureName)	
+{	
+	// Now, get the buffer from the resource cache
+	Resource r(m_textureName);
+	ResourceHandleStrongPtr h = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&r);
+
+	// Is the buffer OK?
+	if (!h->getBuffer())
+	{
+		GCC_ERROR("Buffer from texture resource is bad");
+	}
+
+	if (!m_texture.loadFromMemory(h->getBuffer(),h->getSize()))
+	{		
+		GCC_ERROR("sf::Texture could not load buffer from memory: " + m_textureName);
+	}
+
+	m_SFMLSprite.setTexture(m_texture);
+}
+
+HRESULT ant::SFMLBackgroundSpriteNode::render( SFMLScene *scene ) 
+{
+	// First, set proper transformation
+	m_SFMLSprite.setPosition(getPosition());
+	m_SFMLSprite.setRotation(float(getRotation()));	
+
+	// Tell the renderer to draw the sprite
+	return scene->getRenderer()->drawSprite(m_SFMLSprite);
+}
+
+HRESULT ant::SFMLBackgroundSpriteNode::onRestore( SFMLScene *scene ) 
 {
 	return SFMLSceneNode::onRestore(scene);
 	// TODO - do nothing until I get to know what this is
