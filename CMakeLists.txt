@@ -15,7 +15,8 @@ include(${PROJECT_SOURCE_DIR}/cmake/HandleDependencies.cmake)
 INCLUDE(ExternalProject)
 
 # Set default ExternalProject root directory
-SET_DIRECTORY_PROPERTIES(PROPERTIES EP_PREFIX ${CMAKE_BINARY_DIR}/dependecies)
+set(EP_PREFIX ${CMAKE_BINARY_DIR}/dependecies)
+SET_DIRECTORY_PROPERTIES(PROPERTIES EP_PREFIX ${EP_PREFIX})
 
 # define the path of our additional CMake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/Modules/)
@@ -170,10 +171,8 @@ endif(FASTDELEGATE_FOUND)
 # Add Box2d
 ExternalProject_Add(
     box2d
-    SVN_REPOSITORY http://box2d.googlecode.com/svn/trunk/Box2D
-    TIMEOUT 10
-    #Set CMakeLists path
-
+    SVN_REPOSITORY http://box2d.googlecode.com/svn/trunk/Box2D/Box2D
+    TIMEOUT 10  
     # Force separate output paths for debug and release builds to allow easy
     # identification of correct lib in subsequent TARGET_LINK_LIBRARIES commands
     CMAKE_ARGS -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=DebugLibs
