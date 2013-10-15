@@ -1,4 +1,5 @@
 #include <ant/graphicsSFML/SFMLRenderer.hpp>
+#include <iostream>
 
 using namespace ant;
 
@@ -40,15 +41,14 @@ bool ant::SFMLRenderer::postRender(void)
 
 void ant::SFMLRenderer::setView( sf::Vector2f pos, ant::Real angle )
 {
-	sf::View view;
-	view.setCenter(pos);
-	view.setRotation(float(angle));
-	m_centerView = view;
+	m_centerView.setCenter(pos);
+	m_centerView.setRotation(float(angle));
+	m_centerView;
 
 	// Set the view size to window size also	
 	m_centerView.setSize(float(m_window->getSize().x),float(m_window->getSize().y));
-
-	m_window->setView(view);
+		
+	m_window->setView(m_centerView);
 }
 
 void ant::SFMLRenderer::shutDown(void)

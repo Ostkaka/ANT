@@ -28,7 +28,7 @@ namespace ant
 			* assets among other things
 			*/
 			static ISFMLApp * getApp();
-
+			
 			/*
 			* Processes the command line for arguments 
 			*/

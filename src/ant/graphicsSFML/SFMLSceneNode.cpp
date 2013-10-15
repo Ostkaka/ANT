@@ -301,6 +301,7 @@ HRESULT ant::SFMLSpriteNode::render( SFMLScene *scene )
 	// First, set proper transformation
 	m_SFMLSprite.setPosition(getPosition());
 	m_SFMLSprite.setRotation(float(getRotation()));	
+	m_SFMLSprite.setScale(3,3);
 
 	// Tell the renderer to draw the sprite
 	return scene->getRenderer()->drawSprite(m_SFMLSprite);
