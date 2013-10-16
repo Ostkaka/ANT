@@ -44,7 +44,7 @@ namespace ant
 			//virtual void moveActor(const ActorId id, Mat4x4 const &mat) = 0;
 
 			/// Gets the active game physics implementation in the game logic
-			virtual IGamePhysicsStrongPtr getGamePhysics(void) = 0;
+			virtual IGamePhysics2DStrongPtr getGamePhysics(void) = 0;
 	};
 }
 

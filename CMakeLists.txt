@@ -188,9 +188,8 @@ SET_PROPERTY(TARGET box2d PROPERTY FOLDER "external")
 ExternalProject_Get_Property(box2d source_dir)
 INCLUDE_DIRECTORIES(${source_dir}/include)
 
-MEssage("Release: " ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES})
-
-#set(DEPENDECY_LIBS ${DEPENDECY_LIBS} ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES} ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES})
+# Message("Release: " ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES})
+set(DEPENDECY_LIBS ${DEPENDECY_LIBS} ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES} ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES})
 
 # add the ANT subdirectory
 message("Configuring ANT...")
