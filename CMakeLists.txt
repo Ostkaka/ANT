@@ -185,10 +185,14 @@ ExternalProject_Add(
     LOG_BUILD ON)
 
 SET_PROPERTY(TARGET box2d PROPERTY FOLDER "external")
-ExternalProject_Get_Property(box2d source_dir)
-INCLUDE_DIRECTORIES(${source_dir}/include)
 
-# Message("Release: " ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES})
+# Get include directory of external project
+ExternalProject_Get_Property(box2d source_dir)
+INCLUDE_DIRECTORIES(${source_dir}/..)
+MESSAGE(" fdjgid " ${source_dir}/..)
+
+# Get binary directory of external project
+ExternalProject_Get_Property(box2d binary_dir)
 set(DEPENDECY_LIBS ${DEPENDECY_LIBS} ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES} ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES})
 
 # add the ANT subdirectory

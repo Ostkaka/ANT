@@ -15,8 +15,8 @@ namespace ant
 		virtual ~IGamePhysics2D() { };
 
 		virtual bool initialize()=0;
-		virtual bool syncVisibleScene()=0;
-		virtual bool onUpdate(ant::DeltaTime dt)=0;
+		virtual void syncVisibleScene()=0;
+		virtual void onUpdate(ant::DeltaTime dt)=0;
 
 		// Create physics object
 		virtual	void addSphere(ant::Real radius, ActorWeakPtr actor)=0;

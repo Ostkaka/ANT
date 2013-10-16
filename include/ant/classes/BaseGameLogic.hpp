@@ -107,7 +107,7 @@ namespace ant
 		/// Game physics
 		void toggleRenderDiagnostics();  /// Should this even be here?
 		virtual void renderDiagnostics();
-		virtual IGamePhysicsStrongPtr getGamePhysics(void); 
+		virtual IGamePhysics2DStrongPtr getGamePhysics(void); 
 
 		/// Attach a process into the process manager inside the game logic
 		void attachProcesses(IProcessStrongPtr process);
@@ -151,7 +151,7 @@ namespace ant
 		BaseGameState m_gameState;
 		/// Game physics
 		bool m_renderDiagnostics;
-		IGamePhysicsStrongPtr m_gamePhysics;
+		IGamePhysics2DStrongPtr m_gamePhysics;
 		/// The level manager of the game
 		LevelManager* m_levelManager;
 	};
@@ -163,7 +163,7 @@ namespace ant
 
 	ANT_INLINE ActorId BaseGameLogic::getNewActorId(void) { return m_lastActorId++; }
 
-	ANT_INLINE IGamePhysicsStrongPtr BaseGameLogic::getGamePhysics(void) { return m_gamePhysics; }
+	ANT_INLINE IGamePhysics2DStrongPtr BaseGameLogic::getGamePhysics(void) { return m_gamePhysics; }
 
 	ANT_INLINE const LevelManager* BaseGameLogic::getLevelManager(void) { return m_levelManager; }
 
