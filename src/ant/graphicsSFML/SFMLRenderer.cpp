@@ -70,5 +70,3 @@ bool ant::SFMLRenderer::drawRectangle( const sf::RectangleShape& rectangle )
 	m_window->draw(rectangle);
 	return true;
 }
-
-
