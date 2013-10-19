@@ -171,15 +171,18 @@ endif(FASTDELEGATE_FOUND)
 # Add Box2d
 ExternalProject_Add(
     box2d
-    SVN_REPOSITORY http://box2d.googlecode.com/svn/trunk/Box2D/Box2D
+    SVN_REPOSITORY http://box2d.googlecode.com/svn/trunk/Box2D
     TIMEOUT 10  
     # Force separate output paths for debug and release builds to allow easy
     # identification of correct lib in subsequent TARGET_LINK_LIBRARIES commands
-    CMAKE_ARGS -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=DebugLibs
-               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=ReleaseLibs
-    # Disable install step
-    INSTALL_COMMAND ""
+   	CMAKE_ARGS -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=DebugLibs
+               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=ReleaseLibs 
+               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO:PATH=ReleaseLibs 
+               -DCMAKE_CXX_FLAGS=${MSVC_COMPILER_DEFS}
+               -DBOX2D_BUILD_SHARED=ON -BOX2D_INSTALL=ON 
     # Wrap download, configure and build steps in a script to log output
+	# Disable install step
+    INSTALL_COMMAND ""
     LOG_DOWNLOAD ON
     LOG_CONFIGURE ON
     LOG_BUILD ON)
@@ -188,12 +191,11 @@ SET_PROPERTY(TARGET box2d PROPERTY FOLDER "external")
 
 # Get include directory of external project
 ExternalProject_Get_Property(box2d source_dir)
-INCLUDE_DIRECTORIES(${source_dir}/..)
-MESSAGE(" fdjgid " ${source_dir}/..)
+INCLUDE_DIRECTORIES(${source_dir})
 
 # Get binary directory of external project
 ExternalProject_Get_Property(box2d binary_dir)
-set(DEPENDECY_LIBS ${DEPENDECY_LIBS} ${binary_dir}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES} ${binary_dir}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES})
+set(BOX2D_LIB_DIR ${binary_dir})
 
 # add the ANT subdirectory
 message("Configuring ANT...")
