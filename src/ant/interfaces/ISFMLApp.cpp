@@ -329,4 +329,14 @@ void ant::ISFMLApp::registerEngineEvents( void )
 	//REGISTER_EVENT(EvtData_Network_Player_Actor_Assignment);
 }
 
+ISFMLApp * ant::ISFMLApp::getApp()
+{
+	return g_App;
+}
+
+IGameLogic * ant::ISFMLApp::getGameLogic()
+{
+	return m_gameLogic;
+}
+
 

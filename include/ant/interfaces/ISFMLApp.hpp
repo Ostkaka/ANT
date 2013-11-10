@@ -65,6 +65,11 @@ namespace ant
        */
 			void quit(int exitCode = 1);
 
+			/**
+			 * Get the game logic from the APP
+			 */
+			IGameLogic * getGameLogic();
+
 		protected:
 
       /**

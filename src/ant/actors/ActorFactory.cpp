@@ -6,6 +6,7 @@
 #include <ant/actors/BaseScriptComponent.hpp>
 #include <ant/actors/TransformComponent.hpp>
 #include <ant/graphicsSFML/SFMLRenderComponent.hpp>
+#include <ant/2DPhysics/PhysicsComponent.hpp>
 
 #include <tinyxml.h>
 
@@ -14,10 +15,10 @@ using namespace ant;
 ant::ActorFactory::ActorFactory( void )
 {
 	m_lastActorId = INVALID_ACTOR_ID;
-
-	// TODO - Register game components when they are created
+	
 	m_componentFactory.Register<BaseScriptComponent>(ActorComponent::getIdFromName(BaseScriptComponent::g_Name));
 	m_componentFactory.Register<TransformComponent>(ActorComponent::getIdFromName(TransformComponent::g_Name));	
+	m_componentFactory.Register<Physics2DComponent>(ActorComponent::getIdFromName(Physics2DComponent::g_Name));	
 
 	// TODO - Render components	
 	m_componentFactory.Register<SFMLSpriteComponent>(ActorComponent::getIdFromName(SFMLSpriteComponent::g_Name));

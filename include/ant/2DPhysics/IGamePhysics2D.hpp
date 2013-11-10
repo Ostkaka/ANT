@@ -15,6 +15,8 @@ namespace ant
 		public:
 		virtual ~IGamePhysics2D() { };
 
+		virtual void registerGameLogic(IGameLogic * gameLogic);
+
 		virtual bool initialize()=0;
 		virtual void syncVisibleScene()=0;
 		virtual void onUpdate(ant::DeltaTime dt)=0;
@@ -24,16 +26,21 @@ namespace ant
 		virtual void removeActor(const ActorId& id)=0;
 
 		// Physics modifier functions
-		virtual void applyForce(const sf::Vector2f& force, ActorId id)=0;
-		virtual void kinematicMove(const sf::Vector2f& pos, ActorId id)=0;	
-		virtual void setVelocity(const sf::Vector2f& pos, ActorId id)=0;
-		virtual const sf::Vector2f& getVelocity(ActorId id)=0;
-		virtual void setAngularVelocity(ant::Real rotVel, ActorId id)=0;
-		virtual const sf::Vector2f& getAngularVelocity(ant::Real rotVel)=0;
+		virtual void applyForce(const sf::Vector2f& force, const ActorId&)=0;
+		virtual bool kinematicMove(const sf::Vector2f& pos, const ActorId&)=0;	
 
-		// Physics states
+		// Physics actor state
+		virtual void setVelocity(const sf::Vector2f& vel,const ActorId&)=0;
+		virtual const sf::Vector2f& getVelocity(const ActorId&)=0;
+		virtual void setAngularVelocity(ant::Real rotVel, const ActorId& id)=0;
+		virtual const ant::Real& getAngularVelocity(const ActorId&)=0;
+		virtual void stopActor( const ActorId& id)=0;				
 		virtual void translate(const ActorId& id, const sf::Vector2f& pos)=0;
 		virtual void rotate(const ActorId& id, ant::Real rot)=0;		
+		virtual void setPosition(const ActorId& id, const sf::Vector2f& pos)=0;
+		virtual const sf::Vector2f& getPosition(const ActorId& id)=0;
+		virtual void setRotation(const ActorId& id, ant::Real rot)=0;
+		virtual const ant::Real& getRotation(const ActorId& id)=0;
 	};
 }
 
