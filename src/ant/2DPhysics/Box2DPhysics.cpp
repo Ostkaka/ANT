@@ -62,6 +62,8 @@ void ant::Box2DPhysics::syncVisibleScene()
 		{			
 			TransformComponentStrongPtr transform = MakeStrongPtr(pGameActor->getComponent<TransformComponent>(TransformComponent::g_Name));
 
+			// TODO insert conversion between pixels and meters!!!
+
 			transform->setPosition(convertBox2DVec2fTosfVector2f(actorBody->GetPosition()));
 			transform->setRotation(actorBody->GetAngle());
 

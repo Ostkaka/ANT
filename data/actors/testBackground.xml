@@ -1,0 +1,9 @@
+<Actor type="Grid" resource="actors\testBackground">
+	<TransformComponent>
+		<Position x="-300" y="-250"/>
+		<Rotation angle="0"/>
+	</TransformComponent>
+	<SFMLBackgroundSpriteComponent>
+		<Texture>resources\splash.png</Texture>
+	</SFMLBackgroundSpriteComponent>
+</Actor>

@@ -1,0 +1,10 @@
+<Actor type="Ground" resource="actors\floorActor">
+	<TransformComponent>
+		<Position x="-500" y="200"/>
+		<Rotation angle="0"/>
+	</TransformComponent>
+	<SFMLRectanglePrimitiveComponent>
+		<Size x="1200" y="300"/>
+		<Filled>1</Filled>
+	</SFMLRectanglePrimitiveComponent>
+</Actor>

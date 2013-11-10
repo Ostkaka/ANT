@@ -1,0 +1,9 @@
+<Actor type="Player" resource="actors\bowserActor">
+	<TransformComponent>
+		<Position x="-200" y="-250"/>
+		<Rotation angle="0"/>
+	</TransformComponent>
+	<SFMLSpriteComponent>
+		<Texture>resources\bowser.png</Texture>
+	</SFMLSpriteComponent>
+</Actor>

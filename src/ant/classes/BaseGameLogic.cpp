@@ -11,6 +11,7 @@
 #include <ant/gccUtils/String.hpp>
 #include <ant/eventsystem/Events.hpp>
 #include <ant/classes/HumanView.hpp>
+#include <ant/2DPhysics/Box2DPhysics.hpp>
 #include <iostream>
 
 using namespace ant;
@@ -180,6 +181,10 @@ void ant::BaseGameLogic::onUpdate( ant::DeltaTime time, ant::DeltaTime elapsedTi
 
 		case GAME_STATE_RUNNING:
 			m_processManager->updateProcesses(dt);
+			if (m_gamePhysics)
+			{
+				m_gamePhysics->syncVisibleScene();
+			}
 			// TODO Update physics! PHYSICS!
 			break;
 

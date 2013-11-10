@@ -184,4 +184,3 @@ void ant::Physics2DComponent::handleRigidBodyTransform( TiXmlElement* pData )
 		m_rigidBodyScale = sf::Vector3f(x, y, z);
 	}
 }
-

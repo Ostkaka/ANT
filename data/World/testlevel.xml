@@ -1,0 +1,7 @@
+<World>
+    <StaticActors>
+      <Actor resource="actors\testBackground.xml" />
+      <Actor resource="actors\BowserActor.xml" />
+      <Actor resource="actors\floorActor.xml" /> 
+   </StaticActors>
+</World>
