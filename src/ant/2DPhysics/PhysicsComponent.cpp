@@ -53,17 +53,23 @@ bool ant::Physics2DComponent::init( TiXmlElement* pData )
 		m_density = pMaterial->FirstChild()->Value();
 	}
 
+	// Get transformation properties such as scale, position and stuff
+	TiXmlElement *pTranform = pData->FirstChildElement("RigidBodyTransform");
+	if (pTranform)
+	{
+		handleRigidBodyTransform(pTranform);
+	}
+
 	return true;
 }
 
 void ant::Physics2DComponent::postInit() 
 {
-
 	if (m_pOwner)
 	{
 		if (m_shape == "Circle")
 		{
-			m_pPhysics->addSphere(1.0,m_pOwner,m_density,m_material);
+			m_pPhysics->addSphere(m_rigidBodyScale.x,m_pOwner,m_density,m_material);
 		}
 	}
 }
@@ -161,5 +167,21 @@ bool ant::Physics2DComponent::kinematicMove( const sf::Vector2f& pos )
 TiXmlElement* ant::Physics2DComponent::generateXml( void ) 
 {
 	return NULL;
+}
+
+void ant::Physics2DComponent::handleRigidBodyTransform( TiXmlElement* pData )
+{
+
+	TiXmlElement* pScaleElement = pData->FirstChildElement("Scale");
+	if (pScaleElement)
+	{
+		ant::Real x = 0;
+		ant::Real y = 0;
+		ant::Real z = 0;
+		pScaleElement->Attribute("x", &x);
+		pScaleElement->Attribute("y", &y);
+		pScaleElement->Attribute("z", &z);
+		m_rigidBodyScale = sf::Vector3f(x, y, z);
+	}
 }
 

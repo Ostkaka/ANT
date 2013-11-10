@@ -38,6 +38,7 @@ namespace ant
 		virtual const char *getName() const ANT_OVERRIDE { return Physics2DComponent::g_Name; }
 
 	protected:
+		void handleRigidBodyTransform(TiXmlElement* pData);
 		void createShape();
 
 		//////////////////////////////////////////////////////////////////////////
@@ -53,6 +54,8 @@ namespace ant
 
 		ant::Real               m_angularAcceleration;
 		ant::Real               m_maxAngularVelocity;
+
+		sf::Vector3f            m_rigidBodyScale;
 				
 		IGamePhysics2DStrongPtr m_pPhysics;
 	};
