@@ -118,7 +118,6 @@ namespace ant
 	/**
 	 * Class that render a rectangle primitive 
 	 */
-
 	class SFMLRectanglePrimitiveComponent : public SFMLBaseRenderComponent
 	{		
 
@@ -144,6 +143,38 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 	protected:		
 		sf::Vector2f m_size;
+		bool				 m_filled;
+	public:
+		static const char *g_Name;
+	};
+
+		/**
+	 * Class that render a circle primitive 
+	 */
+	class SFMLCirclePrimitiveComponent : public SFMLBaseRenderComponent
+	{		
+	public:
+		/// Default constructor
+		SFMLCirclePrimitiveComponent(void);
+
+		virtual const char *getName() const { return g_Name; }
+
+	protected:
+		// factory method to create the appropriate scene node
+		virtual SFMLSceneNodeStrongPtr createSceneNode(void) ANT_OVERRIDE;  
+
+		/// Loads data to the scene node from the <SceneNode> tag
+		virtual bool delegateInit(TiXmlElement *data) ANT_OVERRIDE;
+
+		/// Functions that subclasses implement that extends XML generation for child-classes
+		virtual void createInheritedXmlElements(TiXmlElement* pBaseElement) ANT_OVERRIDE;
+
+	private:
+		//////////////////////////////////////////////////////////////////////////
+		// Variables
+		//////////////////////////////////////////////////////////////////////////
+	protected:		
+		ant::Real		 m_radius;
 		bool				 m_filled;
 	public:
 		static const char *g_Name;

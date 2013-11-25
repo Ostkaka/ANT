@@ -6,6 +6,8 @@
 #include <ant/actors/TransformComponent.hpp>
 #include <ant/eventsystem/Events.hpp>
 #include <SFML/Graphics.hpp>
+#include <ant/interfaces/ISFMLApp.hpp>
+#include <iostream>
 
 using namespace ant;
 
@@ -19,16 +21,9 @@ ant::Box2DPhysics::~Box2DPhysics()
 
 }
 
-void ant::Box2DPhysics::registerGameLogic( IGameLogic * gameLogic ) 
-{
-	GCC_ASSERT( gameLogic );
-	m_gameLogic = gameLogic;
-}
-
 bool ant::Box2DPhysics::initialize() 
 {
-	// Make sure that we register the game logic first
-	GCC_ASSERT( m_gameLogic );
+	GCC_INFO("Initializing Game Physics");
 
 	// TODO - Load XML for material
 	
@@ -36,6 +31,9 @@ bool ant::Box2DPhysics::initialize()
 	m_PhysicsWorld = new b2World(b2Vec2(0,DEFAULT_GRAVITY));
 
 	// TODO - initialize the debug drawer
+
+	// Get the logic pointer from the global application
+	m_gameLogic = ISFMLApp::getApp()->getGameLogic();
 
 	return true;
 }
@@ -62,9 +60,11 @@ void ant::Box2DPhysics::syncVisibleScene()
 		{			
 			TransformComponentStrongPtr transform = MakeStrongPtr(pGameActor->getComponent<TransformComponent>(TransformComponent::g_Name));
 
-			// TODO insert conversion between pixels and meters!!!
-
-			transform->setPosition(convertBox2DVec2fTosfVector2f(actorBody->GetPosition()));
+			// Converts the position to pixel coordinates
+			sf::Vector2f pos = convertBox2DVec2fTosfVector2f(actorBody->GetPosition());
+			pos = sf::Vector2f(pos.x * PIXELS_PER_METER, pos.y * PIXELS_PER_METER);
+		
+			transform->setPosition(pos);
 			transform->setRotation(actorBody->GetAngle());
 
 			// Send event that the actor have moved
@@ -80,6 +80,7 @@ void ant::Box2DPhysics::onUpdate( ant::DeltaTime dt )
 	if (m_PhysicsWorld)
 	{
 		m_PhysicsWorld->Step(dt,DEFAULT_VELOCITY_ITERATIONS,DEFAULT_POSITIONS_ITERATIONS);
+		m_PhysicsWorld->SetGravity(b2Vec2(0,-0.01));
 	}	
 }
 
@@ -109,7 +110,6 @@ void ant::Box2DPhysics::addSphere( ant::Real radius, ActorWeakPtr actor, std::st
 
 void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureDef, std::string material )
 {
-
 	GCC_ASSERT( pActor );
 	
 	ActorId id = pActor->getId();
@@ -129,7 +129,7 @@ void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureD
 	GCC_ASSERT(pTransform);	
 	if (pTransform)
 	{
-		pos = pTransform->getPostion();
+		pos = sf::Vector2f(pTransform->getPostion().x / PIXELS_PER_METER, pTransform->getPostion().y / PIXELS_PER_METER);
 		angle = pTransform->getRotation();
 	}
 	else 
@@ -238,7 +238,7 @@ void ant::Box2DPhysics::setRotation( const ActorId& id, ant::Real rot )
 	body->SetTransform(body->GetPosition(),rot);
 }
 
-void ant::Box2DPhysics::setVelocity( const sf::Vector2f& velocity, const ActorId& id ) 
+void ant::Box2DPhysics::setVelocity( const ActorId& id, const sf::Vector2f& velocity ) 
 {
 	// Get body 
 	b2Body * body = findB2Body(id);
@@ -256,7 +256,7 @@ const sf::Vector2f& ant::Box2DPhysics::getVelocity( const ActorId& id )
 	return convertBox2DVec2fTosfVector2f(body->GetLinearVelocity());
 }
 
-void ant::Box2DPhysics::setAngularVelocity( ant::Real rotVel, const ActorId& id ) 
+void ant::Box2DPhysics::setAngularVelocity( const ActorId& id,  ant::Real rotVel ) 
 {
 	// Get body 
 	b2Body * body = findB2Body(id);
@@ -290,6 +290,11 @@ const ant::Real& ant::Box2DPhysics::getRotation( const ActorId& id )
 	GCC_ASSERT(body);
 
 	return (body->GetAngle());
+}
+
+void ant::Box2DPhysics::stopActor( const ActorId& id ) 
+{
+	setVelocity(id, sf::Vector2f(0,0));
 }
 
 

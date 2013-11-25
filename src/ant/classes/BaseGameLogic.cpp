@@ -37,6 +37,8 @@ ant::BaseGameLogic::BaseGameLogic()
 	GCC_ASSERT(m_processManager && m_levelManager);
 	//m_pLevelManager->Initialize(g_pApp->m_ResCache->Match("world\\*.xml")); // This is not good at all
 
+	m_gamePhysics = GCC_NEW Box2DPhysics();
+
 	registerEngineScriptEvents();
 	registerAllDelegates();
 }
@@ -52,6 +54,7 @@ ant::BaseGameLogic::~BaseGameLogic()
 	SAFE_DELETE(m_levelManager);
 	SAFE_DELETE(m_processManager);
 	SAFE_DELETE(m_actorFactory);
+	SAFE_DELETE(m_gamePhysics);
 
 	// Destroy all actors
 	for (auto it = m_actors.begin() ; it != m_actors.end() ; ++it)
@@ -59,12 +62,13 @@ ant::BaseGameLogic::~BaseGameLogic()
 		it->second->destroy();
 	}
 	m_actors.clear();
-
 }
 
 bool ant::BaseGameLogic::init( void )
 {
 	m_actorFactory = createActorFactory();
+
+	m_gamePhysics->initialize();
 
 	return true;
 }
@@ -134,7 +138,7 @@ bool ant::BaseGameLogic::loadGame( const char* levelResource )
 	if (postLoadScript)
 	{
 		Resource resource(postLoadScript);
-		// THis will automaticlly load the post script to the lua manager
+		// THis will automatically load the post script to the lua manager
 		ResourceHandleStrongPtr pResourceHandle = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&resource);
 	}
 
@@ -183,9 +187,10 @@ void ant::BaseGameLogic::onUpdate( ant::DeltaTime time, ant::DeltaTime elapsedTi
 			m_processManager->updateProcesses(dt);
 			if (m_gamePhysics)
 			{
+				m_gamePhysics->onUpdate(dt);
 				m_gamePhysics->syncVisibleScene();
 			}
-			// TODO Update physics! PHYSICS!
+			
 			break;
 
 		default:

@@ -5,9 +5,10 @@
 
 using namespace ant;
 
-const char* SFMLSpriteComponent::g_Name = "SFMLSpriteComponent";
-const char* SFMLBackgroundSpriteComponent::g_Name = "SFMLBackgroundSpriteComponent";
+const char* SFMLSpriteComponent::g_Name             = "SFMLSpriteComponent";
+const char* SFMLBackgroundSpriteComponent::g_Name   = "SFMLBackgroundSpriteComponent";
 const char* SFMLRectanglePrimitiveComponent::g_Name = "SFMLRectanglePrimitiveComponent";
+const char* SFMLCirclePrimitiveComponent::g_Name    = "SFMLCirclePrimitiveComponent";
 
 //////////////////////////////////////////////////////////////////////////
 // Base Render Component
@@ -139,7 +140,6 @@ void ant::SFMLBackgroundSpriteComponent::createInheritedXmlElements( TiXmlElemen
 	// TODO, spawn XML
 }
 
-
 //////////////////////////////////////////////////////////////////////////
 // SFMLRectanglePrimitiveComponent
 //////////////////////////////////////////////////////////////////////////
@@ -178,7 +178,6 @@ bool ant::SFMLRectanglePrimitiveComponent::delegateInit( TiXmlElement *data )
 		m_size.y = float(y);
 	}
 
-	// Get texture resource path	
 	TiXmlElement* texNode = data->FirstChildElement("Filled");
 	if (texNode)
 	{
@@ -189,6 +188,45 @@ bool ant::SFMLRectanglePrimitiveComponent::delegateInit( TiXmlElement *data )
 }
 
 void ant::SFMLRectanglePrimitiveComponent::createInheritedXmlElements( TiXmlElement* pBaseElement ) 
+{
+	// TODO, spawn XML
+}
+
+//////////////////////////////////////////////////////////////////////////
+// SFMLCirclePrimitiveComponent
+//////////////////////////////////////////////////////////////////////////
+
+ant::SFMLCirclePrimitiveComponent::SFMLCirclePrimitiveComponent( void )
+{
+	m_radius = 0;
+}
+
+ant::SFMLSceneNodeStrongPtr ant::SFMLCirclePrimitiveComponent::createSceneNode( void ) 
+{
+	// Try to get the transform component here. Is this an ugly hack?
+	TransformComponentStrongPtr pTransformComponent = MakeStrongPtr(m_pOwner->getComponent<TransformComponent>(TransformComponent::g_Name));
+
+	if (pTransformComponent)
+	{
+		SFMLBaseRenderComponentWeakPtr weakThis(this);
+		return SFMLSceneNodeStrongPtr(GCC_NEW SFMLCirclePrimitiveNode(m_pOwner->getId(), weakThis, m_radius ,m_filled, RenderPass_Actor,pTransformComponent->getPostion(),pTransformComponent->getRotation()));	
+	}
+	return SFMLSceneNodeStrongPtr();
+}
+
+bool ant::SFMLCirclePrimitiveComponent::delegateInit( TiXmlElement *data ) 
+{
+	GCC_ASSERT(data);
+
+	TiXmlElement* scaleNode = data->FirstChildElement("Radius");
+	if (scaleNode)
+	{
+		m_radius = atoi(scaleNode->FirstChild()->Value());
+	}
+	return true;
+}
+
+void ant::SFMLCirclePrimitiveComponent::createInheritedXmlElements( TiXmlElement* pBaseElement ) 
 {
 	// TODO, spawn XML
 }

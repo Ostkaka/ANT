@@ -79,7 +79,7 @@ void ant::Physics2DComponent::update( ant::DeltaTime dt )
 	// Get the transform component
 	TransformComponentStrongPtr pTransform = MakeStrongPtr(m_pOwner->getComponent<TransformComponent>(TransformComponent::g_Name));
 
-	if (pTransform)
+	if (!pTransform)
 	{
 		GCC_ERROR("Actor does not have a transform");
 		return;
@@ -115,6 +115,7 @@ void ant::Physics2DComponent::applyForce( const sf::Vector2f& force )
 void ant::Physics2DComponent::applyRotation( const ant::Real force )
 {
 	// TODO
+	GCC_ASSERT(false);
 }
 
 void ant::Physics2DComponent::applyAcceleration( float acceleration )
@@ -134,7 +135,7 @@ const sf::Vector2f& ant::Physics2DComponent::getVelocity()
 
 void ant::Physics2DComponent::setVelocity( const sf::Vector2f velocity )
 {
-	m_pPhysics->setVelocity(velocity, m_pOwner->getId());
+	m_pPhysics->setVelocity(m_pOwner->getId(), velocity);
 }
 
 void ant::Physics2DComponent::setPosition( const sf::Vector2f position )

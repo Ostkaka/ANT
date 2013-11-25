@@ -24,6 +24,7 @@ ant::ActorFactory::ActorFactory( void )
 	m_componentFactory.Register<SFMLSpriteComponent>(ActorComponent::getIdFromName(SFMLSpriteComponent::g_Name));
 	m_componentFactory.Register<SFMLBackgroundSpriteComponent>(ActorComponent::getIdFromName(SFMLBackgroundSpriteComponent::g_Name));	
 	m_componentFactory.Register<SFMLRectanglePrimitiveComponent>(ActorComponent::getIdFromName(SFMLRectanglePrimitiveComponent::g_Name));	
+	m_componentFactory.Register<SFMLCirclePrimitiveComponent>(ActorComponent::getIdFromName(SFMLCirclePrimitiveComponent::g_Name));	
 }
 
 ant::ActorFactory::~ActorFactory()

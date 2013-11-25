@@ -57,7 +57,7 @@ namespace ant
 
 		sf::Vector3f            m_rigidBodyScale;
 				
-		IGamePhysics2DStrongPtr m_pPhysics;
+		IGamePhysics2D*         m_pPhysics;
 	};
 
 }

@@ -280,6 +280,33 @@ namespace ant
 		bool               m_filled;
 		sf::RectangleShape m_rectangleShape;
 	};
+
+	/**
+	 * Circle primitive drawn with SFML
+	 */
+	class SFMLCirclePrimitiveNode : public SFMLSceneNode
+	{
+	public:
+		SFMLCirclePrimitiveNode(ActorId actorId, 
+			SFMLBaseRenderComponentWeakPtr renderComponent, 
+			const ant::Real& size,
+			const bool& filled,
+			SFMLRenderPass renderPass, 
+			const sf::Vector2f& pos, 
+			const ant::Real& rot);
+
+		virtual HRESULT render(SFMLScene *scene) ANT_OVERRIDE; 		
+
+		virtual HRESULT onRestore(SFMLScene *scene) ANT_OVERRIDE;
+
+		//////////////////////////////////////////////////////////////////////////
+		// Variables
+		//////////////////////////////////////////////////////////////////////////
+	protected:
+		ant::Real          m_radius;
+		bool               m_filled;
+		sf::CircleShape    m_circleShape;
+	};
 }
 
 #endif

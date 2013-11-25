@@ -15,8 +15,6 @@ namespace ant
 		public:
 		virtual ~IGamePhysics2D() { };
 
-		virtual void registerGameLogic(IGameLogic * gameLogic);
-
 		virtual bool initialize()=0;
 		virtual void syncVisibleScene()=0;
 		virtual void onUpdate(ant::DeltaTime dt)=0;
@@ -30,9 +28,9 @@ namespace ant
 		virtual bool kinematicMove(const sf::Vector2f& pos, const ActorId&)=0;	
 
 		// Physics actor state
-		virtual void setVelocity(const sf::Vector2f& vel,const ActorId&)=0;
+		virtual void setVelocity(const ActorId& id, const sf::Vector2f& vel )=0;
 		virtual const sf::Vector2f& getVelocity(const ActorId&)=0;
-		virtual void setAngularVelocity(ant::Real rotVel, const ActorId& id)=0;
+		virtual void setAngularVelocity(const ActorId& id, ant::Real rotVel)=0;
 		virtual const ant::Real& getAngularVelocity(const ActorId&)=0;
 		virtual void stopActor( const ActorId& id)=0;				
 		virtual void translate(const ActorId& id, const sf::Vector2f& pos)=0;

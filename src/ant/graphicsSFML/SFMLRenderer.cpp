@@ -70,3 +70,10 @@ bool ant::SFMLRenderer::drawRectangle( const sf::RectangleShape& rectangle )
 	m_window->draw(rectangle);
 	return true;
 }
+
+bool ant::SFMLRenderer::drawCircle( const sf::CircleShape& circle )
+{
+	GCC_ASSERT(m_window);
+	m_window->draw(circle);
+	return true;
+}

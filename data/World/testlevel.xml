@@ -3,5 +3,6 @@
       <Actor resource="actors\testBackground.xml" />
       <Actor resource="actors\BowserActor.xml" />
       <Actor resource="actors\floorActor.xml" /> 
-   </StaticActors>
+      <Actor resource="actors\circleActor.xml" /> 
+    </StaticActors>
 </World>

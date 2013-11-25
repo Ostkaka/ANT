@@ -399,3 +399,41 @@ HRESULT ant::SFMLRectanglePrimitiveNode::onRestore( SFMLScene *scene )
 {
 	return SFMLSceneNode::onRestore(scene);
 }
+
+//////////////////////////////////////////////////////////////////////////
+// SFMLCirclePrimitiveNode
+//////////////////////////////////////////////////////////////////////////
+
+ant::SFMLCirclePrimitiveNode::SFMLCirclePrimitiveNode( ActorId actorId, 
+	SFMLBaseRenderComponentWeakPtr renderComponent, 
+	const ant::Real& radius, 
+	const bool& filled, 
+	SFMLRenderPass renderPass, 
+	const sf::Vector2f& pos, 
+	const ant::Real& rot )
+	:SFMLSceneNode(actorId,renderComponent,renderPass,pos,rot),
+	m_radius(radius),
+	m_filled(filled)
+{
+	sf::Color color(255,0,0,255);
+	m_circleShape.setRadius(radius);
+	if (m_filled)
+	{
+		m_circleShape.setFillColor(color);
+		m_circleShape.setOutlineColor(color);
+	}			
+}
+
+HRESULT ant::SFMLCirclePrimitiveNode::render( SFMLScene *scene ) 
+{
+	m_circleShape.setPosition(getPosition());
+	m_circleShape.setRotation(float(getRotation()));	
+
+	scene->getRenderer()->drawCircle(m_circleShape);
+	return true;
+}
+
+HRESULT ant::SFMLCirclePrimitiveNode::onRestore( SFMLScene *scene ) 
+{
+	return SFMLSceneNode::onRestore(scene);
+}
