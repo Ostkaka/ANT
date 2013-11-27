@@ -6,4 +6,10 @@
 	<SFMLSpriteComponent>
 		<Texture>resources\bowser.png</Texture>
 	</SFMLSpriteComponent>
+	<Physics2DComponent>
+		<Shape>
+			Circle
+		</Shape>
+		<RigidBodyTransform x="10" y="1" z="1"/>
+	</Physics2DComponent>
 </Actor>

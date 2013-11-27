@@ -71,6 +71,10 @@ void ant::Physics2DComponent::postInit()
 		{
 			m_pPhysics->addSphere(m_rigidBodyScale.x,m_pOwner,m_density,m_material);
 		}
+		else if(m_shape == "Box")
+		{
+			m_pPhysics->addBox(sf::Vector2f(m_rigidBodyScale.x,m_rigidBodyScale.y),m_pOwner,m_density,m_material);
+		}
 	}
 }
 

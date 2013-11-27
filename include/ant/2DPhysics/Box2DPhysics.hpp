@@ -73,6 +73,7 @@ namespace ant
 
 		// Create physics object
 		virtual	void addSphere(ant::Real radius, ActorWeakPtr actor, std::string density, std::string material) ANT_OVERRIDE;
+		virtual	void addBox(const sf::Vector2f& dimensions, ActorWeakPtr actor, std::string density, std::string material) ANT_OVERRIDE;
 		virtual void removeActor(const ActorId& id) ANT_OVERRIDE;
 
 		// Physics modifier functions

@@ -29,6 +29,7 @@ bool ant::Box2DPhysics::initialize()
 	
 	// Create physics world
 	m_PhysicsWorld = new b2World(b2Vec2(0,DEFAULT_GRAVITY));
+	m_PhysicsWorld->SetGravity(b2Vec2(0,0.1));
 
 	// TODO - initialize the debug drawer
 
@@ -62,6 +63,8 @@ void ant::Box2DPhysics::syncVisibleScene()
 
 			// Converts the position to pixel coordinates
 			sf::Vector2f pos = convertBox2DVec2fTosfVector2f(actorBody->GetPosition());
+			std::cout << "Body: " << pGameActor->getId() << "  : " << pos.x  << " " << pos.y << std::endl;
+
 			pos = sf::Vector2f(pos.x * PIXELS_PER_METER, pos.y * PIXELS_PER_METER);
 		
 			transform->setPosition(pos);
@@ -80,7 +83,6 @@ void ant::Box2DPhysics::onUpdate( ant::DeltaTime dt )
 	if (m_PhysicsWorld)
 	{
 		m_PhysicsWorld->Step(dt,DEFAULT_VELOCITY_ITERATIONS,DEFAULT_POSITIONS_ITERATIONS);
-		m_PhysicsWorld->SetGravity(b2Vec2(0,-0.01));
 	}	
 }
 
@@ -101,6 +103,30 @@ void ant::Box2DPhysics::addSphere( ant::Real radius, ActorWeakPtr actor, std::st
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shape;
 	
+	// Add density mass 
+	fixtureDef.density = 1.0; // TODO Fix density
+
+	// Add the sphere
+	addB2Shape( pActor, fixtureDef, material );
+}
+
+
+void ant::Box2DPhysics::addBox( const sf::Vector2f& dimensions, ActorWeakPtr actor, std::string density, std::string material ) 
+{
+	ActorStrongPtr pActor = MakeStrongPtr(actor);
+	if (!pActor)
+	{
+		GCC_ERROR("Trying to add a shape for an actor is not valid");
+	}
+
+	// Create a sphere shape and fixture definition 
+	b2PolygonShape shape;
+	shape.SetAsBox(dimensions.x,dimensions.y,b2Vec2(),0);
+
+	// Fixture 
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &shape;
+
 	// Add density mass 
 	fixtureDef.density = 1.0; // TODO Fix density
 
@@ -144,6 +170,7 @@ void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureD
 	bodyDef.angle = angle;
 	b2Body * body = m_PhysicsWorld->CreateBody(&bodyDef);	
 	body->CreateFixture(&fixtureDef);
+	bodyDef.type = b2_kinematicBody;
 
 	// Insert it into the actor maps
 	m_actorIDToRigidBody[id] = body;
@@ -296,5 +323,6 @@ void ant::Box2DPhysics::stopActor( const ActorId& id )
 {
 	setVelocity(id, sf::Vector2f(0,0));
 }
+
 
 
