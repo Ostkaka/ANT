@@ -23,7 +23,6 @@ namespace ant
 	class LevelManager;
 	class ActorFactory;
 
-	typedef std::map<ActorId, ActorStrongPtr> ActorMap;
 	typedef std::string Level;
 
 	/// How to use this?
@@ -115,6 +114,9 @@ namespace ant
 		// editor functions
 		std::string getActorXml(const ActorId id);
 
+		// Get active actors in the scene
+		ActorMap* getActiveActors(void);
+
 	protected:
 		/// Create an actor factory
 		virtual ActorFactory* createActorFactory(void);
@@ -176,6 +178,8 @@ namespace ant
 	}
 
 	ANT_INLINE GameViewList* BaseGameLogic::getGameViews(){ return &m_gameViews; }
+
+	ANT_INLINE ActorMap* BaseGameLogic::getActiveActors(){ return &m_actors; }
 }
 
 #endif

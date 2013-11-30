@@ -1,8 +1,9 @@
 <World>
     <StaticActors>
-      <Actor resource="actors\testBackground.xml" />
+<!--      <Actor resource="actors\testBackground.xml" /> -->
       <Actor resource="actors\BowserActor.xml" />
       <Actor resource="actors\floorActor.xml" /> 
       <Actor resource="actors\circleActor.xml" /> 
+      <Actor resource="actors\circleActor2.xml" /> 
     </StaticActors>
 </World>

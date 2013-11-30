@@ -7,4 +7,10 @@
 		<Size x="1200" y="300"/>
 		<Filled>1</Filled>
 	</SFMLRectanglePrimitiveComponent>
+	<Physics2DComponent>
+		<Shape>Box</Shape>
+		<RigidBodyTransform>
+			<Scale x="600" y="300" z="1"/>
+		</RigidBodyTransform>
+	</Physics2DComponent>
 </Actor>

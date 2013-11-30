@@ -10,6 +10,8 @@
 		<Shape>
 			Circle
 		</Shape>
-		<RigidBodyTransform x="10" y="1" z="1"/>
+		<RigidBodyTransform>
+			<Scale x="1" y="1" z="1"/>
+		</RigidBodyTransform>
 	</Physics2DComponent>
 </Actor>

@@ -4,13 +4,15 @@
 		<Rotation angle="0"/>
 	</TransformComponent>
 	<SFMLCirclePrimitiveComponent>
-		<Radius>10</Radius>
-		<Filled>10</Filled>
+		<Radius>20</Radius>
+		<Filled>1</Filled>
 	</SFMLCirclePrimitiveComponent>
 	<Physics2DComponent>
 		<Shape>
 			Circle
 		</Shape>
-		<RigidBodyTransform x="1" y="1" z="1"/>
+		<RigidBodyTransform>
+			<Scale x="20" y="1" z="1"/>
+		</RigidBodyTransform>
 	</Physics2DComponent>
 </Actor>

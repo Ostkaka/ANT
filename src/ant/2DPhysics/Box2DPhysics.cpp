@@ -63,10 +63,12 @@ void ant::Box2DPhysics::syncVisibleScene()
 
 			// Converts the position to pixel coordinates
 			sf::Vector2f pos = convertBox2DVec2fTosfVector2f(actorBody->GetPosition());
-			std::cout << "Body: " << pGameActor->getId() << "  : " << pos.x  << " " << pos.y << std::endl;
+			//std::cout << "Body: " << pGameActor->getId() << "  : " << pos.x  << " " << pos.y << std::endl;
 
-			pos = sf::Vector2f(pos.x * PIXELS_PER_METER, pos.y * PIXELS_PER_METER);
+			//pos = sf::Vector2f(pos.x * PIXELS_PER_METER, pos.y * PIXELS_PER_METER);
 		
+			//std::cout << "Body: " << pGameActor->getId() << "  : " << pos.x  << " " << pos.y << std::endl;
+
 			transform->setPosition(pos);
 			transform->setRotation(actorBody->GetAngle());
 
@@ -121,7 +123,7 @@ void ant::Box2DPhysics::addBox( const sf::Vector2f& dimensions, ActorWeakPtr act
 
 	// Create a sphere shape and fixture definition 
 	b2PolygonShape shape;
-	shape.SetAsBox(dimensions.x,dimensions.y,b2Vec2(),0);
+	shape.SetAsBox(dimensions.x,dimensions.y);
 
 	// Fixture 
 	b2FixtureDef fixtureDef;
@@ -148,14 +150,14 @@ void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureD
 	b2MassData massData;
 	fixtureDef.shape->ComputeMass(&massData,fixtureDef.density);
 	
-	// Synch the transform with this body
+	// Synch the transform with this body, Is this a hack? This means we MUST include the transform component first!
 	sf::Vector2f pos(0,0);
 	ant::Real angle = 0;
 	TransformComponentStrongPtr pTransform = MakeStrongPtr(pActor->getComponent<TransformComponent>(TransformComponent::g_Name));
 	GCC_ASSERT(pTransform);	
 	if (pTransform)
 	{
-		pos = sf::Vector2f(pTransform->getPostion().x / PIXELS_PER_METER, pTransform->getPostion().y / PIXELS_PER_METER);
+		pos = sf::Vector2f(pTransform->getPostion().x , pTransform->getPostion().y );
 		angle = pTransform->getRotation();
 	}
 	else 
@@ -165,12 +167,19 @@ void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureD
 
 	// Crete a rigid body from the fixture definition
 	b2BodyDef bodyDef;
-	bodyDef.type     = b2_dynamicBody;
+	if (fixtureDef.shape->GetType() == b2Shape::e_polygon)
+	{
+		bodyDef.type = b2_kinematicBody;
+	}
+	else
+	{
+		bodyDef.type = b2_dynamicBody;
+	}
+	
 	bodyDef.position = convertsfVector2fToBox2DVec2f(pos);
 	bodyDef.angle = angle;
 	b2Body * body = m_PhysicsWorld->CreateBody(&bodyDef);	
 	body->CreateFixture(&fixtureDef);
-	bodyDef.type = b2_kinematicBody;
 
 	// Insert it into the actor maps
 	m_actorIDToRigidBody[id] = body;

@@ -15,6 +15,8 @@
 
 namespace ant
 {
+	typedef std::map<ActorId, ActorStrongPtr> ActorMap;
+
 	class IGameLogic 
 	{
 		public:
@@ -45,6 +47,9 @@ namespace ant
 
 			/// Gets the active game physics implementation in the game logic
 			virtual IGamePhysics2D* getGamePhysics(void) = 0;
+
+			// Get active actors in the scene
+			virtual ActorMap* getActiveActors(void) = 0;
 	};
 }
 
