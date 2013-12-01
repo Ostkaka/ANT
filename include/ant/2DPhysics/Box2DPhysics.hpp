@@ -72,8 +72,8 @@ namespace ant
 		virtual void onUpdate(ant::DeltaTime dt) ANT_OVERRIDE;
 
 		// Create physics object
-		virtual	void addSphere(ant::Real radius, ActorWeakPtr actor, std::string density, std::string material) ANT_OVERRIDE;
-		virtual	void addBox(const sf::Vector2f& dimensions, ActorWeakPtr actor, std::string density, std::string material) ANT_OVERRIDE;
+		virtual	void addSphere(ant::Real radius, ActorWeakPtr actor,const std::string& density, const std::string& material, const std::string& motionState) ANT_OVERRIDE;
+		virtual	void addBox(const sf::Vector2f& dimensions, ActorWeakPtr actor, const std::string& density, const std::string& material, const std::string& motionState) ANT_OVERRIDE;
 		virtual void removeActor(const ActorId& id) ANT_OVERRIDE;
 
 		// Physics modifier functions
@@ -94,7 +94,7 @@ namespace ant
 		virtual void                stopActor( const ActorId& id) ANT_OVERRIDE;
 
 	protected:
-		void addB2Shape(ActorStrongPtr pActor, b2FixtureDef fixtureDef, std::string material);
+		void addB2Shape(ActorStrongPtr pActor, b2FixtureDef fixtureDef,const std::string& material, const std::string& motionState);
 		MaterialData lookUpMaterialData(const std::string& mat);
 		MaterialData lookUpDensityData(const std::string& mat); // TODO is this even nessecary?
 		b2Body * findB2Body(const ActorId& id) const;

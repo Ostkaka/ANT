@@ -8,7 +8,7 @@
 #include <direct.h>
 #define GetCurrentDir _getcwd
 
-int main(int argc, char* argv[] ){
+int main( int argc, char* argv[] ){
 
 	int exitCode = ant::StatusNoError;
 
@@ -29,8 +29,6 @@ int main(int argc, char* argv[] ){
 	{
 		std::cout << "Could not initialize app!" << std::endl;
 	}
-
-	app->processArguments(argc, argv);
 
 	exitCode = app->run();
 

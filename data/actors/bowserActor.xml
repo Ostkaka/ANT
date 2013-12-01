@@ -1,17 +1,16 @@
 <Actor type="Player" resource="actors\bowserActor">
 	<TransformComponent>
-		<Position x="-200" y="-250"/>
+		<Position x="-50" y="-850"/>
 		<Rotation angle="0"/>
 	</TransformComponent>
 	<SFMLSpriteComponent>
 		<Texture>resources\bowser.png</Texture>
 	</SFMLSpriteComponent>
 	<Physics2DComponent>
-		<Shape>
-			Circle
-		</Shape>
+		<Shape>Box</Shape>
+		<MotionState>DYNAMIC</MotionState>
 		<RigidBodyTransform>
-			<Scale x="1" y="1" z="1"/>
+			<Scale x="35" y="30" z="1"/>
 		</RigidBodyTransform>
 	</Physics2DComponent>
 </Actor>

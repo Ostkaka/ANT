@@ -16,6 +16,11 @@ const char* SFMLCirclePrimitiveComponent::g_Name    = "SFMLCirclePrimitiveCompon
 
 bool SFMLBaseRenderComponent::init( TiXmlElement* pData ) 
 {
+	// color
+	TiXmlElement* pColorNode = pData->FirstChildElement("Color");
+	if (pColorNode)
+		m_color = loadColor(pColorNode);
+
 	return delegateInit(pData);
 }
 
@@ -45,6 +50,25 @@ ant::SFMLSceneNodeStrongPtr ant::SFMLBaseRenderComponent::getSceneNode( void )
 		m_pSceneNode = createSceneNode();
 	}
 	return m_pSceneNode;
+}
+
+sf::Color ant::SFMLBaseRenderComponent::loadColor( TiXmlElement * pColorData )
+{
+	double MAX_COLOR = 256;
+
+	double r = 1.0;
+	double g = 1.0;
+	double b = 1.0;
+	double a = 1.0;
+
+	pColorData->Attribute("r", &r);
+	pColorData->Attribute("g", &g);
+	pColorData->Attribute("b", &b);
+	pColorData->Attribute("a", &a);
+
+	sf::Color color((int)(r*255),(int)(g*255),(int)(b*255),(float)(a*255));
+
+	return color;
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -17,6 +17,7 @@ ant::Physics2DComponent::Physics2DComponent( void )
 	m_angularAcceleration = 0;
 	m_maxAngularVelocity  = DEFAULT_MAX_ANGULAR_VELOCITY; 
 	m_maxVelocity         = DEFAULT_MAX_VELOCITY;
+	m_motionState = "DYNAMIC";
 }
 
 ant::Physics2DComponent::~Physics2DComponent( void )
@@ -53,6 +54,13 @@ bool ant::Physics2DComponent::init( TiXmlElement* pData )
 		m_density = pMaterial->FirstChild()->Value();
 	}
 
+	// Material
+	TiXmlElement *pMotionState = pData->FirstChildElement("MotionState");
+	if (pMotionState)
+	{
+		m_motionState = pMotionState->FirstChild()->Value();
+	}
+
 	// Get transformation properties such as scale, position and stuff
 	TiXmlElement *pTranform = pData->FirstChildElement("RigidBodyTransform");
 	if (pTranform)
@@ -69,11 +77,11 @@ void ant::Physics2DComponent::postInit()
 	{
 		if (m_shape == "Circle")
 		{
-			m_pPhysics->addSphere(m_rigidBodyScale.x,m_pOwner,m_density,m_material);
+			m_pPhysics->addSphere(m_rigidBodyScale.x,m_pOwner,m_density,m_material,m_motionState);
 		}
 		else if(m_shape == "Box")
 		{
-			m_pPhysics->addBox(sf::Vector2f(m_rigidBodyScale.x,m_rigidBodyScale.y),m_pOwner,m_density,m_material);
+			m_pPhysics->addBox(sf::Vector2f(m_rigidBodyScale.x,m_rigidBodyScale.y),m_pOwner,m_density,m_material,m_motionState);
 		}
 	}
 }

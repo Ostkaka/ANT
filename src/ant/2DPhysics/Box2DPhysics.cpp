@@ -9,7 +9,20 @@
 #include <ant/interfaces/ISFMLApp.hpp>
 #include <iostream>
 
+#define M_PI 3.1415926535
+
 using namespace ant;
+
+
+ant::Real convertRadiansToAngle(const ant::Real radians)
+{
+	return radians * (180.0 / M_PI);
+}
+
+ant::Real convertAngleToRadians(const ant::Real& angle)
+{
+		return angle * ( M_PI / 180.0 );
+}
 
 ant::Box2DPhysics::Box2DPhysics()
 {
@@ -29,7 +42,7 @@ bool ant::Box2DPhysics::initialize()
 	
 	// Create physics world
 	m_PhysicsWorld = new b2World(b2Vec2(0,DEFAULT_GRAVITY));
-	m_PhysicsWorld->SetGravity(b2Vec2(0,0.1));
+	m_PhysicsWorld->SetGravity(b2Vec2(0,0.02));
 
 	// TODO - initialize the debug drawer
 
@@ -65,13 +78,13 @@ void ant::Box2DPhysics::syncVisibleScene()
 			sf::Vector2f pos = convertBox2DVec2fTosfVector2f(actorBody->GetPosition());
 			//std::cout << "Body: " << pGameActor->getId() << "  : " << pos.x  << " " << pos.y << std::endl;
 
-			//pos = sf::Vector2f(pos.x * PIXELS_PER_METER, pos.y * PIXELS_PER_METER);
+			pos = sf::Vector2f(pos.x , pos.y );
 		
 			//std::cout << "Body: " << pGameActor->getId() << "  : " << pos.x  << " " << pos.y << std::endl;
 
 			transform->setPosition(pos);
-			transform->setRotation(actorBody->GetAngle());
-
+			transform->setRotation(convertRadiansToAngle(actorBody->GetAngle()));
+	
 			// Send event that the actor have moved
 			shared_ptr<EvtData_Move_SFMLActor> pEvent(GCC_NEW EvtData_Move_SFMLActor(id,transform->getPostion(),transform->getRotation()));
 			IEventManager::instance()->queueEvent(pEvent);
@@ -88,9 +101,10 @@ void ant::Box2DPhysics::onUpdate( ant::DeltaTime dt )
 	}	
 }
 
-void ant::Box2DPhysics::addSphere( ant::Real radius, ActorWeakPtr actor, std::string density, std::string material) 
+void ant::Box2DPhysics::addSphere( ant::Real radius, ActorWeakPtr actor,const std::string& density, const std::string& material, const std::string& motionState ) 
 {
 	ActorStrongPtr pActor = MakeStrongPtr(actor);
+
 	if (!pActor)
 	{
 		GCC_ERROR("Trying to add a shape for an actor is not valid");
@@ -99,23 +113,22 @@ void ant::Box2DPhysics::addSphere( ant::Real radius, ActorWeakPtr actor, std::st
 	// Create a sphere shape and fixture definition 
 	b2CircleShape shape;
 	shape.m_radius = radius;
-	shape.m_p.Set(0,0);
-	
+
 	// Fixture 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shape;
-	
-	// Add density mass 
-	fixtureDef.density = 1.0; // TODO Fix density
 
+	// Add density mass 
+	fixtureDef.density = 0.0; // TODO Fix density
+	
 	// Add the sphere
-	addB2Shape( pActor, fixtureDef, material );
+	addB2Shape( pActor, fixtureDef, material, motionState );
 }
 
-
-void ant::Box2DPhysics::addBox( const sf::Vector2f& dimensions, ActorWeakPtr actor, std::string density, std::string material ) 
+void ant::Box2DPhysics::addBox( const sf::Vector2f& dimensions, ActorWeakPtr actor, const std::string& density, const std::string& material, const std::string& motionState ) 
 {
 	ActorStrongPtr pActor = MakeStrongPtr(actor);
+
 	if (!pActor)
 	{
 		GCC_ERROR("Trying to add a shape for an actor is not valid");
@@ -130,16 +143,16 @@ void ant::Box2DPhysics::addBox( const sf::Vector2f& dimensions, ActorWeakPtr act
 	fixtureDef.shape = &shape;
 
 	// Add density mass 
-	fixtureDef.density = 1.0; // TODO Fix density
+	fixtureDef.density = 5.0; // TODO Fix density
 
 	// Add the sphere
-	addB2Shape( pActor, fixtureDef, material );
+	addB2Shape( pActor, fixtureDef, material , motionState);
 }
 
-void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureDef, std::string material )
+void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureDef,const std::string& material, const std::string& motionState )
 {
 	GCC_ASSERT( pActor );
-	
+
 	ActorId id = pActor->getId();
 	GCC_ASSERT( m_actorIDToRigidBody.find(id) == m_actorIDToRigidBody.end() && "Actor has more than one physics body");
 
@@ -149,7 +162,7 @@ void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureD
 	// Calculate all the mass data such as inertia and total mass
 	b2MassData massData;
 	fixtureDef.shape->ComputeMass(&massData,fixtureDef.density);
-	
+
 	// Synch the transform with this body, Is this a hack? This means we MUST include the transform component first!
 	sf::Vector2f pos(0,0);
 	ant::Real angle = 0;
@@ -158,7 +171,7 @@ void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureD
 	if (pTransform)
 	{
 		pos = sf::Vector2f(pTransform->getPostion().x , pTransform->getPostion().y );
-		angle = pTransform->getRotation();
+		angle = convertAngleToRadians(pTransform->getRotation());
 	}
 	else 
 	{
@@ -167,13 +180,13 @@ void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureD
 
 	// Crete a rigid body from the fixture definition
 	b2BodyDef bodyDef;
-	if (fixtureDef.shape->GetType() == b2Shape::e_polygon)
-	{
-		bodyDef.type = b2_kinematicBody;
-	}
-	else
+	if (motionState == "DYNAMIC")
 	{
 		bodyDef.type = b2_dynamicBody;
+	}
+	else if (motionState == "KINEMATIC")
+	{
+		bodyDef.type = b2_kinematicBody;
 	}
 	
 	bodyDef.position = convertsfVector2fToBox2DVec2f(pos);

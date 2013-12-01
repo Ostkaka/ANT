@@ -1,18 +1,16 @@
 <Actor type="Player" resource="actors\circleActor">
 	<TransformComponent>
-		<Position x="-300" y="-250"/>
+		<Position x="-400" y="-250"/>
 		<Rotation angle="0"/>
 	</TransformComponent>
 	<SFMLCirclePrimitiveComponent>
-		<Radius>20</Radius>
+		<Radius>40</Radius>
 		<Filled>1</Filled>
 	</SFMLCirclePrimitiveComponent>
 	<Physics2DComponent>
-		<Shape>
-			Circle
-		</Shape>
+		<Shape>Circle</Shape>
 		<RigidBodyTransform>
-			<Scale x="20" y="1" z="1"/>
+			<Scale x="40" y="1" z="1"/>
 		</RigidBodyTransform>
 	</Physics2DComponent>
 </Actor>

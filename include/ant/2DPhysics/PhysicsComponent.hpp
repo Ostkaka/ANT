@@ -48,6 +48,7 @@ namespace ant
 		std::string             m_shape;
 		std::string             m_density;
 		std::string             m_material;
+		std::string             m_motionState;
 
 		ant::Real								m_acceleration;		
 		ant::Real								m_maxVelocity;		

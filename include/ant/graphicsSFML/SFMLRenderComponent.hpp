@@ -26,7 +26,12 @@ namespace ant
 		/// Generates XML description from the component
 		virtual TiXmlElement* generateXml(void);
 
+		/// Get the color from the component
+		const sf::Color& getColor(void) const;
+
 	protected:
+
+		sf::Color loadColor(TiXmlElement * pColorData);
 
 		//// Loads data to the scene node from the <SceneNode> tag
 		virtual bool delegateInit(TiXmlElement *data) { return true; }
@@ -46,7 +51,10 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 	protected:
 		SFMLSceneNodeStrongPtr m_pSceneNode;
+		sf::Color m_color;
 	};
+
+	ANT_INLINE const sf::Color& SFMLBaseRenderComponent::getColor(void) const { return m_color; }
 
 	/**
 	 * Extends the base SFML render component with a sprite render component

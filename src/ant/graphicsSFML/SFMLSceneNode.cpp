@@ -294,6 +294,14 @@ ant::SFMLSpriteNode::SFMLSpriteNode( ActorId actorId,
 	}
 
 	m_SFMLSprite.setTexture(m_texture);
+	m_SFMLSprite.setRotation(45);
+
+	// Adjust center of sprite from top left corner
+	std::cout << "Bound: " << m_SFMLSprite.getLocalBounds().height << "  " << m_SFMLSprite.getLocalBounds().width << std::endl;
+	std::cout << "Text : " << m_SFMLSprite.getTextureRect().height << "  " << m_SFMLSprite.getTextureRect().width << std::endl;
+
+	//m_SFMLSprite.setOrigin(m_SFMLSprite.getLocalBounds ().width/2,m_SFMLSprite.getLocalBounds().height/2);
+	//m_SFMLSprite.setOrigin(m_SFMLSprite.getTextureRect().width / 2.0 , m_SFMLSprite.getTextureRect().height / 2.0);
 }
 
 HRESULT ant::SFMLSpriteNode::render( SFMLScene *scene ) 
@@ -301,8 +309,7 @@ HRESULT ant::SFMLSpriteNode::render( SFMLScene *scene )
 	// First, set proper transformation
 	m_SFMLSprite.setPosition(getPosition());
 	m_SFMLSprite.setRotation(float(getRotation()));	
-	m_SFMLSprite.setScale(3,3);
-
+	
 	// Tell the renderer to draw the sprite
 	return scene->getRenderer()->drawSprite(m_SFMLSprite);
 }
@@ -377,7 +384,12 @@ ant::SFMLRectanglePrimitiveNode::SFMLRectanglePrimitiveNode( ActorId actorId,
 	m_size(size),
 	m_filled(filled)
 {
-		sf::Color color(255,0,0,255);
+		sf::Color color = sf::Color::White;
+		if (renderComponent)
+		{
+			color = renderComponent->getColor();
+		}
+		
 		m_rectangleShape.setSize(m_size);
 		if (m_filled)
 		{
@@ -390,6 +402,7 @@ HRESULT ant::SFMLRectanglePrimitiveNode::render( SFMLScene *scene )
 {
 	m_rectangleShape.setPosition(getPosition());
 	m_rectangleShape.setRotation(float(getRotation()));	
+	m_rectangleShape.setOrigin(m_rectangleShape.getSize().x/2.0, m_rectangleShape.getSize().y/2.0);
 
 	scene->getRenderer()->drawRectangle(m_rectangleShape);
 	return true;
@@ -430,6 +443,7 @@ HRESULT ant::SFMLCirclePrimitiveNode::render( SFMLScene *scene )
 	m_circleShape.setRotation(float(getRotation()));	
 
 	scene->getRenderer()->drawCircle(m_circleShape);
+
 	return true;
 }
 

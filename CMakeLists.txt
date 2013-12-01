@@ -179,7 +179,9 @@ ExternalProject_Add(
                -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=ReleaseLibs 
                -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO:PATH=ReleaseLibs 
                -DCMAKE_CXX_FLAGS=${MSVC_COMPILER_DEFS}
-               -DBOX2D_BUILD_SHARED=ON -BOX2D_INSTALL=ON 
+               -DBOX2D_BUILD_SHARED=OFF
+               -DBOX2D_BUILD_EXAMPLES=OFF
+               -BOX2D_INSTALL=ON 
     # Wrap download, configure and build steps in a script to log output
 	# Disable install step
     INSTALL_COMMAND ""
