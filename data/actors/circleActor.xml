@@ -5,7 +5,7 @@
 	</TransformComponent>
 	<SFMLCirclePrimitiveComponent>
 		<Radius>40</Radius>
-		<Filled>1</Filled>
+		<Filled>0</Filled>
 	</SFMLCirclePrimitiveComponent>
 	<Physics2DComponent>
 		<Shape>Circle</Shape>

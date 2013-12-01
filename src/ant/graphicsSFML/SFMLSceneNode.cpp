@@ -294,14 +294,13 @@ ant::SFMLSpriteNode::SFMLSpriteNode( ActorId actorId,
 	}
 
 	m_SFMLSprite.setTexture(m_texture);
-	m_SFMLSprite.setRotation(45);
 
 	// Adjust center of sprite from top left corner
-	std::cout << "Bound: " << m_SFMLSprite.getLocalBounds().height << "  " << m_SFMLSprite.getLocalBounds().width << std::endl;
-	std::cout << "Text : " << m_SFMLSprite.getTextureRect().height << "  " << m_SFMLSprite.getTextureRect().width << std::endl;
+	//std::cout << "Bound: " << m_SFMLSprite.getLocalBounds().height << "  " << m_SFMLSprite.getLocalBounds().width << std::endl;
+	//std::cout << "Text : " << m_SFMLSprite.getTextureRect().height << "  " << m_SFMLSprite.getTextureRect().width << std::endl;
 
-	//m_SFMLSprite.setOrigin(m_SFMLSprite.getLocalBounds ().width/2,m_SFMLSprite.getLocalBounds().height/2);
-	//m_SFMLSprite.setOrigin(m_SFMLSprite.getTextureRect().width / 2.0 , m_SFMLSprite.getTextureRect().height / 2.0);
+	m_SFMLSprite.setOrigin(m_SFMLSprite.getLocalBounds().width/2,m_SFMLSprite.getLocalBounds().height/2);
+	//m_SFMLSprite.setOrigin(m_SFMLSprite.getTextureRect().width / 2.0 , -m_SFMLSprite.getTextureRect().height / 2.0);
 }
 
 HRESULT ant::SFMLSpriteNode::render( SFMLScene *scene ) 
@@ -387,15 +386,22 @@ ant::SFMLRectanglePrimitiveNode::SFMLRectanglePrimitiveNode( ActorId actorId,
 		sf::Color color = sf::Color::White;
 		if (renderComponent)
 		{
-			color = renderComponent->getColor();
+			color = renderComponent->getColor(); 
 		}
 		
 		m_rectangleShape.setSize(m_size);
 		if (m_filled)
 		{
-			m_rectangleShape.setFillColor(color);
+			m_rectangleShape.setFillColor(color);	
+			m_rectangleShape.setOutlineThickness(0);	
+		}	
+		else
+		{
+			m_rectangleShape.setFillColor(sf::Color::Transparent);
 			m_rectangleShape.setOutlineColor(color);
-		}			
+			m_rectangleShape.setOutlineThickness(1);
+		}	
+		
 }
 
 HRESULT ant::SFMLRectanglePrimitiveNode::render( SFMLScene *scene ) 
@@ -432,15 +438,22 @@ ant::SFMLCirclePrimitiveNode::SFMLCirclePrimitiveNode( ActorId actorId,
 	m_circleShape.setRadius(radius);
 	if (m_filled)
 	{
-		m_circleShape.setFillColor(color);
+		m_circleShape.setFillColor(color);	
+		m_circleShape.setOutlineThickness(0);	
+	}	
+	else
+	{
+		m_circleShape.setFillColor(sf::Color::Transparent);
 		m_circleShape.setOutlineColor(color);
-	}			
+		m_circleShape.setOutlineThickness(1);
+	}	
 }
 
 HRESULT ant::SFMLCirclePrimitiveNode::render( SFMLScene *scene ) 
 {
 	m_circleShape.setPosition(getPosition());
 	m_circleShape.setRotation(float(getRotation()));	
+	m_circleShape.setOrigin(m_radius,m_radius);
 
 	scene->getRenderer()->drawCircle(m_circleShape);
 

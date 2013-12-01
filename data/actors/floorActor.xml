@@ -6,7 +6,7 @@
 	<SFMLRectanglePrimitiveComponent>
 		<Color r="0.5" g="0.5" b="0.5" a="1"/>
 		<Size x="1200" y="300"/>
-		<Filled>1</Filled>
+		<Filled>0</Filled>
 	</SFMLRectanglePrimitiveComponent>
 	<Physics2DComponent>
 		<Shape>Box</Shape>

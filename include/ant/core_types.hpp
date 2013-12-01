@@ -24,6 +24,9 @@
 	#define RESOURCE_DIR "resources"
 #endif
 
+// Todo. this should really be in the renderer, and all transformations should be in physics coordinates
+#define PIXELS_PER_METER 20
+
 #define INFO_LEVEL   0  ///< Defines the value for ant::SeverityInfo
 #define WARN_LEVEL   1  ///< Defines the value for ant::SeverityWarning
 #define ERROR_LEVEL  2  ///< Defines the value for ant::SeverityError

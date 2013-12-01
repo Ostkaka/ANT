@@ -184,7 +184,6 @@ TiXmlElement* ant::Physics2DComponent::generateXml( void )
 
 void ant::Physics2DComponent::handleRigidBodyTransform( TiXmlElement* pData )
 {
-
 	TiXmlElement* pScaleElement = pData->FirstChildElement("Scale");
 	if (pScaleElement)
 	{
@@ -194,6 +193,6 @@ void ant::Physics2DComponent::handleRigidBodyTransform( TiXmlElement* pData )
 		pScaleElement->Attribute("x", &x);
 		pScaleElement->Attribute("y", &y);
 		pScaleElement->Attribute("z", &z);
-		m_rigidBodyScale = sf::Vector3f(x, y, z);
+		m_rigidBodyScale = sf::Vector3f(x / PIXELS_PER_METER, y / PIXELS_PER_METER, z / PIXELS_PER_METER);
 	}
 }

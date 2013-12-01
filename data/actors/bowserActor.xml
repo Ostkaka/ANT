@@ -6,11 +6,16 @@
 	<SFMLSpriteComponent>
 		<Texture>resources\bowser.png</Texture>
 	</SFMLSpriteComponent>
+	<SFMLRectanglePrimitiveComponent>
+		<Size x="35" y="30"/>
+		<Color r="1.0" g="1.0" b="0" a="1"/>
+		<Filled>0</Filled>
+	</SFMLRectanglePrimitiveComponent>
 	<Physics2DComponent>
 		<Shape>Box</Shape>
 		<MotionState>DYNAMIC</MotionState>
 		<RigidBodyTransform>
-			<Scale x="35" y="30" z="1"/>
+			<Scale x="17.5" y="15" z="1"/>
 		</RigidBodyTransform>
 	</Physics2DComponent>
 </Actor>

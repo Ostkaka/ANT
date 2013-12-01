@@ -12,8 +12,6 @@
 #define DEFAULT_VELOCITY_ITERATIONS 6 
 #define DEFAULT_POSITIONS_ITERATIONS 4
 
-#define PIXELS_PER_METER 10.0
-
 namespace ant
 {
 	/**

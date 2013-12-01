@@ -78,7 +78,7 @@ void ant::Box2DPhysics::syncVisibleScene()
 			sf::Vector2f pos = convertBox2DVec2fTosfVector2f(actorBody->GetPosition());
 			//std::cout << "Body: " << pGameActor->getId() << "  : " << pos.x  << " " << pos.y << std::endl;
 
-			pos = sf::Vector2f(pos.x , pos.y );
+			pos = sf::Vector2f(pos.x * PIXELS_PER_METER, pos.y * PIXELS_PER_METER);
 		
 			//std::cout << "Body: " << pGameActor->getId() << "  : " << pos.x  << " " << pos.y << std::endl;
 
@@ -170,7 +170,7 @@ void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureD
 	GCC_ASSERT(pTransform);	
 	if (pTransform)
 	{
-		pos = sf::Vector2f(pTransform->getPostion().x , pTransform->getPostion().y );
+		pos = sf::Vector2f(pTransform->getPostion().x / PIXELS_PER_METER , pTransform->getPostion().y / PIXELS_PER_METER);
 		angle = convertAngleToRadians(pTransform->getRotation());
 	}
 	else 
