@@ -13,6 +13,7 @@ const ant::Real DEFAULT_MAX_ANGULAR_VELOCITY = 1.0f;
 
 ant::Physics2DComponent::Physics2DComponent( void )
 {
+	m_lockRotation = false;
 	m_acceleration        = 0;
 	m_angularAcceleration = 0;
 	m_maxAngularVelocity  = DEFAULT_MAX_ANGULAR_VELOCITY; 
@@ -54,13 +55,18 @@ bool ant::Physics2DComponent::init( TiXmlElement* pData )
 		m_density = pMaterial->FirstChild()->Value();
 	}
 
-	// Material
 	TiXmlElement *pMotionState = pData->FirstChildElement("MotionState");
 	if (pMotionState)
 	{
 		m_motionState = pMotionState->FirstChild()->Value();
 	}
 
+	TiXmlElement *pLockRot = pData->FirstChildElement("LockRotation");
+	if (pLockRot)
+	{
+		m_lockRotation = (bool)(atoi(pLockRot->FirstChild()->Value()));
+	}
+	
 	// Get transformation properties such as scale, position and stuff
 	TiXmlElement *pTranform = pData->FirstChildElement("RigidBodyTransform");
 	if (pTranform)
@@ -75,13 +81,18 @@ void ant::Physics2DComponent::postInit()
 {
 	if (m_pOwner)
 	{
+		// Create options struct
+		RigidBodyOptions options;
+		options.m_motionState = m_motionState;
+		options.m_lockRotation = m_lockRotation;
+
 		if (m_shape == "Circle")
 		{
-			m_pPhysics->addSphere(m_rigidBodyScale.x,m_pOwner,m_density,m_material,m_motionState);
+			m_pPhysics->addSphere(m_rigidBodyScale.x,m_pOwner,m_density,m_material,options);
 		}
 		else if(m_shape == "Box")
 		{
-			m_pPhysics->addBox(sf::Vector2f(m_rigidBodyScale.x,m_rigidBodyScale.y),m_pOwner,m_density,m_material,m_motionState);
+			m_pPhysics->addBox(sf::Vector2f(m_rigidBodyScale.x,m_rigidBodyScale.y),m_pOwner,m_density,m_material,options);
 		}
 	}
 }

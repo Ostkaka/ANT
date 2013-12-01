@@ -7,6 +7,26 @@
 namespace ant
 {
 
+		/**
+	 * Convenience struct for holding information used to create a rigid body
+	 */
+	struct RigidBodyOptions
+	{
+	public:
+		RigidBodyOptions()
+		{
+			m_motionState = "DYNAMIC";
+			m_lockRotation = false;
+		}
+
+		//////////////////////////////////////////////////////////////////////////
+		// Variables
+		//////////////////////////////////////////////////////////////////////////
+	public:
+		bool m_lockRotation;
+		std::string m_motionState;
+	};
+
 	/**
 	 * Interface for a a 2d physics engine
 	 */
@@ -20,8 +40,8 @@ namespace ant
 		virtual void onUpdate(ant::DeltaTime dt)=0;
 
 		// Create physics object
-		virtual	void addSphere(ant::Real radius, ActorWeakPtr actor,const std::string& density, const std::string& material, const std::string& motionState)=0;
-		virtual	void addBox(const sf::Vector2f& dimensions, ActorWeakPtr actor, const std::string& density, const std::string& material, const std::string& motionState)=0;
+		virtual	void addSphere(ant::Real radius, ActorWeakPtr actor,const std::string& density, const std::string& material, const RigidBodyOptions& options)=0;
+		virtual	void addBox(const sf::Vector2f& dimensions, ActorWeakPtr actor, const std::string& density, const std::string& material, const RigidBodyOptions& options)=0;
 		virtual void removeActor(const ActorId& id)=0;
 
 		// Physics modifier functions

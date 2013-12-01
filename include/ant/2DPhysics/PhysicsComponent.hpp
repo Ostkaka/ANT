@@ -57,6 +57,7 @@ namespace ant
 		ant::Real               m_maxAngularVelocity;
 
 		sf::Vector3f            m_rigidBodyScale;
+		bool										m_lockRotation;
 				
 		IGamePhysics2D*         m_pPhysics;
 	};

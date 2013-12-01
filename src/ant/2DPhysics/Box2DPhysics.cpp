@@ -101,7 +101,7 @@ void ant::Box2DPhysics::onUpdate( ant::DeltaTime dt )
 	}	
 }
 
-void ant::Box2DPhysics::addSphere( ant::Real radius, ActorWeakPtr actor,const std::string& density, const std::string& material, const std::string& motionState ) 
+void ant::Box2DPhysics::addSphere( ant::Real radius, ActorWeakPtr actor,const std::string& density, const std::string& material, const RigidBodyOptions& options ) 
 {
 	ActorStrongPtr pActor = MakeStrongPtr(actor);
 
@@ -120,12 +120,12 @@ void ant::Box2DPhysics::addSphere( ant::Real radius, ActorWeakPtr actor,const st
 
 	// Add density mass 
 	fixtureDef.density = 0.0; // TODO Fix density
-	
+
 	// Add the sphere
-	addB2Shape( pActor, fixtureDef, material, motionState );
+	addB2Shape( pActor, fixtureDef, material, options );
 }
 
-void ant::Box2DPhysics::addBox( const sf::Vector2f& dimensions, ActorWeakPtr actor, const std::string& density, const std::string& material, const std::string& motionState ) 
+void ant::Box2DPhysics::addBox( const sf::Vector2f& dimensions, ActorWeakPtr actor, const std::string& density, const std::string& material, const RigidBodyOptions& options ) 
 {
 	ActorStrongPtr pActor = MakeStrongPtr(actor);
 
@@ -146,10 +146,10 @@ void ant::Box2DPhysics::addBox( const sf::Vector2f& dimensions, ActorWeakPtr act
 	fixtureDef.density = 5.0; // TODO Fix density
 
 	// Add the sphere
-	addB2Shape( pActor, fixtureDef, material , motionState);
+	addB2Shape( pActor, fixtureDef, material , options);
 }
 
-void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureDef,const std::string& material, const std::string& motionState )
+void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureDef,const std::string& material, const RigidBodyOptions& options)
 {
 	GCC_ASSERT( pActor );
 
@@ -180,14 +180,16 @@ void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureD
 
 	// Crete a rigid body from the fixture definition
 	b2BodyDef bodyDef;
-	if (motionState == "DYNAMIC")
+	if (options.m_motionState == "DYNAMIC")
 	{
 		bodyDef.type = b2_dynamicBody;
 	}
-	else if (motionState == "KINEMATIC")
+	else if (options.m_motionState == "KINEMATIC")
 	{
 		bodyDef.type = b2_kinematicBody;
 	}
+
+	bodyDef.fixedRotation = options.m_lockRotation;
 	
 	bodyDef.position = convertsfVector2fToBox2DVec2f(pos);
 	bodyDef.angle = angle;
