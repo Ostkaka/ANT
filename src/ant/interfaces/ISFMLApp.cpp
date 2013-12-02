@@ -176,6 +176,9 @@ void ant::ISFMLApp::gameLoop()
 
 			// Display contents in the window
 			m_window.display();		
+
+			// Restart frame clock
+			frameClock.restart();
 		}
 	}
 }

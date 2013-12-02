@@ -42,7 +42,7 @@ bool ant::Box2DPhysics::initialize()
 	
 	// Create physics world
 	m_PhysicsWorld = new b2World(b2Vec2(0,DEFAULT_GRAVITY));
-	m_PhysicsWorld->SetGravity(b2Vec2(0,0.02));
+	m_PhysicsWorld->SetGravity(b2Vec2(0,9.82));
 
 	// TODO - initialize the debug drawer
 
@@ -162,6 +162,7 @@ void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureD
 	// Calculate all the mass data such as inertia and total mass
 	b2MassData massData;
 	fixtureDef.shape->ComputeMass(&massData,fixtureDef.density);
+	fixtureDef.restitution = 0.5;
 
 	// Synch the transform with this body, Is this a hack? This means we MUST include the transform component first!
 	sf::Vector2f pos(0,0);
