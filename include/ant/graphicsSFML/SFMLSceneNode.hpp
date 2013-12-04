@@ -25,13 +25,17 @@ namespace ant
 
 		const ActorId &getActorId() const;
 
-		sf::Vector2f getPosition() const;
-
-		ant::Real getRotation() const;
-
 		void setPosition(const sf::Vector2f& pos);
 
+		const sf::Vector2f& getPosition() const;
+		
 		void setRotation(const ant::Real& rot);
+		
+		ant::Real getRotation() const;
+
+		void setDirection(const sf::Vector2f& pos);
+
+		const sf::Vector2f& getDirection() const;
 
 		const char* getName() const;
 
@@ -45,6 +49,7 @@ namespace ant
 		std::string					m_name;
 		SFMLRenderPass			m_renderPass;
 		sf::Vector2f				m_position;
+		sf::Vector2f				m_direction;
 		ant::Real						m_rotation;
 	};
 
@@ -55,13 +60,17 @@ namespace ant
 
 	ANT_INLINE const char* SFMLSceneNodeProperties::getName() const { return m_name.c_str(); }
 
-	ANT_INLINE sf::Vector2f SFMLSceneNodeProperties::getPosition() const { return m_position; }
+	ANT_INLINE const sf::Vector2f& SFMLSceneNodeProperties::getPosition() const { return m_position; }
 
 	ANT_INLINE ant::Real SFMLSceneNodeProperties::getRotation() const { return m_rotation; }
 
 	ANT_INLINE void SFMLSceneNodeProperties::setPosition(const sf::Vector2f& pos) { m_position = pos; }
 
 	ANT_INLINE void SFMLSceneNodeProperties::setRotation(const ant::Real& rot) { m_rotation = rot; }
+
+	ANT_INLINE void SFMLSceneNodeProperties::setDirection(const sf::Vector2f& dir) { m_direction = dir; }
+
+	ANT_INLINE const sf::Vector2f& SFMLSceneNodeProperties::getDirection() const { return m_direction; }
 
 	//////////////////////////////////////////////////////////////////////////
 	// Scene Node List
@@ -110,9 +119,13 @@ namespace ant
 
 		virtual void setPosition(const sf::Vector2f& pos) ANT_OVERRIDE;
 
-		virtual void setRotation(const ant::Real& rot) ANT_OVERRIDE;
+		virtual const sf::Vector2f& getPosition() ANT_OVERRIDE;
 
-		virtual sf::Vector2f getPosition() ANT_OVERRIDE;
+		virtual void setDirection(const sf::Vector2f& pos) ANT_OVERRIDE;
+
+		virtual const sf::Vector2f& getDirection() ANT_OVERRIDE;
+
+		virtual void setRotation(const ant::Real& rot) ANT_OVERRIDE;
 
 		virtual ant::Real getRotation() ANT_OVERRIDE;
 
@@ -129,13 +142,17 @@ namespace ant
 	// Implementation
 	ANT_INLINE const SFMLSceneNodeProperties * const SFMLSceneNode::getNodeProps() const { return &m_props; }
 
-	ANT_INLINE sf::Vector2f SFMLSceneNode::getPosition() { return m_props.getPosition(); }
-
-	ANT_INLINE ant::Real SFMLSceneNode::getRotation() { return m_props.getRotation(); }
-	
 	ANT_INLINE void SFMLSceneNode::setPosition(const sf::Vector2f& pos) { m_props.setPosition(pos); }
 
+	ANT_INLINE const sf::Vector2f& SFMLSceneNode::getPosition() { return m_props.getPosition(); }
+
+	ANT_INLINE ant::Real SFMLSceneNode::getRotation() { return m_props.getRotation(); }
+
 	ANT_INLINE void SFMLSceneNode::setRotation(const ant::Real& rot) { return m_props.setRotation(rot); }
+
+	ANT_INLINE void SFMLSceneNode::setDirection(const sf::Vector2f& pos) { m_props.setDirection(pos); }
+
+	ANT_INLINE const sf::Vector2f& SFMLSceneNode::getDirection() { return m_props.getDirection(); }
 
 	/**
 	 * A scene node

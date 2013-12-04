@@ -106,10 +106,10 @@ namespace ant
 		typedef std::map<b2Body const *, ActorId> RigidBodyToActorId;
 		// TODO material database, density database (Why not density in material database?)
 		// The box2D world 
-		b2World* m_PhysicsWorld;
+		b2World*           m_PhysicsWorld;
 		ActorIdToRigidBody m_actorIDToRigidBody;
 		RigidBodyToActorId m_rigidBodyToActorID;
-		IGameLogic * m_gameLogic;
+		IGameLogic *       m_gameLogic;
 	};
 }
 

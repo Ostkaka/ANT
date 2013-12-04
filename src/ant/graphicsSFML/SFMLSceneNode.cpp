@@ -31,6 +31,7 @@ ant::SFMLSceneNode::SFMLSceneNode( ActorId actorId, SFMLBaseRenderComponentWeakP
 	m_baseRenderComponent=renderComponent;
 	setPosition(pos);
 	setRotation(rot);
+	setDirection(sf::Vector2f(1,0));
 }
 
 ant::SFMLSceneNode::~SFMLSceneNode()
@@ -67,6 +68,7 @@ HRESULT ant::SFMLSceneNode::preRender( SFMLScene *scene )
 			{
 				setPosition(pt->getPostion());
 				setRotation(pt->getRotation());
+				setDirection(pt->getDirection());
 			}	
 		}
 	}
@@ -280,27 +282,21 @@ ant::SFMLSpriteNode::SFMLSpriteNode( ActorId actorId,
 {	
 	// Now, get the buffer from the resource cache
 	Resource r(m_textureName);
-	ResourceHandleStrongPtr h = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&r);
+	ResourceHandleStrongPtr handle = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&r);
 	
 	// Is the buffer OK?
-	if (!h->getBuffer())
+	if (!handle->getBuffer())
 	{
 		GCC_ERROR("Buffer from texture resource is bad");
 	}
 
-	if (!m_texture.loadFromMemory(h->getBuffer(),h->getSize()))
+	if (!m_texture.loadFromMemory(handle->getBuffer(),handle->getSize()))
 	{		
 		GCC_ERROR("sf::Texture could not load buffer from memory: " + m_textureName);
 	}
 
 	m_SFMLSprite.setTexture(m_texture);
-
-	// Adjust center of sprite from top left corner
-	//std::cout << "Bound: " << m_SFMLSprite.getLocalBounds().height << "  " << m_SFMLSprite.getLocalBounds().width << std::endl;
-	//std::cout << "Text : " << m_SFMLSprite.getTextureRect().height << "  " << m_SFMLSprite.getTextureRect().width << std::endl;
-
 	m_SFMLSprite.setOrigin(m_SFMLSprite.getLocalBounds().width/2,m_SFMLSprite.getLocalBounds().height/2);
-	//m_SFMLSprite.setOrigin(m_SFMLSprite.getTextureRect().width / 2.0 , -m_SFMLSprite.getTextureRect().height / 2.0);
 }
 
 HRESULT ant::SFMLSpriteNode::render( SFMLScene *scene ) 
@@ -308,6 +304,20 @@ HRESULT ant::SFMLSpriteNode::render( SFMLScene *scene )
 	// First, set proper transformation
 	m_SFMLSprite.setPosition(getPosition());
 	m_SFMLSprite.setRotation(float(getRotation()));	
+	
+	// Flip the sprite depending on direction in X-axis
+	int w = m_SFMLSprite.getTextureRect().width;
+	int h = m_SFMLSprite.getTextureRect().height;
+
+	
+	if (getDirection().x == -1)
+	{
+		m_SFMLSprite.setScale(-1,1);
+	}
+	else if (getDirection().x == 1)
+	{
+		m_SFMLSprite.setScale(1,1);
+	}
 	
 	// Tell the renderer to draw the sprite
 	return scene->getRenderer()->drawSprite(m_SFMLSprite);

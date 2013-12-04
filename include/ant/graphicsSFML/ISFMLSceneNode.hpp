@@ -44,9 +44,13 @@ namespace ant
 
 		virtual void setPosition(const sf::Vector2f& pos)=0;
 
-		virtual void setRotation(const ant::Real& rot)=0;
+		virtual const sf::Vector2f& getPosition()=0;
 
-		virtual sf::Vector2f getPosition()=0;
+		virtual void setDirection(const sf::Vector2f& pos)=0;
+
+		virtual const sf::Vector2f& getDirection()=0;
+
+		virtual void setRotation(const ant::Real& rot)=0;
 
 		virtual ant::Real getRotation()=0;
 	};

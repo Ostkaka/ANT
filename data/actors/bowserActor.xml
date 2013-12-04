@@ -1,4 +1,4 @@
-<Actor type="Player" resource="actors\bowserActor">
+<Actor type="Bowser" resource="actors\bowserActor">
 	<TransformComponent>
 		<Position x="-50" y="-850"/>
 		<Rotation angle="40"/>
@@ -6,11 +6,11 @@
 	<SFMLSpriteComponent>
 		<Texture>resources\bowser.png</Texture>
 	</SFMLSpriteComponent>
-	<SFMLRectanglePrimitiveComponent>
+	<!--<SFMLRectanglePrimitiveComponent>
 		<Size x="35" y="30"/>
 		<Color r="1.0" g="1.0" b="0" a="1"/>
 		<Filled>0</Filled>
-	</SFMLRectanglePrimitiveComponent>
+	</SFMLRectanglePrimitiveComponent>-->
 	<Physics2DComponent>
 		<Shape>Box</Shape>
 		<LockRotation>1</LockRotation>
