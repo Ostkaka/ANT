@@ -86,6 +86,8 @@ namespace ant
 	protected:		
 		std::string m_textureResource;	
 		ant::Real   m_scale;
+		sf::Vector2f m_textureRectangle;
+		sf::Vector2f m_textureRectanglePos;
 	public:
 		static const char *g_Name;
 	};

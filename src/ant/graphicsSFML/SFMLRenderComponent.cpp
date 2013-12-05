@@ -76,7 +76,7 @@ sf::Color ant::SFMLBaseRenderComponent::loadColor( TiXmlElement * pColorData )
 //////////////////////////////////////////////////////////////////////////
 ant::SFMLSpriteComponent::SFMLSpriteComponent( void )
 {
-	
+	m_scale = 1;
 }
 
 bool ant::SFMLSpriteComponent::delegateInit( TiXmlElement *data )
@@ -95,6 +95,30 @@ bool ant::SFMLSpriteComponent::delegateInit( TiXmlElement *data )
 	{
 		m_scale = atoi(scaleNode->FirstChild()->Value());
 	}
+	
+	TiXmlElement* textRectNode = data->FirstChildElement("TextureRectangleSize");
+	if (textRectNode)
+	{
+		double x = 1.0;
+		double y = 1.0;
+
+		textRectNode->Attribute("w", &x);
+		textRectNode->Attribute("h", &y);
+
+		m_textureRectangle = sf::Vector2f(x,y);
+	}	
+
+	TiXmlElement* textRectPosNode = data->FirstChildElement("TextureRectanglePos");
+	if (textRectPosNode)
+	{
+		double x = 1.0;
+		double y = 1.0;
+
+		textRectPosNode->Attribute("x", &x);
+		textRectPosNode->Attribute("y", &y);
+
+		m_textureRectanglePos = sf::Vector2f(x,y);
+	}
 
 	return true;
 }
@@ -107,7 +131,8 @@ ant::SFMLSceneNodeStrongPtr ant::SFMLSpriteComponent::createSceneNode( void )
 	if (pTransformComponent)
 	{
 		SFMLBaseRenderComponentWeakPtr weakThis(this);
-		return SFMLSceneNodeStrongPtr(GCC_NEW SFMLSpriteNode(m_pOwner->getId(),weakThis,m_textureResource,RenderPass_Actor,pTransformComponent->getPostion(),pTransformComponent->getRotation()));	
+		sf::IntRect rect(m_textureRectanglePos.x,m_textureRectanglePos.y,m_textureRectangle.x,m_textureRectangle.y);
+		return SFMLSceneNodeStrongPtr(GCC_NEW SFMLSpriteNode(m_pOwner->getId(),weakThis, m_textureResource, rect, m_scale, RenderPass_Actor,pTransformComponent->getPostion(),pTransformComponent->getRotation()));	
 	}
 	return SFMLSceneNodeStrongPtr();
 }
@@ -247,6 +272,13 @@ bool ant::SFMLCirclePrimitiveComponent::delegateInit( TiXmlElement *data )
 	{
 		m_radius = atoi(scaleNode->FirstChild()->Value());
 	}
+
+	TiXmlElement* texNode = data->FirstChildElement("Filled");
+	if (texNode)
+	{
+		m_filled = (bool)(atoi(texNode->FirstChild()->Value()));
+	}
+
 	return true;
 }
 

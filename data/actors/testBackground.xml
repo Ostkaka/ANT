@@ -1,9 +1,9 @@
 <Actor type="Grid" resource="actors\testBackground">
 	<TransformComponent>
-		<Position x="-300" y="-250"/>
+		<Position x="-600" y="-500"/>
 		<Rotation angle="0"/>
 	</TransformComponent>
 	<SFMLBackgroundSpriteComponent>
-		<Texture>resources\splash.png</Texture>
+		<Texture>resources\Desert.jpg</Texture>
 	</SFMLBackgroundSpriteComponent>
 </Actor>

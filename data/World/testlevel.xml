@@ -1,13 +1,13 @@
 <World>
     <StaticActors>
-	  <!-- <Actor resource="actors\testBackground.xml" /> -->
+	  <Actor resource="actors\testBackground.xml" /> 
       <Actor resource="actors\BowserActor.xml" /> 
       <Actor resource="actors\floorActor.xml" /> 
       <Actor resource="actors\circleActor.xml" /> 
       <Actor resource="actors\circleActor2.xml" /> 
       <Actor resource="actors\rectangleActor.xml" /> 
+      <Actor resource="actors\Kamek.xml" /> 
+      <Actor resource="actors\boxActor.xml" /> 
     </StaticActors>
-
     <!--<Script preLoad="scripts\LevelInit.lua" postLoad="scripts\LevelPostInit.lua"/>-->
-
 </World>

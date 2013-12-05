@@ -1,18 +1,18 @@
 <Actor type="Ground" resource="actors\floorActor">
 	<TransformComponent>
-		<Position x="-500" y="200"/>
+		<Position x="-200" y="300"/>
 		<Rotation angle="0"/>
 	</TransformComponent>
 	<SFMLRectanglePrimitiveComponent>
-		<Color r="0.5" g="0.5" b="0.5" a="1"/>
-		<Size x="1200" y="300"/>
-		<Filled>0</Filled>
+		<Color r="0.5" g="0.4" b="0.4" a="1"/>
+		<Size x="1200" y="200"/>
+		<Filled>1</Filled>
 	</SFMLRectanglePrimitiveComponent>
 	<Physics2DComponent>
 		<Shape>Box</Shape>
 		<MotionState>KINEAMTIC</MotionState>
 		<RigidBodyTransform>
-			<Scale x="600" y="150" z="1"/>
+			<Scale x="600" y="100" z="1"/>
 		</RigidBodyTransform>
 	</Physics2DComponent>
 </Actor>

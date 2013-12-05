@@ -226,6 +226,8 @@ namespace ant
 		SFMLSpriteNode(ActorId actorId, 
 			SFMLBaseRenderComponentWeakPtr renderComponent, 
 			const std::string& textureName,
+			const sf::IntRect& textureRect,	
+			const ant::Real& scale,
 			SFMLRenderPass renderPass, 
 			const sf::Vector2f& pos, 
 			const ant::Real& rot);

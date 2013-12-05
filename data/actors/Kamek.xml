@@ -1,22 +1,22 @@
-<Actor type="Bowser" resource="actors\bowserActor">
+<Actor type="Actor" resource="actors\rectangleActor">
 	<TransformComponent>
-		<Position x="-50" y="-850"/>
+		<Position x="-120" y="-400"/>
 		<Rotation angle="0"/>
 	</TransformComponent>
 	<SFMLSpriteComponent>
-		<Texture>resources\bowser.png</Texture>
+		<Texture>resources\smw2_kamek_sheet.png</Texture>
+		<TextureRectangleSize w="40" h="30"/>
 	</SFMLSpriteComponent>
 	<SFMLRectanglePrimitiveComponent>
-		<Size x="26" y="12"/>
-		<Color r="1.0" g="1.0" b="0" a="1"/>
+		<Size x="35" y="25"/>
+		<Color r="1" g="1" b="1" a="1"/>
 		<Filled>0</Filled>
 	</SFMLRectanglePrimitiveComponent>
 	<Physics2DComponent>
 		<Shape>Box</Shape>
-		<LockRotation>0</LockRotation>
 		<MotionState>DYNAMIC</MotionState>
 		<RigidBodyTransform>
-			<Scale x="13" y="14" z="1"/>
+			<Scale x="17.5" y="12.5" z="1"/>
 		</RigidBodyTransform>
 	</Physics2DComponent>
 </Actor>

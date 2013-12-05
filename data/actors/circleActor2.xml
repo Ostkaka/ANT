@@ -1,6 +1,6 @@
-<Actor type="Circle1" resource="actors\circleActor">
+<Actor type="Circle2" resource="actors\circleActor2">
 	<TransformComponent>
-		<Position x="-200" y="-250"/>
+		<Position x="-160" y="-350"/>
 		<Rotation angle="0"/>
 	</TransformComponent>
 	<SFMLCirclePrimitiveComponent>

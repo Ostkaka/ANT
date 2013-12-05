@@ -274,11 +274,14 @@ HRESULT ant::SFMLCameraNode::setView( SFMLScene * pScene )
 ant::SFMLSpriteNode::SFMLSpriteNode( ActorId actorId, 
 	SFMLBaseRenderComponent* renderComponent, 
 	const std::string& textureName,
+	const sf::IntRect& textureRect,
+	const ant::Real& scale,
 	SFMLRenderPass renderPass, 
 	const sf::Vector2f& pos, 
 	const ant::Real& rot )
 	:SFMLSceneNode(actorId,renderComponent,renderPass,pos,rot),
-	m_textureName(textureName)	
+	m_textureName(textureName),
+	m_scale(scale)	
 {	
 	// Now, get the buffer from the resource cache
 	Resource r(m_textureName);
@@ -296,6 +299,10 @@ ant::SFMLSpriteNode::SFMLSpriteNode( ActorId actorId,
 	}
 
 	m_SFMLSprite.setTexture(m_texture);
+	if (textureRect.width != 0 && textureRect.height != 0)
+	{
+		m_SFMLSprite.setTextureRect(textureRect);
+	}	
 	m_SFMLSprite.setOrigin(m_SFMLSprite.getLocalBounds().width/2,m_SFMLSprite.getLocalBounds().height/2);
 }
 
@@ -312,11 +319,11 @@ HRESULT ant::SFMLSpriteNode::render( SFMLScene *scene )
 	
 	if (getDirection().x == -1)
 	{
-		m_SFMLSprite.setScale(-1,1);
+		m_SFMLSprite.setScale(-1 * m_scale, 1* m_scale);
 	}
 	else if (getDirection().x == 1)
 	{
-		m_SFMLSprite.setScale(1,1);
+		m_SFMLSprite.setScale(1* m_scale, 1* m_scale);
 	}
 	
 	// Tell the renderer to draw the sprite
@@ -444,7 +451,11 @@ ant::SFMLCirclePrimitiveNode::SFMLCirclePrimitiveNode( ActorId actorId,
 	m_radius(radius),
 	m_filled(filled)
 {
-	sf::Color color(255,0,0,255);
+	sf::Color color = sf::Color::White;
+	if (renderComponent)
+	{
+		color = renderComponent->getColor(); 
+	}
 	m_circleShape.setRadius(radius);
 	if (m_filled)
 	{

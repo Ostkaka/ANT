@@ -52,7 +52,7 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 
 	if (translating)
 	{		
-		ant::Real speed = 1.0;
+		ant::Real speed = 5.0;
 		sf::Vector2f currentPos = m_object->getPosition();
 		ant::Real rotation = m_object->getRotation();
 		currentPos += sf::Vector2f(m_dir.x * speed, m_dir.y * speed);

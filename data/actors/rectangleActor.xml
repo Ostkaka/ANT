@@ -1,0 +1,18 @@
+<Actor type="Actor" resource="actors\rectangleActor">
+	<TransformComponent>
+		<Position x="-50" y="-400"/>
+		<Rotation angle="180"/>
+	</TransformComponent>
+	<SFMLRectanglePrimitiveComponent>
+		<Size x="50" y="50"/>
+		<Color r="1" g="1" b="1" a="1"/>
+		<Filled>0</Filled>
+	</SFMLRectanglePrimitiveComponent>
+	<Physics2DComponent>
+		<Shape>Box</Shape>
+		<MotionState>DYNAMIC</MotionState>
+		<RigidBodyTransform>
+			<Scale x="25" y="25" z="1"/>
+		</RigidBodyTransform>
+	</Physics2DComponent>
+</Actor>
