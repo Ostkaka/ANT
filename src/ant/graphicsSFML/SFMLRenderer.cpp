@@ -13,7 +13,7 @@ void ant::SFMLRenderer::setBackgroundColor(BYTE bgA, BYTE bgR, BYTE bgG, BYTE bg
 	m_color = sf::Color(bgR,bgG,bgB,bgA);
 }
 
-HRESULT ant::SFMLRenderer::onRestore(void)
+bool ant::SFMLRenderer::onRestore(void)
 {
 	return S_OK;
 }

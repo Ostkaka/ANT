@@ -22,11 +22,11 @@ namespace ant
 	class IGameView
 	{
 	public:
-		virtual HRESULT onRestore() = 0;
+		virtual bool onRestore() = 0;
 
 		virtual void onRender(ant::DeltaTime fTime, ant::DeltaTime fElapsedTime) = 0;
 
-		virtual HRESULT onLostDevice() = 0;
+		virtual bool onLostDevice() = 0;
 
 		virtual GameViewType getType() = 0;
 
@@ -34,7 +34,7 @@ namespace ant
 
 		virtual void onAttach(GameViewId id, ActorId actorid) = 0;
 
-		virtual LRESULT CALLBACK onMsgProc(sf::Event theEvent) = 0;
+		virtual bool onMsgProc(sf::Event theEvent) = 0;
 
 		virtual void onUpdate(ant::DeltaTime dt) = 0;
 

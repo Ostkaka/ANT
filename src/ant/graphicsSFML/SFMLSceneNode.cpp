@@ -8,6 +8,7 @@
 #include <ant/resources/Resource.hpp>
 #include <ant/graphicsSFML/SFMLRenderer.hpp>
 #include <ant/graphicsSFML/SFMLScene.hpp>
+#include <ant/gccUtils/templates.hpp>
 #include <iostream>
 
 using namespace ant;
@@ -39,23 +40,23 @@ ant::SFMLSceneNode::~SFMLSceneNode()
 
 }
 
-HRESULT ant::SFMLSceneNode::onUpdate( SFMLScene *scene, ant::DeltaTime dt )
+bool ant::SFMLSceneNode::onUpdate( SFMLScene *scene, ant::DeltaTime dt )
 {
 	for (auto i=m_Children.begin() ; i != m_Children.end() ; ++i)
 		(*i)->onUpdate(scene,dt);
 
-	return S_OK;
+	return true;
 }
 
-HRESULT ant::SFMLSceneNode::onRestore( SFMLScene *scene )
+bool ant::SFMLSceneNode::onRestore( SFMLScene *scene )
 {	
 	for (auto i=m_Children.begin() ; i != m_Children.end() ; ++i)
 		(*i)->onRestore(scene);
 
-	return S_OK;
+	return true;
 }
 
-HRESULT ant::SFMLSceneNode::preRender( SFMLScene *scene )
+bool ant::SFMLSceneNode::preRender( SFMLScene *scene )
 {
 	// What about the move character delegate in the scene?
 	if (m_baseRenderComponent)
@@ -72,17 +73,17 @@ HRESULT ant::SFMLSceneNode::preRender( SFMLScene *scene )
 			}	
 		}
 	}
-	return S_OK;
+	return true;
 }
 
-HRESULT ant::SFMLSceneNode::render( SFMLScene *scene )
+bool ant::SFMLSceneNode::render( SFMLScene *scene )
 {
-	return S_OK;
+	return true;
 }
 
-HRESULT ant::SFMLSceneNode::postRender( SFMLScene *scene )
+bool ant::SFMLSceneNode::postRender( SFMLScene *scene )
 {
-	return S_OK;
+	return true;
 }
 
 // TODO add culling!!!
@@ -106,22 +107,22 @@ bool ant::SFMLSceneNode::isVisible( SFMLScene *scene ) const
 	return true;
 }
 
-HRESULT ant::SFMLSceneNode::onLostDevice( SFMLScene *scene )
+bool ant::SFMLSceneNode::onLostDevice( SFMLScene *scene )
 {
 	for (SceneNodeList::iterator i=m_Children.begin() ; i != m_Children.end() ; ++i)
 		(*i)->onLostDevice(scene);
 
-	return S_OK;
+	return true;
 }
 
-HRESULT ant::SFMLSceneNode::renderChildren( SFMLScene *scene )
+bool ant::SFMLSceneNode::renderChildren( SFMLScene *scene )
 {
 	SFMLSceneNodeList::iterator i = m_Children.begin();
 	SFMLSceneNodeList::iterator end = m_Children.end();
 
 	while(i != end)
 	{
-		if ((*i)->preRender(scene)==S_OK)
+		if ((*i)->preRender(scene)==true)
 		{
 			if ((*i)->isVisible(scene))
 			{
@@ -134,7 +135,7 @@ HRESULT ant::SFMLSceneNode::renderChildren( SFMLScene *scene )
 		++i;
 	}
 
-	return S_OK;
+	return true;
 }
 
 bool ant::SFMLSceneNode::addChild(ISFMLSceneNodeStrongPtr ikid)
@@ -197,7 +198,7 @@ bool ant::SFMLRootNode::addChild( ISFMLSceneNodeStrongPtr kid )
 	return m_Children[pass]->addChild(kid);
 }
 
-HRESULT ant::SFMLRootNode::renderChildren( SFMLScene *scene )
+bool ant::SFMLRootNode::renderChildren( SFMLScene *scene )
 {
 	// This code creates fine control of the render passes.
 	for (int pass = RenderPass_0; pass < RenderPass_Last; ++pass)
@@ -219,7 +220,7 @@ HRESULT ant::SFMLRootNode::renderChildren( SFMLScene *scene )
 		}
 	}
 
-	return S_OK;
+	return true;
 }
 
 bool ant::SFMLRootNode::removeChild( ActorId id )
@@ -239,17 +240,17 @@ bool ant::SFMLRootNode::removeChild( ActorId id )
 // SFMLCameraNode Implementation
 ////////////////////////////////////////////////////
 
-HRESULT ant::SFMLCameraNode::render(SFMLScene *scene)
+bool ant::SFMLCameraNode::render(SFMLScene *scene)
 {
-	return S_OK;
+	return true;
 }
 
-HRESULT ant::SFMLCameraNode::onRestore(SFMLScene *scene)
+bool ant::SFMLCameraNode::onRestore(SFMLScene *scene)
 {
-	return S_OK;
+	return true;
 }
 
-HRESULT ant::SFMLCameraNode::setView( SFMLScene * pScene )
+bool ant::SFMLCameraNode::setView( SFMLScene * pScene )
 {
 	if (m_target)
 	{
@@ -265,7 +266,7 @@ HRESULT ant::SFMLCameraNode::setView( SFMLScene * pScene )
 	
 	// Set view to scene
 	pScene->getRenderer()->setView(getPosition(), getRotation());
-	return S_OK;
+	return true;
 }
 
 ////////////////////////////////////////////////////
@@ -306,7 +307,7 @@ ant::SFMLSpriteNode::SFMLSpriteNode( ActorId actorId,
 	m_SFMLSprite.setOrigin(m_SFMLSprite.getLocalBounds().width/2,m_SFMLSprite.getLocalBounds().height/2);
 }
 
-HRESULT ant::SFMLSpriteNode::render( SFMLScene *scene ) 
+bool ant::SFMLSpriteNode::render( SFMLScene *scene ) 
 {	
 	// First, set proper transformation
 	m_SFMLSprite.setPosition(getPosition());
@@ -330,7 +331,7 @@ HRESULT ant::SFMLSpriteNode::render( SFMLScene *scene )
 	return scene->getRenderer()->drawSprite(m_SFMLSprite);
 }
 
-HRESULT ant::SFMLSpriteNode::onRestore( SFMLScene *scene ) 
+bool ant::SFMLSpriteNode::onRestore( SFMLScene *scene ) 
 {
 	return SFMLSceneNode::onRestore(scene);
 	// TODO - do nothing until I get to know what this is
@@ -367,7 +368,7 @@ ant::SFMLBackgroundSpriteNode::SFMLBackgroundSpriteNode( ActorId actorId,
 	m_SFMLSprite.setTexture(m_texture);
 }
 
-HRESULT ant::SFMLBackgroundSpriteNode::render( SFMLScene *scene ) 
+bool ant::SFMLBackgroundSpriteNode::render( SFMLScene *scene ) 
 {
 	// First, set proper transformation
 	m_SFMLSprite.setPosition(getPosition());
@@ -377,7 +378,7 @@ HRESULT ant::SFMLBackgroundSpriteNode::render( SFMLScene *scene )
 	return scene->getRenderer()->drawSprite(m_SFMLSprite);
 }
 
-HRESULT ant::SFMLBackgroundSpriteNode::onRestore( SFMLScene *scene ) 
+bool ant::SFMLBackgroundSpriteNode::onRestore( SFMLScene *scene ) 
 {
 	return SFMLSceneNode::onRestore(scene);
 	// TODO - do nothing until I get to know what this is
@@ -421,7 +422,7 @@ ant::SFMLRectanglePrimitiveNode::SFMLRectanglePrimitiveNode( ActorId actorId,
 		
 }
 
-HRESULT ant::SFMLRectanglePrimitiveNode::render( SFMLScene *scene ) 
+bool ant::SFMLRectanglePrimitiveNode::render( SFMLScene *scene ) 
 {
 	m_rectangleShape.setPosition(getPosition());
 	m_rectangleShape.setRotation(float(getRotation()));	
@@ -431,7 +432,7 @@ HRESULT ant::SFMLRectanglePrimitiveNode::render( SFMLScene *scene )
 	return true;
 }
 
-HRESULT ant::SFMLRectanglePrimitiveNode::onRestore( SFMLScene *scene ) 
+bool ant::SFMLRectanglePrimitiveNode::onRestore( SFMLScene *scene ) 
 {
 	return SFMLSceneNode::onRestore(scene);
 }
@@ -470,7 +471,7 @@ ant::SFMLCirclePrimitiveNode::SFMLCirclePrimitiveNode( ActorId actorId,
 	}	
 }
 
-HRESULT ant::SFMLCirclePrimitiveNode::render( SFMLScene *scene ) 
+bool ant::SFMLCirclePrimitiveNode::render( SFMLScene *scene ) 
 {
 	m_circleShape.setPosition(getPosition());
 	m_circleShape.setRotation(float(getRotation()));	
@@ -481,7 +482,7 @@ HRESULT ant::SFMLCirclePrimitiveNode::render( SFMLScene *scene )
 	return true;
 }
 
-HRESULT ant::SFMLCirclePrimitiveNode::onRestore( SFMLScene *scene ) 
+bool ant::SFMLCirclePrimitiveNode::onRestore( SFMLScene *scene ) 
 {
 	return SFMLSceneNode::onRestore(scene);
 }

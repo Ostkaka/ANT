@@ -41,15 +41,15 @@ namespace ant
 		// Event delegates
 		void gameStateDelegate(IEventDataStrongPtr pEventData);	
 
-		virtual HRESULT onRestore() ANT_OVERRIDE;
+		virtual bool onRestore() ANT_OVERRIDE;
 
 		virtual void onRender(ant::DeltaTime fTime, ant::DeltaTime fElapsedTime) ANT_OVERRIDE;
 
-		virtual HRESULT onLostDevice() ANT_OVERRIDE;
+		virtual bool onLostDevice() ANT_OVERRIDE;
 
 		virtual void onAttach(GameViewId id, ActorId actorid) ANT_OVERRIDE;
 
-		virtual LRESULT CALLBACK onMsgProc(sf::Event theEvent) ANT_OVERRIDE;
+		virtual bool onMsgProc(sf::Event theEvent) ANT_OVERRIDE;
 
 		virtual void onUpdate(ant::DeltaTime dt) ANT_OVERRIDE;
 

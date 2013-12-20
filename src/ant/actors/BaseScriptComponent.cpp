@@ -2,7 +2,6 @@
 #include <ant/core_types.hpp>
 #include <ant/gccUtils/String.hpp>
 #include <ant/luascripting/LuaStateManager.hpp>
-#include <ant/gccUtils/Math.hpp>
 
 using namespace ant;
 

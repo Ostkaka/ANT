@@ -4,7 +4,6 @@
 #include <ant/core_types.hpp>
 #include <ant/classes/ProcessManager.hpp>
 #include <ant/interfaces/IGameLogic.hpp>
-#include <ant/gccUtils/Math.hpp>
 
 class GCCRandom;
 
@@ -139,8 +138,6 @@ namespace ant
 		ProcessManager* m_processManager;
 		/// Total lifetime of the game logic
 		ant::DeltaTime m_lifetime;
-		/// Random number generator
-		GCCRandom m_rng;
 		/// Map that holds all the actors in the game logic
 		ActorMap m_actors;
 		/// Last id used for a new actor in the logic
@@ -157,9 +154,6 @@ namespace ant
 		/// The level manager of the game
 		LevelManager* m_levelManager;
 	};
-
-	/// Implementation
-	ANT_INLINE GCCRandom& BaseGameLogic::getRNG(void) { return m_rng; }
 
 	ANT_INLINE const BaseGameState BaseGameLogic::getState(void) const { return m_gameState; }
 

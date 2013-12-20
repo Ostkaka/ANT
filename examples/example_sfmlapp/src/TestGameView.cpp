@@ -33,9 +33,9 @@ void ant::TestGameView::onAttach( GameViewId id, ActorId actorid )
 	SFMLHumanView::onAttach(id,actorid);
 }
 
-LRESULT CALLBACK ant::TestGameView::onMsgProc( sf::Event theEvent ) 
+bool ant::TestGameView::onMsgProc( sf::Event theEvent ) 
 {
-	LRESULT result = 0;
+	bool result = false;
 	switch(theEvent.type)
 	{	
 	case sf::Event::KeyPressed:
@@ -53,7 +53,7 @@ LRESULT CALLBACK ant::TestGameView::onMsgProc( sf::Event theEvent )
 
 	if (SFMLHumanView::onMsgProc(theEvent))
 	{
-		return 0;
+		return false;
 	}		
 	// Do nothing here yet
 	return result;

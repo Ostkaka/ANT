@@ -7,6 +7,7 @@
 #include <ant/actors/TransformComponent.hpp>
 #include <ant/graphicsSFML/SFMLRenderComponent.hpp>
 #include <ant/2DPhysics/PhysicsComponent.hpp>
+#include <ant/gccUtils/templates.hpp>
 
 #include <tinyxml.h>
 

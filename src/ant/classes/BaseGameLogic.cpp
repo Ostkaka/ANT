@@ -7,11 +7,12 @@
 #include <ant/resources/XmlResource.hpp>
 #include <ant/actors/TransformComponent.hpp>
 #include <ant/actors/Actor.hpp>
-#include <ant/gccUtils/Math.hpp>
 #include <ant/gccUtils/String.hpp>
 #include <ant/eventsystem/Events.hpp>
 #include <ant/classes/HumanView.hpp>
 #include <ant/2DPhysics/Box2DPhysics.hpp>
+#include <ant/gccUtils/templates.hpp>
+
 #include <iostream>
 
 using namespace ant;
@@ -29,7 +30,6 @@ ant::BaseGameLogic::BaseGameLogic()
 	m_lastActorId = 0;
 	m_lifetime = 0;
 	m_processManager = GCC_NEW ProcessManager;
-	m_rng.Randomize();
 	m_gameState = GAME_STATE_INIT;
 	m_actorFactory = NULL;
 

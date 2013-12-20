@@ -13,11 +13,11 @@ namespace ant
 
 		virtual ~IScreenElement(){ }
 
-		virtual HRESULT onRestore() = 0;
+		virtual bool onRestore() = 0;
 		
-		virtual HRESULT onLostDevice() = 0;
+		virtual bool onLostDevice() = 0;
 
-		virtual HRESULT onRender(ant::DeltaTime fTime, ant::DeltaTime fElapsedTime) = 0;
+		virtual bool onRender(ant::DeltaTime fTime, ant::DeltaTime fElapsedTime) = 0;
 
 		virtual void onUpdate(ant::DeltaTime dt) = 0;
 

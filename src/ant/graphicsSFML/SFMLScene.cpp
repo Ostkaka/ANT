@@ -2,6 +2,7 @@
 #include <ant/graphicsSFML/SFMLSceneNode.hpp>
 #include <ant/eventsystem/Events.hpp>
 #include <ant/core_types.hpp>
+#include <ant/ant_std.hpp>
 #include <iostream>
 
 using namespace ant;
@@ -27,49 +28,48 @@ ant::SFMLScene::~SFMLScene()
 	pEventMgr->removeListener(MakeDelegate(this, &SFMLScene::modifiedRenderComponentDelegate), EvtData_Modified_SFMLRender_Component::sk_EventType);
 }
 
-HRESULT ant::SFMLScene::onRender()
+bool ant::SFMLScene::onRender()
 {
 	if (m_root && m_camera)
 	{
 		m_camera->setView(this);
 	
-		if (m_root->preRender(this) == S_OK)
+		if (m_root->preRender(this) == true)
 		{
 			m_root->render(this);
 			m_root->renderChildren(this);
 			m_root->postRender(this);
 		}
 	}
-	return S_OK;
+	return true;
 }
 
-HRESULT ant::SFMLScene::onRestore()
+bool ant::SFMLScene::onRestore()
 {
 	if (!m_root)
 	{
-		S_OK;
+		true;
 	}
 
-	HRESULT hr;
-	V_RETURN(m_renderer->onRestore());
+	m_renderer->onRestore();
 
 	return m_root->onRestore(this);
 }
 
-HRESULT ant::SFMLScene::onLostDevice()
+bool ant::SFMLScene::onLostDevice()
 {
 	if (m_root)
 	{
 		m_root->onLostDevice(this);
 	}
-	return S_OK;
+	return true;
 }
 
-HRESULT ant::SFMLScene::onUpdate( const ant::DeltaTime dt )
+bool ant::SFMLScene::onUpdate( const ant::DeltaTime dt )
 {
 	if (!m_root)
 	{
-		return S_OK;
+		return true;
 	}
 
 	// Do some function to get time. This is just stupid with ticks

@@ -2,6 +2,7 @@
 #include <ant/graphicsSFML/SFMLSceneNode.hpp>
 #include <ant/actors/TransformComponent.hpp>
 #include <ant/eventsystem/Events.hpp>
+#include <ant/gccUtils/templates.hpp>
 
 using namespace ant;
 
@@ -105,7 +106,7 @@ bool ant::SFMLSpriteComponent::delegateInit( TiXmlElement *data )
 		textRectNode->Attribute("w", &x);
 		textRectNode->Attribute("h", &y);
 
-		m_textureRectangle = sf::Vector2f(x,y);
+		m_textureRectangle = sf::Vector2f((float)x,(float)y);
 	}	
 
 	TiXmlElement* textRectPosNode = data->FirstChildElement("TextureRectanglePos");

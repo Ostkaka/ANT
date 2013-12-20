@@ -20,27 +20,27 @@ namespace ant
 
 		virtual const SFMLSceneNodeProperties * const getNodeProps() const=0;
 
-		virtual HRESULT onUpdate(SFMLScene *scene, ant::DeltaTime dt)=0;
+		virtual bool onUpdate(SFMLScene *scene, ant::DeltaTime dt)=0;
 
-		virtual HRESULT onRestore(SFMLScene *scene)=0;
+		virtual bool onRestore(SFMLScene *scene)=0;
 
-		virtual HRESULT preRender(SFMLScene *scene)=0;
+		virtual bool preRender(SFMLScene *scene)=0;
 
-		virtual HRESULT render(SFMLScene *scene)=0;
+		virtual bool render(SFMLScene *scene)=0;
 
-		virtual HRESULT postRender(SFMLScene *scene)=0;
+		virtual bool postRender(SFMLScene *scene)=0;
 
 		virtual bool isVisible(SFMLScene *scene) const=0;
 
-		virtual HRESULT onLostDevice(SFMLScene *scene)=0;
+		virtual bool onLostDevice(SFMLScene *scene)=0;
 
-		virtual HRESULT renderChildren(SFMLScene *scene)=0; 
+		virtual bool renderChildren(SFMLScene *scene)=0; 
 
 		virtual bool addChild(ISFMLSceneNodeStrongPtr kid)=0;
 
 		virtual bool removeChild(ActorId id)=0;	 
 
-		//virtual HRESULT pick()=0;
+		//virtual bool pick()=0;
 
 		virtual void setPosition(const sf::Vector2f& pos)=0;
 

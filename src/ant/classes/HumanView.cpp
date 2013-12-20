@@ -4,6 +4,8 @@
 #include <ant/core_types.hpp>
 #include <ant/gui/UserInterface.hpp>
 #include <ant/interfaces/GenericObjectFactory.hpp>
+#include <ant/gccUtils/templates.hpp>
+#include <ant/ant_std.hpp>
 #include <iostream>
 
 #define SCREEN_REFRESH_RATE (1.0/60.0)
@@ -104,23 +106,23 @@ void ant::SFMLHumanView::onRender(ant::DeltaTime fTime, ant::DeltaTime fElapsedT
 	}
 }
 
-HRESULT ant::SFMLHumanView::onRestore() 
+bool ant::SFMLHumanView::onRestore() 
 {
-	HRESULT hr = S_OK;
+	bool hr = S_OK;
 	for(ScreenElementList::iterator i=m_ScreenElements.begin(); i!=m_ScreenElements.end(); ++i)
 	{
-		V_RETURN ( (*i)->onRestore() );
+		return ( (*i)->onRestore() );
 	}
 
 	return hr;
 }
 
-HRESULT ant::SFMLHumanView::onLostDevice() 
+bool ant::SFMLHumanView::onLostDevice() 
 {
-	HRESULT hr = S_OK;
+	bool hr = S_OK;
 	for(ScreenElementList::iterator i=m_ScreenElements.begin(); i!=m_ScreenElements.end(); ++i)
 	{
-		V_RETURN ( (*i)->onLostDevice() );
+		return ( (*i)->onLostDevice() );
 	}
 
 	return S_OK;
@@ -138,7 +140,7 @@ void ant::SFMLHumanView::onUpdate( ant::DeltaTime dt )
 	}
 }
 
-LRESULT CALLBACK ant::SFMLHumanView::onMsgProc( sf::Event theEvent ) 
+bool ant::SFMLHumanView::onMsgProc( sf::Event theEvent ) 
 {
 	// Go through the layers in reverse order
 	for (auto it = m_ScreenElements.rbegin(); it != m_ScreenElements.rend() ; ++it)
@@ -147,12 +149,11 @@ LRESULT CALLBACK ant::SFMLHumanView::onMsgProc( sf::Event theEvent )
 		{
 			if ((*it)->onMsgProc(theEvent))
 			{
-				return 1;
+				return true;
 			}
 		}
 	}
-
-	LRESULT result = 0;
+	bool result=false;
 	switch(theEvent.type)
 	{			
 		case sf::Event::KeyPressed:
@@ -168,7 +169,7 @@ LRESULT CALLBACK ant::SFMLHumanView::onMsgProc( sf::Event theEvent )
 			}
 			break;
 		default:
-				return 0;
+				return false;
 	}
 
 	return result;

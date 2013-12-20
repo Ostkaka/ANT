@@ -21,13 +21,13 @@ namespace ant
 		/// Default destructor
 		virtual ~SFMLScene();
 
-		HRESULT onRender(void);
+		bool onRender(void);
 
-		HRESULT onRestore(void);
+		bool onRestore(void);
 		
-		HRESULT onLostDevice(void);
+		bool onLostDevice(void);
 		
-		HRESULT onUpdate(const ant::DeltaTime dt);
+		bool onUpdate(const ant::DeltaTime dt);
 
 		ISFMLSceneNodeStrongPtr findActor(ActorId actor);
 

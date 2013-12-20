@@ -5,9 +5,6 @@
 #include <ant/interfaces/IScreenElement.hpp>
 #include <ant/graphicsSFML/SFMLScene.hpp>
 
-const DWORD g_QuitNoPrompt = MAKELPARAM(-1,-1);
-const UINT g_MsgEndModal = (WM_USER+100);
-
 namespace ant
 {
 	/**
@@ -28,22 +25,22 @@ namespace ant
 			SFMLScene::onUpdate(dt); 
 		}
 
-		virtual HRESULT onRestore() ANT_OVERRIDE  
+		virtual bool onRestore() ANT_OVERRIDE  
 		{ 
 			SFMLScene::onRestore(); 
-			return S_OK; 
+			return true; 
 		}
 
-		virtual HRESULT onRender(ant::DeltaTime fTime, ant::DeltaTime fElapsedTime) ANT_OVERRIDE 
+		virtual bool onRender(ant::DeltaTime fTime, ant::DeltaTime fElapsedTime) ANT_OVERRIDE 
 		{ 
 			SFMLScene::onRender(); 
-			return S_OK; 
+			return true; 
 		}
 
-		virtual HRESULT onLostDevice() ANT_OVERRIDE 
+		virtual bool onLostDevice() ANT_OVERRIDE 
 		{ 
 			SFMLScene::onLostDevice(); 
-			return S_OK; 
+			return true; 
 		}
 
 		// Don't handle any messages

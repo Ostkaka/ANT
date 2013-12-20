@@ -17,7 +17,7 @@ namespace ant
 
 		void setBackgroundColor(BYTE bgA, BYTE bgR, BYTE bgG, BYTE bgB );
 		
-		HRESULT onRestore(void);
+		bool onRestore(void);
 		
 		void shutDown(void);
 		

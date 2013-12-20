@@ -339,10 +339,6 @@ string ToStr(bool val)
     return (string( (val == true ? "true" : "false") ));
 }
 
-string ToStr(const Vec3& vec)
-{
-    return string("(" + ToStr(vec.x) + "," + ToStr(vec.y) + "," + ToStr(vec.z) + ")");
-}
 
 
 

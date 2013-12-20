@@ -40,8 +40,8 @@ namespace ant
 		
 		/// Helper functions
 		LuaPlus::LuaObject createPath(const std::string& path, bool ignoreLastElement = false);
-		void convertVec3ToTable(const Vec3& vec, LuaPlus::LuaObject& outLuaTable) const;
-		void convertTableToVec3(LuaPlus::LuaObject& inLuaTable, const Vec3& outvec) const;
+
+		// TODO - Vec2
 
 	private:
 		void setError(int errorNum);

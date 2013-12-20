@@ -2,6 +2,7 @@
 #include <ant/2DPhysics/Box2DPhysics.hpp>
 #include <ant/actors/TransformComponent.hpp>
 #include <ant/interfaces/ISFMLApp.hpp>
+#include <ant/gccUtils/templates.hpp>
 
 using namespace ant;
 

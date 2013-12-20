@@ -66,12 +66,6 @@ public:
 #	define GCC_NEW new
 #endif
 
-#define DXUT_AUTOLIB
-
-// DirectX Includes
-#include <dxut.h>
-#include <SDKmisc.h>
-
 #include <tinyxml.h>
 
 // fast delegate stuff
@@ -85,31 +79,6 @@ using fastdelegate::MakeDelegate;
 #include <ant/debug\Logger.hpp>  // this should be the first of the gcc includes since it defines GCC_ASSERT()
 #include <ant/gccUtils/types.hpp>	
 #include <ant/interfaces/GenericObjectFactory.hpp>
-#include <ant/Graphics3D\geometry.hpp>
-
-typedef D3DXCOLOR Color;
-
-extern Color g_White;
-extern Color g_Black;
-extern Color g_Cyan;
-extern Color g_Red;
-extern Color g_Green;
-extern Color g_Blue;
-extern Color g_Yellow;
-extern Color g_Gray40;
-extern Color g_Gray25;
-extern Color g_Gray65;
-extern Color g_Transparent;
-
-extern Vec3 g_Up;
-extern Vec3 g_Right;
-extern Vec3 g_Forward;
-
-extern Vec4 g_Up4;
-extern Vec4 g_Right4;
-extern Vec4 g_Forward4;
-
-
 
 //  AppMsg				- Chapter 9, page 248
 
@@ -120,25 +89,6 @@ struct AppMsg
 	WPARAM m_wParam;
 	LPARAM m_lParam;
 };
-
-
-
-
-//#include "..\GameCode4\interfaces.h"
-
-
-// Useful #defines
-
-extern const float fOPAQUE;
-extern const int iOPAQUE;
-extern const float fTRANSPARENT;
-extern const int iTRANSPARENT;
-
-extern const int MEGABYTE;
-extern const float SIXTY_HERTZ;
-
-extern const int SCREEN_WIDTH;
-extern const int SCREEN_HEIGHT;
 
 #if !defined(SAFE_DELETE)
 #define SAFE_DELETE(x) if(x) delete x; x=NULL;
@@ -163,8 +113,6 @@ extern const int SCREEN_HEIGHT;
 #define __STR2__(x) #x
 #define __STR1__(x) __STR2__(x)
 #define __LOC__ __FILE__ "("__STR1__(__LINE__)") : Warning Msg: "
-
-#include <ant/interfaces/IAppWindows.hpp>
 
 extern INT WINAPI GameCode4(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,

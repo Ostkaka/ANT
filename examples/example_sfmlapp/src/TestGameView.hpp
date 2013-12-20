@@ -22,7 +22,7 @@ namespace ant
 
 		virtual void onAttach(GameViewId id, ActorId actorid) ANT_OVERRIDE;
 
-		virtual LRESULT CALLBACK onMsgProc(sf::Event theEvent) ANT_OVERRIDE;
+		virtual bool onMsgProc(sf::Event theEvent) ANT_OVERRIDE;
 
 		virtual void onUpdate(ant::DeltaTime dt) ANT_OVERRIDE;
 

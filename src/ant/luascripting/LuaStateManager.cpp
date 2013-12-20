@@ -131,16 +131,6 @@ LuaPlus::LuaObject ant::LuaStateManager::createPath( const std::string& path, bo
 	return context;
 }
 
-void ant::LuaStateManager::convertVec3ToTable( const Vec3& vec, LuaPlus::LuaObject& outLuaTable ) const
-{
-	// NOT relevant yet
-}
-
-void ant::LuaStateManager::convertTableToVec3( LuaPlus::LuaObject& inLuaTable, const Vec3& outvec ) const
-{
-	// NOT relevant yet
-}
-
 void ant::LuaStateManager::setError( int errorNum )
 {
 	// Note: If we get an error, we're hosed because LuaPlus throws an exception.  So if this function

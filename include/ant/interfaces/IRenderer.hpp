@@ -13,29 +13,9 @@ namespace ant
 		virtual std::string toString()=0;
 	};
 
-	/**
-	 * Abstract interface for declaring a renderer
-	 */
-	class I3DRenderer
-	{
-	public:
-		virtual void setBackgroundColor(BYTE bgA, BYTE bgR, BYTE bgG, BYTE bgB )=0;
-		virtual HRESULT onRestore()=0;
-		virtual void shutDown()=0;
-		virtual bool preRender()=0;
-		virtual bool postRender()=0;
-		virtual void calcLightning()=0;
-		virtual void setWorldTransform(const Mat4x4 *m)=0;
-		virtual void setViewTransform(const Mat4x4 *m)=0;
-		virtual void setProjectionTransform(const Mat4x4 *m)=0;
-		virtual shared_ptr<IRenderState> prepareAlphaPass()=0;
-		virtual shared_ptr<IRenderState> prepareSkyBoxPass()=0;
-		virtual void drawLine(const Vec3& from,const Vec3& to,const Color& color)=0;
-	};
-
 	/////////////////////////////////////////////////////////////////////////////
 	//   SFML scenes are drawn in passes - this enum defines the render passes
-	//   supported by the 3D scene graph created by class Scene.
+	//   supported by the 2D scene graph created by class Scene.
 	/////////////////////////////////////////////////////////////////////////////
 
 	enum SFMLRenderPass
@@ -55,19 +35,11 @@ namespace ant
 	{
 	public:		
 		virtual void setBackgroundColor(BYTE bgA, BYTE bgR, BYTE bgG, BYTE bgB )=0;
-		virtual HRESULT onRestore()=0;
+		virtual bool onRestore()=0;
 		virtual void shutDown()=0;
 		virtual bool preRender()=0;
 		virtual bool postRender()=0;
 		virtual void setView(sf::Vector2f pos, ant::Real angle)=0;
-		/*virtual void calcLightning()=0;
-		virtual void setWorldTransform(const Mat4x4 *m)=0;
-		virtual void setViewTransform(const Mat4x4 *m)=0;
-		virtual void setProjectionTransform(const Mat4x4 *m)=0;
-		virtual shared_ptr<IRenderState> prepareAlphaPass()=0;
-		virtual shared_ptr<IRenderState> prepareSkyBoxPass()=0;
-		virtual void drawLine(const Vec3& from,const Vec3& to,const Color& color)=0;*/
-
 		// Functions for drawing SFML primitives on the active window
 		virtual bool drawSprite(const sf::Sprite& sprite)=0;
 		virtual bool drawRectangle(const sf::RectangleShape& rectangle)=0;

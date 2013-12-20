@@ -94,28 +94,28 @@ namespace ant
 
 		virtual const SFMLSceneNodeProperties * const getNodeProps() const ANT_OVERRIDE;
 
-		virtual HRESULT onUpdate(SFMLScene *scene, ant::DeltaTime dt) ANT_OVERRIDE;
+		virtual bool onUpdate(SFMLScene *scene, ant::DeltaTime dt) ANT_OVERRIDE;
 
-		virtual HRESULT onRestore(SFMLScene *scene) ANT_OVERRIDE;
+		virtual bool onRestore(SFMLScene *scene) ANT_OVERRIDE;
 
-		virtual HRESULT preRender(SFMLScene *scene) ANT_OVERRIDE;
+		virtual bool preRender(SFMLScene *scene) ANT_OVERRIDE;
 
-		virtual HRESULT render(SFMLScene *scene) ANT_OVERRIDE; 
+		virtual bool render(SFMLScene *scene) ANT_OVERRIDE; 
 
-		virtual HRESULT postRender(SFMLScene *scene) ANT_OVERRIDE;
+		virtual bool postRender(SFMLScene *scene) ANT_OVERRIDE;
 
 		virtual bool isVisible(SFMLScene *scene) const ANT_OVERRIDE;
 
-		virtual HRESULT onLostDevice(SFMLScene *scene) ANT_OVERRIDE;
+		virtual bool onLostDevice(SFMLScene *scene) ANT_OVERRIDE;
 
 		// This support child nodes. Is this even necessary?
-		virtual HRESULT renderChildren(SFMLScene *scene) ANT_OVERRIDE; 
+		virtual bool renderChildren(SFMLScene *scene) ANT_OVERRIDE; 
 		 
 		virtual bool addChild(ISFMLSceneNodeStrongPtr ikid) ANT_OVERRIDE;
 
 		virtual bool removeChild(ActorId id) ANT_OVERRIDE;
 		 
-		//virtual HRESULT pick()=0; // This can be done with just simple coords
+		//virtual bool pick()=0; // This can be done with just simple coords
 
 		virtual void setPosition(const sf::Vector2f& pos) ANT_OVERRIDE;
 
@@ -162,7 +162,7 @@ namespace ant
 	public:
 		SFMLRootNode();
 		virtual bool addChild(ISFMLSceneNodeStrongPtr kid);
-		virtual HRESULT renderChildren(SFMLScene *pScene);
+		virtual bool renderChildren(SFMLScene *pScene);
 		virtual bool removeChild(ActorId id);
 		virtual bool isVisible(SFMLScene *pScene) const;
 	};
@@ -181,9 +181,9 @@ namespace ant
 			{
 			}
 
-			virtual HRESULT render(SFMLScene *scene) ANT_OVERRIDE; 		
+			virtual bool render(SFMLScene *scene) ANT_OVERRIDE; 		
 
-			virtual HRESULT onRestore(SFMLScene *scene) ANT_OVERRIDE;
+			virtual bool onRestore(SFMLScene *scene) ANT_OVERRIDE;
 
 			virtual bool isVisible(SFMLScene *pScene) const ANT_OVERRIDE; //inline
 
@@ -193,7 +193,7 @@ namespace ant
 			
 			SFMLSceneNodeStrongPtr getTarget(); // inline
 
-			HRESULT setView(SFMLScene * pScene); 
+			bool setView(SFMLScene * pScene); 
 
 			void setCameraOffset(const sf::Vector2f& offset);
 
@@ -232,9 +232,9 @@ namespace ant
 			const sf::Vector2f& pos, 
 			const ant::Real& rot);
 
-		virtual HRESULT render(SFMLScene *scene) ANT_OVERRIDE; 		
+		virtual bool render(SFMLScene *scene) ANT_OVERRIDE; 		
 
-		virtual HRESULT onRestore(SFMLScene *scene) ANT_OVERRIDE;
+		virtual bool onRestore(SFMLScene *scene) ANT_OVERRIDE;
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
@@ -259,9 +259,9 @@ namespace ant
 			const sf::Vector2f& pos, 
 			const ant::Real& rot);
 
-		virtual HRESULT render(SFMLScene *scene) ANT_OVERRIDE; 		
+		virtual bool render(SFMLScene *scene) ANT_OVERRIDE; 		
 
-		virtual HRESULT onRestore(SFMLScene *scene) ANT_OVERRIDE;
+		virtual bool onRestore(SFMLScene *scene) ANT_OVERRIDE;
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
@@ -287,9 +287,9 @@ namespace ant
 			const sf::Vector2f& pos, 
 			const ant::Real& rot);
 
-		virtual HRESULT render(SFMLScene *scene) ANT_OVERRIDE; 		
+		virtual bool render(SFMLScene *scene) ANT_OVERRIDE; 		
 
-		virtual HRESULT onRestore(SFMLScene *scene) ANT_OVERRIDE;
+		virtual bool onRestore(SFMLScene *scene) ANT_OVERRIDE;
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
@@ -314,9 +314,9 @@ namespace ant
 			const sf::Vector2f& pos, 
 			const ant::Real& rot);
 
-		virtual HRESULT render(SFMLScene *scene) ANT_OVERRIDE; 		
+		virtual bool render(SFMLScene *scene) ANT_OVERRIDE; 		
 
-		virtual HRESULT onRestore(SFMLScene *scene) ANT_OVERRIDE;
+		virtual bool onRestore(SFMLScene *scene) ANT_OVERRIDE;
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables

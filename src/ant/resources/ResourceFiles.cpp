@@ -2,6 +2,7 @@
 #include <ant/resources/Resource.hpp>
 #include <ant/resources/ZipFile.hpp>
 #include <ant/gccUtils/String.hpp>
+#include <ant/gccUtils/templates.hpp>
 #include <cctype>			// for std::tolower
 
 using namespace ant;
