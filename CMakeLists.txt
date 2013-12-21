@@ -15,7 +15,7 @@ include(${PROJECT_SOURCE_DIR}/cmake/HandleDependencies.cmake)
 INCLUDE(ExternalProject)
 
 # Set default ExternalProject root directory
-set(EP_PREFIX ${CMAKE_BINARY_DIR}/dependecies)
+set(EP_PREFIX ${CMAKE_BINARY_DIR}/dependencies)
 SET_DIRECTORY_PROPERTIES(PROPERTIES EP_PREFIX ${EP_PREFIX})
 
 # define the path of our additional CMake modules
@@ -130,6 +130,7 @@ INCLUDE_DIRECTORIES(${source_dir})
 
 # Get binary directory of external project
 ExternalProject_Get_Property(zlib binary_dir)
+INCLUDE_DIRECTORIES(${binary_dir})
 set(ZLIB_LIB_DIR ${binary_dir})
 
 #find fastdelegate

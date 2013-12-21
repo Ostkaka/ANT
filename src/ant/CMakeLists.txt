@@ -31,6 +31,11 @@ target_link_libraries(${ANTCORE_TARGET_NAME}
 	       optimized ${BOX2D_LIB_DIR}/box2d/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}box2d${CMAKE_FIND_LIBRARY_SUFFIXES}
 )
 
+target_link_libraries(${ANTCORE_TARGET_NAME}
+	       debug ${ZLIB_LIB_DIR}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}zlib${CMAKE_FIND_LIBRARY_SUFFIXES}
+	       optimized ${ZLIB_LIB_DIR}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}zlib${CMAKE_FIND_LIBRARY_SUFFIXES}
+)
+
 # Need to link SFML separately just cause it is easier
 target_link_libraries(${ANTCORE_TARGET_NAME} ${SFML_LIBRARIES})
 
