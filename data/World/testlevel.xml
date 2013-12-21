@@ -7,7 +7,6 @@
       <Actor resource="actors\circleActor2.xml" /> 
       <Actor resource="actors\rectangleActor.xml" /> 
       <Actor resource="actors\Kamek.xml" /> 
-      <Actor resource="actors\boxActor.xml" /> 
     </StaticActors>
     <!--<Script preLoad="scripts\LevelInit.lua" postLoad="scripts\LevelPostInit.lua"/>-->
 </World>

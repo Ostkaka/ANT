@@ -115,6 +115,7 @@ ExternalProject_Add(
                -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=ReleaseLibs 
                -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO:PATH=ReleaseLibs 
                -DCMAKE_CXX_FLAGS=${MSVC_COMPILER_DEFS}
+               -DBUILD_SHARED_LIBS=OFF
     # Wrap download, configure and build steps in a script to log output
 	# Disable install step
     INSTALL_COMMAND ""
