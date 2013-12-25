@@ -74,7 +74,7 @@ if (MSVC)
 	# This is ugly but set the compiler flags for RelDebInfo -- THIS CANNOT BE SET?!?
 	set ( CMAKE_CXX_FLAGS_RELWITHDEBINFO "/MD /Zi /Od" ) 
 
-	add_definitions(-DUNICODE -D_UNICODE)
+	#add_definitions(-DUNICODE -D_UNICODE)
 	set(CMAKE_DEBUG_POSTFIX "d")
     add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
     add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
@@ -95,14 +95,36 @@ set( LUAPLUSPLUS_TARGET_NAME "luaplusplus" )
 include_directories(${ANT_DEPENDENCIES_DIR}/luaplusplus)
 add_subdirectory(${ANT_DEPENDENCIES_DIR}/luaplusplus)
 
-# find external SFML libraries
-find_package(SFML REQUIRED audio graphics window system)
-IF(SFML_FOUND)
-	include_directories(${SFML_INCLUDE_DIR})
-	message("SFML: FOUND")
-else()
-	message(FATAL_ERROR "SFML: NOT FOUND")
-endif(SFML_FOUND)
+# find external SFML libraries --- hmm, can make macro out of this! Too much repetition of code!
+ExternalProject_Add(
+    sfml
+    GIT_REPOSITORY https://github.com/LaurentGomila/SFML.git
+    TIMEOUT 10  
+    # Force separate output paths for debug and release builds to allow easy
+    # identification of correct lib in subsequent TARGET_LINK_LIBRARIES commands
+    CMAKE_ARGS -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=DebugLibs
+               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=ReleaseLibs 
+               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO:PATH=ReleaseLibs 
+               -DCMAKE_CXX_FLAGS=${MSVC_COMPILER_DEFS}
+               -DBUILD_SHARED_LIBS=OFF
+    # Wrap download, configure and build steps in a script to log output
+  # Disable install step
+    INSTALL_COMMAND ""
+    LOG_DOWNLOAD ON
+    LOG_CONFIGURE ON
+    LOG_BUILD ON)
+
+
+SET_PROPERTY(TARGET sfml PROPERTY FOLDER "external")
+
+# Get include directory of external project
+ExternalProject_Get_Property(sfml source_dir)
+INCLUDE_DIRECTORIES(${source_dir}/include)
+
+# Get binary directory of external project
+ExternalProject_Get_Property(sfml binary_dir)
+INCLUDE_DIRECTORIES(${binary_dir})
+set(ZLIB_SFML_DIR ${binary_dir})
 
 # Add zlib
 ExternalProject_Add(
