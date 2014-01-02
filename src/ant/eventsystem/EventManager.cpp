@@ -2,7 +2,7 @@
 #include <ant/core_types.hpp>
 #include <ant/gccUtils/String.hpp>
 #include <SFML/System/Clock.hpp>
-#include <ant/debug/Logger.hpp>
+#include <ant/gccDebug/Logger.hpp>
 
 using namespace ant;
 

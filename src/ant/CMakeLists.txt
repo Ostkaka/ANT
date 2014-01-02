@@ -37,10 +37,10 @@ target_link_libraries(${ANTCORE_TARGET_NAME}
 	       optimized ${ZLIB_LIB_DIR}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}zlib${CMAKE_FIND_LIBRARY_SUFFIXES}
 )
 
-target_link_libraries(${ANTCORE_TARGET_NAME}
-	       debug ${ZLIB_SFML_DIR}/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}sfml${CMAKE_FIND_LIBRARY_SUFFIXES}
-	       optimized ${ZLIB_SFML_DIR}/ReleaseLibs/${CMAKE_FIND_LIBRARY_PREFIXES}sfml${CMAKE_FIND_LIBRARY_SUFFIXES}
-)
+message("rjfksdfsdf sdj: " ${SFML_LIBRARIES})
+message("rjfksdfsdf sdj openGL: " ${OPENGL_LIBRARIES})
+
+target_link_libraries(${ANTCORE_TARGET_NAME} ${SFML_LIBRARIES})
 
 # Set properties for antCore
 SET_TARGET_PROPERTIES(${ANTCORE_TARGET_NAME} PROPERTIES LINKER_LANGUAGE CXX)

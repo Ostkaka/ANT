@@ -74,7 +74,7 @@ if (MSVC)
 	# This is ugly but set the compiler flags for RelDebInfo -- THIS CANNOT BE SET?!?
 	set ( CMAKE_CXX_FLAGS_RELWITHDEBINFO "/MD /Zi /Od" ) 
 
-	#add_definitions(-DUNICODE -D_UNICODE)
+	add_definitions(-DUNICODE -D_UNICODE)
 	set(CMAKE_DEBUG_POSTFIX "d")
     add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
     add_definitions(-D_CRT_NONSTDC_NO_DEPRECATE)
@@ -94,37 +94,32 @@ add_subdirectory(${ANT_DEPENDENCIES_DIR}/tinyxml)
 set( LUAPLUSPLUS_TARGET_NAME "luaplusplus" )
 include_directories(${ANT_DEPENDENCIES_DIR}/luaplusplus)
 add_subdirectory(${ANT_DEPENDENCIES_DIR}/luaplusplus)
+message("dgjksdfghs::::" ${ANT_DEPENDENCIES_DIR})
 
 # find external SFML libraries --- hmm, can make macro out of this! Too much repetition of code!
+set(SFML_INSTALL_DIR ${ANT_DEPENDENCIES_DIR}/sfml/)
 ExternalProject_Add(
     sfml
     GIT_REPOSITORY https://github.com/LaurentGomila/SFML.git
     TIMEOUT 10  
     # Force separate output paths for debug and release builds to allow easy
     # identification of correct lib in subsequent TARGET_LINK_LIBRARIES commands
-    CMAKE_ARGS -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG:PATH=DebugLibs
-               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE:PATH=ReleaseLibs 
-               -DCMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO:PATH=ReleaseLibs 
+    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${SFML_INSTALL_DIR}
                -DCMAKE_CXX_FLAGS=${MSVC_COMPILER_DEFS}
-               -DBUILD_SHARED_LIBS=OFF
-    # Wrap download, configure and build steps in a script to log output
-  # Disable install step
-    INSTALL_COMMAND ""
+               #-DBUILD_SHARED_LIBS=OFF
+    # Wrap download, configure and build steps in a script to log output   
     LOG_DOWNLOAD ON
     LOG_CONFIGURE ON
     LOG_BUILD ON)
 
-
 SET_PROPERTY(TARGET sfml PROPERTY FOLDER "external")
 
 # Get include directory of external project
-ExternalProject_Get_Property(sfml source_dir)
-INCLUDE_DIRECTORIES(${source_dir}/include)
+INCLUDE_DIRECTORIES(${SFML_INSTALL_DIR}/include)
 
 # Get binary directory of external project
-ExternalProject_Get_Property(sfml binary_dir)
-INCLUDE_DIRECTORIES(${binary_dir})
-set(ZLIB_SFML_DIR ${binary_dir})
+INCLUDE_DIRECTORIES(${SFML_INSTALL_DIR}/bin)
+set(SFML_LIB_DIR ${SFML_INSTALL_DIR}/lib)
 
 # Add zlib
 ExternalProject_Add(
