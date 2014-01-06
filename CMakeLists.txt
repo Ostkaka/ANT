@@ -83,8 +83,6 @@ endif(MSVC)
 # add include paths of external SFML libraries
 MESSAGE("Using dependecies dir: " ${ANT_DEPENDENCIES_DIR})
 
-set(DEPENDECY_LIBS ${DEPENDECY_LIBS})
-
 # TinyXML
 set(TINYXML_TARGET_NAME "TinyXml")
 include_directories(${ANT_DEPENDENCIES_DIR}/tinyxml)
@@ -94,7 +92,6 @@ add_subdirectory(${ANT_DEPENDENCIES_DIR}/tinyxml)
 set( LUAPLUSPLUS_TARGET_NAME "luaplusplus" )
 include_directories(${ANT_DEPENDENCIES_DIR}/luaplusplus)
 add_subdirectory(${ANT_DEPENDENCIES_DIR}/luaplusplus)
-message("dgjksdfghs::::" ${ANT_DEPENDENCIES_DIR})
 
 # find external SFML libraries --- hmm, can make macro out of this! Too much repetition of code!
 set(SFML_INSTALL_DIR ${ANT_DEPENDENCIES_DIR}/sfml/)
@@ -106,7 +103,7 @@ ExternalProject_Add(
     # identification of correct lib in subsequent TARGET_LINK_LIBRARIES commands
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${SFML_INSTALL_DIR}
                -DCMAKE_CXX_FLAGS=${MSVC_COMPILER_DEFS}
-               #-DBUILD_SHARED_LIBS=OFF
+               -DBUILD_SHARED_LIBS=ON
     # Wrap download, configure and build steps in a script to log output   
     LOG_DOWNLOAD ON
     LOG_CONFIGURE ON
@@ -191,6 +188,9 @@ INCLUDE_DIRECTORIES(${source_dir})
 # Get binary directory of external project
 ExternalProject_Get_Property(box2d binary_dir)
 set(BOX2D_LIB_DIR ${binary_dir})
+
+get_filename_component(BOX2D_LIB_DIR_ABS ${BOX2D_LIB_DIR} ABSOLUTE)
+message("abs path: " ${BOX2D_LIB_DIR_ABS})
 
 # add the ANT subdirectory
 message("Configuring ANT...")
