@@ -350,6 +350,45 @@ namespace ant
 		}
 	};
 
+	//////////////////////////////////////////////////////////////////////////
+	// EvtData_New_SFMLRender_Component - Event that is sent when a new render component was created
+	//////////////////////////////////////////////////////////////////////////
+	class EvtData_ReloadLevel : public BaseEventData
+	{
+
+	public:
+		static const EventType sk_EventType;
+
+		EvtData_ReloadLevel(void) 
+		{
+		}
+
+		virtual void serialize(std::ostrstream& out) const 
+		{
+			GCC_ERROR(getName() + std::string(" should not be serialzied!"));
+		}
+
+		virtual void deserialize(std::istrstream& in) 
+		{
+			GCC_ERROR(getName() + std::string(" should not be serialzied!"));
+		}
+
+		virtual const EventType& getEventType(void) const
+		{
+			return sk_EventType;
+		}
+
+		virtual IEventDataStrongPtr copy(void) const
+		{
+			return IEventDataStrongPtr(GCC_NEW EvtData_ReloadLevel());
+		}
+
+		virtual std::string getName(void) const 
+		{
+			return "EvtData_ReloadLevel";
+		}
+	};
+
 #pragma region Unittest_events
 
 	//////////////////////////////////////////////////////////////////////////

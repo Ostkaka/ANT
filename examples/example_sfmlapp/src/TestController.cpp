@@ -21,6 +21,7 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 	m_dir.y = 0;
 	bool translating = false;
 	bool printInformation = false;
+	bool reloadLevel = false;
 	if (m_bKey['W'])
 	{
 		m_dir.y = -1;
@@ -50,6 +51,11 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 		printInformation = true;
 	}
 
+	if (m_bKey['N'])
+	{
+		reloadLevel = true;
+	}
+
 	if (translating)
 	{		
 		ant::Real speed = 5.0;
@@ -77,6 +83,13 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 		{
 			std::cout << "id:" << it->first << "  name: " << it->second->getType() << std::endl;
 		}
+	}
+
+	if (reloadLevel)
+	{
+		// Send event here perhaps? To reload level
+		IEventDataStrongPtr pData(GCC_NEW EvtData_ReloadLevel());
+		EventManager::instance()->queueEvent(pData);
 	}
 }
 

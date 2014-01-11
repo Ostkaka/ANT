@@ -40,7 +40,7 @@ void ant::ScriptEvent::registerEventTypeWithScript( const char* key, EventType t
 
 	// error checking
 	GCC_ASSERT(eventTypeTable.IsTable());
-	GCC_ASSERT(eventTypeTable[key].IsNil());
+//	GCC_ASSERT(eventTypeTable[key].IsNil());
 
 	// add the entry
 	eventTypeTable.SetNumber(key, (double)type);

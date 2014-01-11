@@ -78,12 +78,12 @@ void ant::SFMLHumanView::gameStateDelegate( IEventDataStrongPtr pEventData )
 void ant::SFMLHumanView::onRender(ant::DeltaTime fTime, ant::DeltaTime fElapsedTime) 
 {
 	// TODO - add clock here! WTF?!? Why used milliseconds here? Why not use fTime and fElasped time?
-	m_currentTime = 0;
+	m_currentTime = fTime;
 
 	// Render if we have a valid renderer
 	GCC_ASSERT(m_renderer);
 	if ( m_runfullSpeed || (m_currentTime - m_lastDrawTime) > SCREEN_REFRESH_RATE )
-	{
+	{		
 		if (m_renderer->preRender())
 		{
 			m_ScreenElements.sort(SortBy_SharedPtr_Content<IScreenElement>());
@@ -103,6 +103,7 @@ void ant::SFMLHumanView::onRender(ant::DeltaTime fTime, ant::DeltaTime fElapsedT
 			// Record last successfully timestamp
 		}
 		m_renderer->postRender();
+		m_lastDrawTime = m_currentTime;
 	}
 }
 

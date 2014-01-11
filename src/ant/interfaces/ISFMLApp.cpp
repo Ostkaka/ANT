@@ -79,10 +79,6 @@ bool ant::ISFMLApp::init()
 	Logger::Init(ANT_DATA_PATH"\\default_logging.xml");
 
 	GCC_LOG("SFMLApplication","Init application");
-	
-	// Register events
-	registerEngineEvents();
-	registerGameEvents();
 
 	// Init resource cache
 	if(!initResourceCache())
@@ -101,6 +97,10 @@ bool ant::ISFMLApp::init()
 	{
 		GCC_ERROR("Failed to create EventManager.");
 	}
+
+	// Register events
+	registerEngineEvents();
+	registerGameEvents();
 
 	// Init renderer and application window
 	initRenderer();
@@ -173,9 +173,6 @@ void ant::ISFMLApp::gameLoop()
 
 			// Update renderer
 			renderFrame(updateTime,dt);
-
-			// Display contents in the window
-			m_window.display();		
 
 			// Restart frame clock
 			frameClock.restart();

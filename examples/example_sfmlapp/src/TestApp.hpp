@@ -1,6 +1,7 @@
 #ifndef SFMLAPP_HPP_
 	#define SFMLAPP_HPP_
 
+#include <ant/ant_std.hpp>
 #include <ant/core_types.hpp>
 #include <ant/interfaces/ISFMLApp.hpp>
 
@@ -11,6 +12,13 @@ namespace ant
 	*/
 	class SFMLApp : public ISFMLApp
 	{
+	public:
+
+			/**
+			 * Load the game
+			 */
+			virtual void loadGameDelegate(IEventDataStrongPtr eventData);
+
 	protected:
 		 
 			/**
@@ -27,6 +35,7 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
+
 	};
 }
 

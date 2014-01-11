@@ -50,6 +50,9 @@ namespace ant
 
 			// Get active actors in the scene
 			virtual ActorMap* getActiveActors(void) = 0;
+
+			// Set active level in the game logic
+			virtual void setActiveLevel(const std::string& level) = 0;
 	};
 }
 

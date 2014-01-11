@@ -25,6 +25,8 @@ int main( int argc, char* argv[] ){
 
 	ant::SFMLApp * app = new(std::nothrow) ant::SFMLApp();
 
+	app->m_settings.m_level = "world\\testlevel.xml";
+
 	if (!app->init())
 	{
 		std::cout << "Could not initialize app!" << std::endl;

@@ -17,8 +17,6 @@
 
 using namespace ant;
 
-#define DEFAULT_LEVEL "world\\TestLevel.xml"
-
 //////////////////////////////////////////////////////////////////////////
 //
 // BaseGameLogic implementation
@@ -32,10 +30,11 @@ ant::BaseGameLogic::BaseGameLogic()
 	m_processManager = GCC_NEW ProcessManager;
 	m_gameState = GAME_STATE_INIT;
 	m_actorFactory = NULL;
+	m_currentLevel = "";
 
 	m_levelManager = GCC_NEW LevelManager;
 	GCC_ASSERT(m_processManager && m_levelManager);
-	//m_pLevelManager->Initialize(g_pApp->m_ResCache->Match("world\\*.xml")); // This is not good at all
+	//m_pLevelManager->Initialize(g_pApp->m_ResCache->Match("world\\*.xml")); // This is not good at all. Should not be hardcoded
 
 	m_gamePhysics = GCC_NEW Box2DPhysics();
 
@@ -51,18 +50,27 @@ ant::BaseGameLogic::~BaseGameLogic()
 	while(!m_gameViews.empty())
 		m_gameViews.pop_front();
 
+	// Clear level
+	clearLoadedLevel();
+
 	SAFE_DELETE(m_levelManager);
 	SAFE_DELETE(m_processManager);
 	SAFE_DELETE(m_actorFactory);
 	SAFE_DELETE(m_gamePhysics);
 
-	// Destroy all actors
+	
+}
+
+void ant::BaseGameLogic::clearLoadedLevel()
+{
+	// Destroy actors	
 	for (auto it = m_actors.begin() ; it != m_actors.end() ; ++it)
 	{
 		it->second->destroy();
 	}
 	m_actors.clear();
 }
+
 
 bool ant::BaseGameLogic::init( void )
 {
@@ -215,7 +223,7 @@ void ant::BaseGameLogic::changeGameState( BaseGameState newState )
 	if (newState == GAME_STATE_LOADING_ENVIRONMENT)
 	{
 		m_gameState = newState;
-		if (!this->loadGame(DEFAULT_LEVEL))
+		if (!this->loadGame(m_currentLevel.c_str()))
 		{
 			GCC_ERROR("The game failed to load.");			
 		}

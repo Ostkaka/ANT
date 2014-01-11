@@ -116,6 +116,9 @@ namespace ant
 		// Get active actors in the scene
 		ActorMap* getActiveActors(void);
 
+		// Set active level in the game logic
+		virtual void setActiveLevel(const std::string& level);
+
 	protected:
 		/// Create an actor factory
 		virtual ActorFactory* createActorFactory(void);
@@ -125,6 +128,9 @@ namespace ant
 
 		/// Move actor delegate
 		void moveActorDelegate(IEventDataStrongPtr pEventData);
+
+		/// Clears actors in level data
+		virtual void clearLoadedLevel();
 
 	private:
 		void registerAllDelegates();
@@ -153,6 +159,8 @@ namespace ant
 		IGamePhysics2D* m_gamePhysics;
 		/// The level manager of the game
 		LevelManager* m_levelManager;
+		// Current string to resource level
+		std::string m_currentLevel;
 	};
 
 	ANT_INLINE const BaseGameState BaseGameLogic::getState(void) const { return m_gameState; }
@@ -174,6 +182,8 @@ namespace ant
 	ANT_INLINE GameViewList* BaseGameLogic::getGameViews(){ return &m_gameViews; }
 
 	ANT_INLINE ActorMap* BaseGameLogic::getActiveActors(){ return &m_actors; }
+
+	ANT_INLINE void BaseGameLogic::setActiveLevel(const std::string& level){ m_currentLevel = level;}
 }
 
 #endif

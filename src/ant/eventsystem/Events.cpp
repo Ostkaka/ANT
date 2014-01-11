@@ -12,6 +12,7 @@ const EventType EvtData_New_Actor::sk_EventType(0x50a51f52);
 const EventType EvtData_New_SFMLRender_Component::sk_EventType(0xdd4a0c71);
 const EventType EvtData_Modified_SFMLRender_Component::sk_EventType(0x1412e9ed);
 const EventType EvtData_Move_SFMLActor::sk_EventType(0x53c1a89);
+const EventType EvtData_ReloadLevel::sk_EventType(0x53c1a87);
 	
 /**
  * Unit-test events

@@ -33,7 +33,7 @@ bool ant::SFMLRenderer::postRender(void)
 	GCC_ASSERT(m_window);
 	if (m_window)
 	{
-		//m_window->display();
+		m_window->display();
 	}
 	 
 	return true;

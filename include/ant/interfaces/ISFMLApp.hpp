@@ -15,6 +15,15 @@
 
 namespace ant
 {
+
+	struct GameSettings
+	{
+		GameSettings(){m_level="";}
+		~GameSettings(){}
+
+		std::string m_level;
+	};
+
 	class ISFMLApp 
 	{
 		public:
@@ -181,8 +190,8 @@ namespace ant
 		  /// Window style to use when creating Render window
 		  unsigned long             m_windowStyle;
 
-			/// Settings for the application
-			//TODO - fix this
+			/// Settings for the application	
+			GameSettings                 m_settings;
 
 			/// The game logic
 			BaseGameLogic*							m_gameLogic;
