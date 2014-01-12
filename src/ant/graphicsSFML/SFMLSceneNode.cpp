@@ -265,7 +265,7 @@ bool ant::SFMLCameraNode::setView( SFMLScene * pScene )
 	}
 	
 	// Set view to scene
-	pScene->getRenderer()->setView(getPosition(), getRotation());
+	pScene->getRenderer()->setView(getPosition(), getRotation(), m_zoomFactor);
 	return true;
 }
 

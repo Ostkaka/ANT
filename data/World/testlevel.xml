@@ -8,5 +8,5 @@
       <Actor resource="actors\rectangleActor.xml" /> 
       <Actor resource="actors\Kamek.xml" /> 
     </StaticActors>
-    <!--<Script preLoad="scripts\LevelInit.lua" postLoad="scripts\LevelPostInit.lua"/>-->
+    <Script preLoad="lua\LevelInit.lua" postLoad="lua\LevelPostInit.lua"/>-->
 </World>

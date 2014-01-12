@@ -179,6 +179,7 @@ namespace ant
 			SFMLCameraNode(const sf::Vector2f& position, const ant::Real& rot)
 				: SFMLSceneNode(INVALID_ACTOR_ID, NULL, RenderPass_0, position, rot)
 			{
+				m_zoomFactor = 1.0;
 			}
 
 			virtual bool render(SFMLScene *scene) ANT_OVERRIDE; 		
@@ -197,6 +198,8 @@ namespace ant
 
 			void setCameraOffset(const sf::Vector2f& offset);
 
+			void setCameraZoom(const ant::Real& zoomFactor);
+
 			//////////////////////////////////////////////////////////////////////////
 			// Variables
 			//////////////////////////////////////////////////////////////////////////
@@ -204,6 +207,7 @@ namespace ant
 		shared_ptr<SFMLSceneNode>			m_target;
 		bool													m_active;		
 		sf::Vector2f									m_cameraOffset;
+		ant::Real                     m_zoomFactor;
 	};
 
 	// Implementation
@@ -216,6 +220,8 @@ namespace ant
 	ANT_INLINE void SFMLCameraNode::clearTarget(){ m_target=SFMLSceneNodeStrongPtr(); }
 
 	ANT_INLINE void SFMLCameraNode::setCameraOffset(const sf::Vector2f& offset) { m_cameraOffset = offset; }
+
+	ANT_INLINE void SFMLCameraNode::setCameraZoom(const ant::Real& zoomFactor) { m_zoomFactor = zoomFactor; }
 
 	/**
 	 * Node that contains and draws a sprite 

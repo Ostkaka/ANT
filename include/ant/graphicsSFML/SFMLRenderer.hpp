@@ -15,24 +15,24 @@ namespace ant
 
 		SFMLRenderer(sf::RenderWindow *window);
 
-		void setBackgroundColor(BYTE bgA, BYTE bgR, BYTE bgG, BYTE bgB );
+		void setBackgroundColor(BYTE bgA, BYTE bgR, BYTE bgG, BYTE bgB ) ANT_OVERRIDE;
 		
-		bool onRestore(void);
+		bool onRestore(void) ANT_OVERRIDE;
 		
-		void shutDown(void);
+		void shutDown(void) ANT_OVERRIDE;
 		
-		bool preRender(void);
+		bool preRender(void) ANT_OVERRIDE;
 		
-		bool postRender(void);
+		bool postRender(void) ANT_OVERRIDE;
 
-		void setView(sf::Vector2f pos, ant::Real angle);
+		void setView(sf::Vector2f pos, ant::Real angle, ant::Real zoomFactor=1.0) ANT_OVERRIDE;
 
 		/// Functions used to draw primitives on the active render target
-		virtual bool drawSprite(const sf::Sprite& sprite);
+		virtual bool drawSprite(const sf::Sprite& sprite) ANT_OVERRIDE;
 
-		virtual bool drawRectangle(const sf::RectangleShape& rectangle);
+		virtual bool drawRectangle(const sf::RectangleShape& rectangle) ANT_OVERRIDE;
 
-		virtual bool drawCircle(const sf::CircleShape& circle);
+		virtual bool drawCircle(const sf::CircleShape& circle) ANT_OVERRIDE;
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
@@ -40,7 +40,7 @@ namespace ant
 	protected:
 		sf::View		      m_centerView;
 		sf::Color		      m_color;
-		sf::RenderWindow *m_window;
+		sf::RenderWindow *m_window;	
 	};
 }
 

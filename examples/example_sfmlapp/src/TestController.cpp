@@ -10,6 +10,7 @@ using namespace ant;
 ant::TestController::TestController( SFMLSceneNodeStrongPtr target )
 {
 	m_object = target;
+	m_zoomFactor = 1;
 	// Set memory in the key map controller to zero
 	memset(m_bKey, 0x00, sizeof(m_bKey));
 }
@@ -22,6 +23,8 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 	bool translating = false;
 	bool printInformation = false;
 	bool reloadLevel = false;
+	bool zoomIn = false;
+	bool zoomOut = false;
 	if (m_bKey['W'])
 	{
 		m_dir.y = -1;
@@ -54,6 +57,28 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 	if (m_bKey['N'])
 	{
 		reloadLevel = true;
+	}
+
+	if (m_bKey['P'])
+	{
+		zoomOut = true;		
+	}
+
+	if (m_bKey['L'])
+	{
+		zoomIn = true;		
+	}
+
+	if (zoomOut || zoomIn)
+	{
+		if ( m_object && m_object->getNodeProps()->getActorId() == INVALID_ACTOR_ID )
+		{
+			ant::Real dz = 0.01;
+			m_zoomFactor += dz * ( zoomOut ? 1 : -1 );
+			// Try to cast it to a camera node
+			shared_ptr<SFMLCameraNode> pCameraNode = static_pointer_cast<SFMLCameraNode>(m_object);	
+			pCameraNode->setCameraZoom(m_zoomFactor);
+		}
 	}
 
 	if (translating)

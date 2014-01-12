@@ -1,0 +1,1 @@
+ActorManager.init("TestString");
