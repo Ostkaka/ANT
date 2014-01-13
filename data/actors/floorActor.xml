@@ -8,11 +8,11 @@
 		<Size x="1200" y="200"/>
 		<Filled>1</Filled>
 	</SFMLRectanglePrimitiveComponent>
-	<Physics2DComponent>
+	<PhysicsComponent>
 		<Shape>Box</Shape>
 		<MotionState>KINEAMTIC</MotionState>
 		<RigidBodyTransform>
 			<Scale x="600" y="100" z="1"/>
 		</RigidBodyTransform>
-	</Physics2DComponent>
+	</PhysicsComponent>
 </Actor>

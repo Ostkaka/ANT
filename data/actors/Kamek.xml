@@ -12,11 +12,11 @@
 		<Color r="1" g="1" b="1" a="1"/>
 		<Filled>0</Filled>
 	</SFMLRectanglePrimitiveComponent>
-	<Physics2DComponent>
+	<PhysicsComponent>
 		<Shape>Box</Shape>
 		<MotionState>DYNAMIC</MotionState>
 		<RigidBodyTransform>
 			<Scale x="17.5" y="12.5" z="1"/>
 		</RigidBodyTransform>
-	</Physics2DComponent>
+	</PhysicsComponent>
 </Actor>

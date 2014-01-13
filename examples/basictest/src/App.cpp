@@ -1,4 +1,7 @@
 #include "App.hpp"
+#include <ostream>
+#include <string>
+#include <vector>
 
 using namespace ant;
 /*
@@ -15,7 +18,7 @@ TestApp::TestApp( const std::string title /*= "TestApp"*/ ):
 
 TestApp::~TestApp()
 {
-		std::cout << mLooger->getStream() << std::endl;
+	//std::cout << mLooger->getStream() << std::endl;
 }
 
 void TestApp::initCustomAssetHandlers()

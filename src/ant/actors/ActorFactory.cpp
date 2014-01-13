@@ -19,7 +19,7 @@ ant::ActorFactory::ActorFactory( void )
 	
 	m_componentFactory.Register<BaseScriptComponent>(ActorComponent::getIdFromName(BaseScriptComponent::g_Name));
 	m_componentFactory.Register<TransformComponent>(ActorComponent::getIdFromName(TransformComponent::g_Name));	
-	m_componentFactory.Register<Physics2DComponent>(ActorComponent::getIdFromName(Physics2DComponent::g_Name));	
+	m_componentFactory.Register<PhysicsComponent>(ActorComponent::getIdFromName(PhysicsComponent::g_Name));
 
 	// TODO - Render components	
 	m_componentFactory.Register<SFMLSpriteComponent>(ActorComponent::getIdFromName(SFMLSpriteComponent::g_Name));

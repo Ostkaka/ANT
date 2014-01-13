@@ -9,11 +9,11 @@ namespace ant
 	/**
 	* This is a physics component
 	*/ 
-	class Physics2DComponent : public ActorComponent
+	class PhysicsComponent : public ActorComponent
 	{
 	public:
-		Physics2DComponent(void);
-		virtual ~Physics2DComponent(void);
+		PhysicsComponent(void);
+		virtual ~PhysicsComponent(void);
 
 		/// Actor component interface
 		virtual bool init(TiXmlElement* pData) ANT_OVERRIDE;
@@ -35,7 +35,7 @@ namespace ant
 		void stop(void);
 
 		const static char *g_Name;
-		virtual const char *getName() const ANT_OVERRIDE { return Physics2DComponent::g_Name; }
+		virtual const char *getName() const ANT_OVERRIDE { return PhysicsComponent::g_Name; }
 
 	protected:
 		void handleRigidBodyTransform(TiXmlElement* pData);

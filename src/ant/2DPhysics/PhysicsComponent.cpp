@@ -6,13 +6,13 @@
 
 using namespace ant;
 
-const char* Physics2DComponent::g_Name = "Physics2DComponent";
+const char* PhysicsComponent::g_Name = "PhysicsComponent";
 
 // units per second
 const ant::Real DEFAULT_MAX_VELOCITY = 1.0f;
 const ant::Real DEFAULT_MAX_ANGULAR_VELOCITY = 1.0f;
 
-ant::Physics2DComponent::Physics2DComponent( void )
+ant::PhysicsComponent::PhysicsComponent( void )
 {
 	m_lockRotation = false;
 	m_acceleration        = 0;
@@ -22,12 +22,12 @@ ant::Physics2DComponent::Physics2DComponent( void )
 	m_motionState = "DYNAMIC";
 }
 
-ant::Physics2DComponent::~Physics2DComponent( void )
+ant::PhysicsComponent::~PhysicsComponent( void )
 {
 	m_pPhysics->removeActor(m_pOwner->getId());
 }
 
-bool ant::Physics2DComponent::init( TiXmlElement* pData ) 
+bool ant::PhysicsComponent::init( TiXmlElement* pData ) 
 {
 	// Try to find the pointer to the game physics from the active app
 	m_pPhysics = ISFMLApp::getApp()->getGameLogic()->getGamePhysics();
@@ -78,7 +78,7 @@ bool ant::Physics2DComponent::init( TiXmlElement* pData )
 	return true;
 }
 
-void ant::Physics2DComponent::postInit() 
+void ant::PhysicsComponent::postInit() 
 {
 	if (m_pOwner)
 	{
@@ -98,7 +98,7 @@ void ant::Physics2DComponent::postInit()
 	}
 }
 
-void ant::Physics2DComponent::update( ant::DeltaTime dt ) 
+void ant::PhysicsComponent::update( ant::DeltaTime dt ) 
 {
 	// Get the transform component
 	TransformComponentStrongPtr pTransform = MakeStrongPtr(m_pOwner->getComponent<TransformComponent>(TransformComponent::g_Name));
@@ -131,38 +131,38 @@ void ant::Physics2DComponent::update( ant::DeltaTime dt )
 	}
 }
 
-void ant::Physics2DComponent::applyForce( const sf::Vector2f& force )
+void ant::PhysicsComponent::applyForce( const sf::Vector2f& force )
 {
 	m_pPhysics->applyForce(force, m_pOwner->getId());
 }
 
-void ant::Physics2DComponent::applyRotation( const ant::Real force )
+void ant::PhysicsComponent::applyRotation( const ant::Real force )
 {
 	// TODO
 	GCC_ASSERT(false);
 }
 
-void ant::Physics2DComponent::applyAcceleration( float acceleration )
+void ant::PhysicsComponent::applyAcceleration( float acceleration )
 {
 	m_acceleration = acceleration;
 }
 
-void ant::Physics2DComponent::removeAcceleration( void )
+void ant::PhysicsComponent::removeAcceleration( void )
 {
 	m_acceleration = 0;
 }
 
-const sf::Vector2f& ant::Physics2DComponent::getVelocity()
+const sf::Vector2f& ant::PhysicsComponent::getVelocity()
 {
 	return m_pPhysics->getVelocity(m_pOwner->getId());
 }
 
-void ant::Physics2DComponent::setVelocity( const sf::Vector2f velocity )
+void ant::PhysicsComponent::setVelocity( const sf::Vector2f velocity )
 {
 	m_pPhysics->setVelocity(m_pOwner->getId(), velocity);
 }
 
-void ant::Physics2DComponent::setPosition( const sf::Vector2f position )
+void ant::PhysicsComponent::setPosition( const sf::Vector2f position )
 {
 	// NEED TO UPDATE TRANSFORM COMPOENNT ALSO
 	TransformComponentStrongPtr pTransform = MakeStrongPtr(m_pOwner->getComponent<TransformComponent>(TransformComponent::g_Name));
@@ -174,27 +174,27 @@ void ant::Physics2DComponent::setPosition( const sf::Vector2f position )
 	m_pPhysics->setPosition(m_pOwner->getId(),position);
 }
 
-const sf::Vector2f& ant::Physics2DComponent::getPosition()
+const sf::Vector2f& ant::PhysicsComponent::getPosition()
 {
 	return m_pPhysics->getPosition(m_pOwner->getId());
 }
 
-void ant::Physics2DComponent::stop( void )
+void ant::PhysicsComponent::stop( void )
 {
 	m_pPhysics->stopActor(m_pOwner->getId());
 }
 
-bool ant::Physics2DComponent::kinematicMove( const sf::Vector2f& pos )
+bool ant::PhysicsComponent::kinematicMove( const sf::Vector2f& pos )
 {
 	return m_pPhysics->kinematicMove(pos,m_pOwner->getId());
 }
 
-TiXmlElement* ant::Physics2DComponent::generateXml( void ) 
+TiXmlElement* ant::PhysicsComponent::generateXml( void ) 
 {
 	return NULL;
 }
 
-void ant::Physics2DComponent::handleRigidBodyTransform( TiXmlElement* pData )
+void ant::PhysicsComponent::handleRigidBodyTransform( TiXmlElement* pData )
 {
 	TiXmlElement* pScaleElement = pData->FirstChildElement("Scale");
 	if (pScaleElement)

@@ -8,10 +8,10 @@
 		<Radius>40</Radius>
 		<Filled>0</Filled>
 	</SFMLCirclePrimitiveComponent>
-	<Physics2DComponent>
+	<PhysicsComponent>
 		<Shape>Circle</Shape>
 		<RigidBodyTransform>
 			<Scale x="40" y="1" z="1"/>
 		</RigidBodyTransform>
-	</Physics2DComponent>
+	</PhysicsComponent>
 </Actor>
