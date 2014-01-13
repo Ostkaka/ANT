@@ -1,4 +1,8 @@
 #include "TestGameView.hpp"
+#include <ant/eventsystem/EventManager.hpp>
+#include <ant/eventsystem/Events.hpp>
+#include "TestEvents.hpp"
+#include <ant/ant_std.hpp>
 
 ant::TestGameView::TestGameView( ISFMLRendererStrongPtr renderer )
 	:SFMLHumanView(renderer)
@@ -38,15 +42,6 @@ bool ant::TestGameView::onMsgProc( sf::Event theEvent )
 	bool result = false;
 	switch(theEvent.type)
 	{	
-	case sf::Event::KeyPressed:
-		{
-			if ( theEvent.key.code == sf::Keyboard::B )
-			{				
-				this->setControllerActor(2);
-				result = true;
-			}
-			break;
-		}
 	default:
 		break;
 	}
@@ -80,13 +75,21 @@ bool ant::TestGameView::loadGameDelegate( TiXmlElement* levelData )
 	return true;
 }
 
+void ant::TestGameView::setControllerActorDelegate(IEventDataStrongPtr eventPtr)
+{
+	shared_ptr<EvtData_Set_Controlled_Actor> pCastEventData = static_pointer_cast<EvtData_Set_Controlled_Actor>(eventPtr);
+	setControllerActor(pCastEventData->getActorId());
+}
+
 void ant::TestGameView::registerAllDelegates( void )
 {
-
+	IEventManager* pGlobalEventManager = IEventManager::instance();
+	pGlobalEventManager->addListener(MakeDelegate(this, &TestGameView::setControllerActorDelegate), EvtData_Set_Controlled_Actor::sk_EventType);
 }
 
 void ant::TestGameView::removeAllDelegates( void )
 {
-
+	IEventManager* pGlobalEventManager = IEventManager::instance();
+	pGlobalEventManager->removeListener(MakeDelegate(this, &TestGameView::setControllerActorDelegate), EvtData_Set_Controlled_Actor::sk_EventType);
 }
 

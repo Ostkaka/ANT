@@ -1,11 +1,30 @@
+
+require("lua\\ActorManager.lua");
+
 -----------------------------------------------------------------------------------------------------------------------
--- Event system
+-- Global ActorManager
 -----------------------------------------------------------------------------------------------------------------------
 
-ActorManager = {}
+ActorManagerSingleton = ActorManager:Create();
 
+-----------------------------------------------------------------------------------------------------------------------
+-- Declare global functions for interfacing with the actor manager
+-----------------------------------------------------------------------------------------------------------------------
 
-ActorManager.init = function( g )
-	-- body
-	print("Init ActorManager!: "..g)
+function AddPlayer(scriptObject)
+	ActorManagerSingleton:AddPlayer(scriptObject);
 end
+
+function RemovePlayer(scriptObject)
+	ActorManagerSingleton:RemovePlayer(scriptObject);
+end
+
+function AddCircle(scriptObject)
+	ActorManagerSingleton:AddCircle(scriptObject);
+end
+
+function RemoveObject(scriptObject)
+	ActorManagerSingleton:RemoveObject(scriptObject);
+end
+
+print("Levelinit done!")

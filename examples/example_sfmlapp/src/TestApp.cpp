@@ -2,19 +2,24 @@
 #include <ant/classes/BaseGameLogic.hpp>
 #include "TestGameLogic.hpp"
 #include "TestGameView.hpp"
-#include <ant/eventsystem/Events.hpp>
 #include <ant/eventsystem/EventManager.hpp>
 #include <ant/eventsystem/Events.hpp>
-#include <ant/core_types.hpp>
 #include <ant/ant_std.hpp>
+#include <ant/core_types.hpp>
+#include "TestEvents.hpp"
 
 using namespace ant;
 
-void ant::SFMLApp::registerGameEvents( void )
+void ant::SFMLApp::registerGameDelegates(void)
 {
 	// Nothing to do here yet
 	IEventManager* pGlobalEventManager = IEventManager::instance();	
 	pGlobalEventManager->addListener(MakeDelegate(this, &SFMLApp::loadGameDelegate), EvtData_ReloadLevel::sk_EventType);
+}
+
+void ant::SFMLApp::registerGameEvents(void)
+{
+	// Do nothing?	
 }
 
 BaseGameLogic* ant::SFMLApp::initGameLogicAndView( void ) 
@@ -35,6 +40,7 @@ BaseGameLogic* ant::SFMLApp::initGameLogicAndView( void )
 
 void ant::SFMLApp::loadGameDelegate(IEventDataStrongPtr eventData)
 {
+	registerTestEvents();
 	initGameLogicAndView();
 }
 

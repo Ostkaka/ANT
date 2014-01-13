@@ -22,9 +22,14 @@ namespace ant
 	protected:
 		 
 			/**
+			* Registers events for the game
+			*/
+			virtual void registerGameEvents(void) ANT_OVERRIDE;
+
+			/**
 			 * Registers events for the game
 			 */
-			virtual void registerGameEvents(void) ANT_OVERRIDE;
+			virtual void registerGameDelegates(void);
 
 			/**
 			 * Initializes the game logic and views. 

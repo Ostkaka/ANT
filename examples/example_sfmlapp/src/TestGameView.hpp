@@ -26,7 +26,11 @@ namespace ant
 
 		virtual void onUpdate(ant::DeltaTime dt) ANT_OVERRIDE;
 
+		/// Delegates
+
 		virtual bool loadGameDelegate(TiXmlElement* levelData) ANT_OVERRIDE;
+
+		virtual void setControllerActorDelegate(IEventDataStrongPtr eventPtr);
 
 	private:
 

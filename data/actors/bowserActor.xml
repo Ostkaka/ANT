@@ -19,4 +19,9 @@
 			<Scale x="13" y="14" z="1"/>
 		</RigidBodyTransform>
 	</PhysicsComponent>
+
+	 <BaseScriptComponent>
+        <ScriptObject constructor="AddPlayer" destructor="RemovePlayer" />
+        <ScriptData actorType="Player" />
+    </BaseScriptComponent>
 </Actor>
