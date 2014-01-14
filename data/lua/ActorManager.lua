@@ -22,8 +22,12 @@ function ActorManager:AddPlayer(scriptObject)
 	-- add new player
 	self._player = scriptObject;
 
+	print("dfdsgsdgsd   "..self._player:getActorId())
+	print("dfdsgsdgsd   event"..EventType.EvtData_Set_Controlled_Actor)
+	Utils.DumpObject(EventType)
+
 	-- Tell the engine we added a player
-	QueueEvent(EventType.EvtData_Set_Controlled_Actor, self._player:getActorId());
+	queueEvent(EventType.EvtData_Set_Controlled_Actor, self._player:getActorId());
 end
 
 function ActorManager:RemovePlayer( scriptObject )
@@ -35,8 +39,12 @@ function ActorManager:GetPlayer()
 end
 
 function ActorManager:CreateCircle()
+	local pos = Vec2:Create(); 
+	pos.x = 0; 
+	pos.y = 200;
+	local rot = 0;
 	-- Create random pos around origon
-	local sphere = CreateActor("actors\\circle.xml");
+	local sphere = createActor("actors\\circle.xml",pos,rot);
 end
 
 function ActorManager:RemoveObject(scriptObject)

@@ -176,6 +176,7 @@ void ant::BaseScriptComponent::registerScriptFunctions( void )
 	metaTableObj.SetObject("__index", metaTableObj);
 
 	// Do the rest of the registering of the Lua export functions here
+	metaTableObj.RegisterObjectDirect("getActorId",		        (BaseScriptComponent*)0, &BaseScriptComponent::getActorId);
 }
 
 void ant::BaseScriptComponent::unregisterScriptFunctions( void )

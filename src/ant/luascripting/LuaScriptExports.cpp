@@ -10,6 +10,11 @@
 #include <ant/resources/Resource.hpp>
 #include <ant/core_types.hpp>
 #include <ant/ant_std.hpp>
+#include <SFML/Graphics.hpp>
+#include <ant/interfaces/ISFMLApp.hpp>
+#include <ant/eventsystem/Events.hpp>
+#include <ant/interfaces/IGameLogic.hpp>
+#include <ant/actors/Actor.hpp>
 #include <LuaPlus.h>
 
 using namespace ant;
@@ -194,6 +199,31 @@ void ant::InternalLuaScriptExports::removeEventListener( ant::Ulong listenerId )
 
 int ant::InternalLuaScriptExports::createActor( const std::string& actorArchetype, LuaPlus::LuaObject luaPosition, LuaPlus::LuaObject luaRotation )
 {
-	return 0;
+	if (!luaPosition.IsTable())
+	{
+		GCC_ERROR("Invalid object passed to createActor(); type = " + std::string(luaPosition.TypeName()));
+		return INVALID_ACTOR_ID;
+	}
+
+	if (!luaRotation.IsTable())
+	{
+		GCC_ERROR("Invalid object passed to createActor(); type = " + std::string(luaRotation.TypeName()));
+		return INVALID_ACTOR_ID;
+	}
+
+	sf::Vector2f pos(luaPosition["x"].GetFloat(), luaPosition["y"].GetFloat());
+	ant::Real rot = luaRotation.GetFloat();
+
+	TiXmlElement *overloads = NULL;
+	ActorStrongPtr actor = ant::ISFMLApp::getApp()->getGameLogic()->createActor(actorArchetype, overloads, &pos, &rot);
+
+	if (actor)
+	{
+		shared_ptr<EvtData_New_Actor> pNewActorEvent(GCC_NEW EvtData_New_Actor(actor->getId()));
+		IEventManager::instance()->queueEvent(pNewActorEvent);
+		return actor->getId();
+	}
+
+	return INVALID_ACTOR_ID;
 }
 

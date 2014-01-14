@@ -1,6 +1,7 @@
 #include "TestGameLogic.hpp"
 #include <ant/eventsystem/Events.hpp>
 #include <ant/gccUtils/String.hpp>
+#include "TestEvents.hpp"
 
 using namespace ant;
 
@@ -35,7 +36,7 @@ void ant::TestGameLogic::TestScriptDelegate( IEventDataStrongPtr pEventData )
 
 bool ant::TestGameLogic::loadGameDelegate( TiXmlElement* levelData ) 
 {
-	// TODO - Register the script events here
+	registerTestEvents();
 	return true;
 }
 

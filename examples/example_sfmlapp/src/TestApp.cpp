@@ -6,7 +6,6 @@
 #include <ant/eventsystem/Events.hpp>
 #include <ant/ant_std.hpp>
 #include <ant/core_types.hpp>
-#include "TestEvents.hpp"
 
 using namespace ant;
 
@@ -39,8 +38,7 @@ BaseGameLogic* ant::SFMLApp::initGameLogicAndView( void )
 }
 
 void ant::SFMLApp::loadGameDelegate(IEventDataStrongPtr eventData)
-{
-	registerTestEvents();
+{	
 	initGameLogicAndView();
 }
 

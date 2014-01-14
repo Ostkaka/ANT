@@ -110,23 +110,6 @@ bool ant::BaseGameLogic::loadGame( const char* levelResource )
 		ResourceHandleStrongPtr pResourceHandle = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&resource);
 	}
 
-	// load all initial actors
-	TiXmlElement* pActorsNode = root->FirstChildElement("StaticActors");
-	if (pActorsNode)
-	{
-		for (TiXmlElement* pNode = pActorsNode->FirstChildElement() ; pNode ; pNode = pNode->NextSiblingElement())
-		{
-			const char* actorResource = pNode->Attribute("resource");
-
-			ActorStrongPtr pActor = createActor(actorResource, pNode);
-			if (pActor)
-			{
-				shared_ptr<EvtData_New_Actor> pNewActorEvent(GCC_NEW EvtData_New_Actor(pActor->getId()));
-				IEventManager::instance()->queueEvent(pNewActorEvent);
-			}
-		}
-	}
-
 	// init all game views
 	for (auto it = m_gameViews.begin() ; it != m_gameViews.end() ; ++it)
 	{
@@ -141,6 +124,23 @@ bool ant::BaseGameLogic::loadGame( const char* levelResource )
 	if (!loadGameDelegate(root))
 	{
 		return false;
+	}
+
+	// load all initial actors
+	TiXmlElement* pActorsNode = root->FirstChildElement("StaticActors");
+	if (pActorsNode)
+	{
+		for (TiXmlElement* pNode = pActorsNode->FirstChildElement(); pNode; pNode = pNode->NextSiblingElement())
+		{
+			const char* actorResource = pNode->Attribute("resource");
+
+			ActorStrongPtr pActor = createActor(actorResource, pNode);
+			if (pActor)
+			{
+				shared_ptr<EvtData_New_Actor> pNewActorEvent(GCC_NEW EvtData_New_Actor(pActor->getId()));
+				IEventManager::instance()->queueEvent(pNewActorEvent);
+			}
+		}
 	}
 
 	if (postLoadScript)
