@@ -28,8 +28,6 @@ namespace ant
 		BYTE					          m_bKey[256];			// Which keys are up and down
 		SFMLSceneNodeStrongPtr	m_object;
 		sf::Vector2f						m_dir;
-		ant::Real               m_zoomFactor;
-
 	};
 
 	ANT_DECLARE_POINTER_TYPES(TestController)

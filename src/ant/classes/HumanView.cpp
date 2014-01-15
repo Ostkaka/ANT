@@ -173,7 +173,7 @@ bool ant::SFMLHumanView::onMsgProc( sf::Event theEvent )
 				return false;
 	}
 
-	return result;
+	return false; // ????
 }
 
 void ant::SFMLHumanView::registerAllDelegates( void )

@@ -44,6 +44,7 @@ namespace ant
 		virtual bool drawSprite(const sf::Sprite& sprite)=0;
 		virtual bool drawRectangle(const sf::RectangleShape& rectangle)=0;
 		virtual bool drawCircle(const sf::CircleShape& circle)=0;
+		virtual const sf::View& getView() = 0;
 	};
 }
 

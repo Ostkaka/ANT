@@ -13,8 +13,7 @@ namespace ant
 	class SFMLApp : public ISFMLApp
 	{
 	public:
-
-			/**
+		    /**
 			 * Load the game
 			 */
 			virtual void loadGameDelegate(IEventDataStrongPtr eventData);

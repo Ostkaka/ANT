@@ -34,6 +34,8 @@ namespace ant
 
 	private:
 
+		void handleKeyDown(sf::Keyboard::Key key);
+
 		void registerAllDelegates(void);
 
 		void removeAllDelegates(void);
@@ -43,6 +45,7 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 	protected:
 		TestControllerStrongPtr m_TestController;
+		ant::Real m_zoomFactor;
 	};
 }
 

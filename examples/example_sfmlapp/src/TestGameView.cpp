@@ -7,6 +7,7 @@
 ant::TestGameView::TestGameView( ISFMLRendererStrongPtr renderer )
 	:SFMLHumanView(renderer)
 {
+	m_zoomFactor = 1;
 	registerAllDelegates();
 }
 
@@ -29,7 +30,6 @@ void ant::TestGameView::setControllerActor( ActorId actorId )
 	m_TestController.reset(GCC_NEW TestController(node));
 	m_KeyboardHandler = m_TestController;	
 	m_Camera->setTarget(node);
-	m_Camera->setCameraOffset(sf::Vector2f(400,200));
 }
 
 void ant::TestGameView::onAttach( GameViewId id, ActorId actorid ) 
@@ -48,10 +48,37 @@ bool ant::TestGameView::onMsgProc( sf::Event theEvent )
 
 	if (SFMLHumanView::onMsgProc(theEvent))
 	{
-		return false;
+		return true;
 	}		
+
+	// Handle view specific stuff
+	switch (theEvent.type)
+	{
+		case sf::Event::KeyPressed:
+			handleKeyDown(theEvent.key.code);
+			break;
+		default:
+			break;
+	}
+
 	// Do nothing here yet
-	return result;
+	return false;
+}
+
+void ant::TestGameView::handleKeyDown(sf::Keyboard::Key key)
+{
+	if (key == sf::Keyboard::Key::N)
+	{
+		// Send event here perhaps? To reload level
+		IEventDataStrongPtr pData(GCC_NEW EvtData_ReloadLevel());
+		EventManager::instance()->queueEvent(pData);
+	}	
+	else if (key == sf::Keyboard::Key::P || key == sf::Keyboard::Key::L)
+	{
+		ant::Real dz = 0.01;
+		m_zoomFactor += dz * ((sf::Keyboard::Key::P == key) ? 1 : -1);
+		m_Camera->setCameraZoom(m_zoomFactor);
+	}	
 }
 
 void ant::TestGameView::onUpdate( ant::DeltaTime dt ) 

@@ -10,7 +10,6 @@ using namespace ant;
 ant::TestController::TestController( SFMLSceneNodeStrongPtr target )
 {
 	m_object = target;
-	m_zoomFactor = 1;
 	// Set memory in the key map controller to zero
 	memset(m_bKey, 0x00, sizeof(m_bKey));
 }
@@ -49,16 +48,6 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 		translating = true;
 	}
 
-	if (m_bKey['I'])
-	{
-		printInformation = true;
-	}
-
-	if (m_bKey['N'])
-	{
-		reloadLevel = true;
-	}
-
 	if (m_bKey['P'])
 	{
 		zoomOut = true;		
@@ -73,11 +62,7 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 	{
 		if ( m_object && m_object->getNodeProps()->getActorId() == INVALID_ACTOR_ID )
 		{
-			ant::Real dz = 0.01;
-			m_zoomFactor += dz * ( zoomOut ? 1 : -1 );
-			// Try to cast it to a camera node
-			shared_ptr<SFMLCameraNode> pCameraNode = static_pointer_cast<SFMLCameraNode>(m_object);	
-			pCameraNode->setCameraZoom(m_zoomFactor);
+
 		}
 	}
 
@@ -108,13 +93,6 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 		{
 			std::cout << "id:" << it->first << "  name: " << it->second->getType() << std::endl;
 		}
-	}
-
-	if (reloadLevel)
-	{
-		// Send event here perhaps? To reload level
-		IEventDataStrongPtr pData(GCC_NEW EvtData_ReloadLevel());
-		EventManager::instance()->queueEvent(pData);
 	}
 }
 

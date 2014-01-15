@@ -255,15 +255,17 @@ bool ant::SFMLCameraNode::setView( SFMLScene * pScene )
 	if (m_target)
 	{
 		sf::Vector2f pos = m_target->getNodeProps()->getPosition();
-		ant::Real rot = m_target->getNodeProps()->getRotation();
+		//ant::Real rot = m_target->getNodeProps()->getRotation();
 
 		// Add the camera offset also
 		pos += m_cameraOffset;
 
 		setPosition(pos);
-		setRotation(rot);
+		//setRotation(rot);
 	}
-	
+	// Get the offset to the middle
+	sf::Vector2f center = pScene->getRenderer()->getView().getCenter();
+
 	// Set view to scene
 	pScene->getRenderer()->setView(getPosition(), getRotation(), m_zoomFactor);
 	return true;

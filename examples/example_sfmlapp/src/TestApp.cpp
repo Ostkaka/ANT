@@ -19,6 +19,7 @@ void ant::SFMLApp::registerGameDelegates(void)
 void ant::SFMLApp::registerGameEvents(void)
 {
 	// Do nothing?	
+	registerGameDelegates();
 }
 
 BaseGameLogic* ant::SFMLApp::initGameLogicAndView( void ) 

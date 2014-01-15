@@ -27,6 +27,8 @@ namespace ant
 
 		void setView(sf::Vector2f pos, ant::Real angle, ant::Real zoomFactor=1.0) ANT_OVERRIDE;
 
+		virtual const sf::View& getView() ANT_OVERRIDE;
+
 		/// Functions used to draw primitives on the active render target
 		virtual bool drawSprite(const sf::Sprite& sprite) ANT_OVERRIDE;
 
@@ -42,6 +44,12 @@ namespace ant
 		sf::Color		      m_color;
 		sf::RenderWindow *m_window;	
 	};
+
+	ANT_INLINE const sf::View& SFMLRenderer::getView()
+	{
+		GCC_ASSERT(m_window);
+		return m_window->getView();
+	}
 }
 
 #endif
