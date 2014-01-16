@@ -13,7 +13,7 @@
 	</SFMLRectanglePrimitiveComponent>
 	<PhysicsComponent>
 		<Shape>Box</Shape>
-		<LockRotation>0</LockRotation>
+		<LockRotation>1</LockRotation>
 		<MotionState>DYNAMIC</MotionState>
 		<RigidBodyTransform>
 			<Scale x="13" y="14" z="1"/>

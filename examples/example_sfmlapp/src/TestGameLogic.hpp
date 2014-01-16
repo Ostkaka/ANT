@@ -22,9 +22,16 @@ namespace ant
 	
 		void TestScriptDelegate(IEventDataStrongPtr pEventData);
 
+		void StartAcceleratingDelegate(IEventDataStrongPtr pEventData);
+
+		void EndAcceleratingDelegate(IEventDataStrongPtr pEventData);
+
+		void StartJumpDelegate(IEventDataStrongPtr pEventData);
+
 	protected:
 
 		virtual bool loadGameDelegate(TiXmlElement* levelData) ANT_OVERRIDE;
+
 		
 	private:
 		

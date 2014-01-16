@@ -3,9 +3,12 @@
 #include <ant/eventsystem/Events.hpp>
 #include <ant/classes/BaseGameLogic.hpp>
 #include <ant/interfaces/ISFMLApp.hpp>
+#include "TestEvents.hpp"
 #include <iostream>
 
 using namespace ant;
+
+#define ACTOR_ACCELERATION 5000
 
 ant::TestController::TestController( SFMLSceneNodeStrongPtr target )
 {
@@ -22,18 +25,12 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 	bool translating = false;
 	bool printInformation = false;
 	bool reloadLevel = false;
-	bool zoomIn = false;
-	bool zoomOut = false;
+	bool jumping = false;
+
 	if (m_bKey['W'])
 	{
 		m_dir.y = -1;
-		translating = true;
-	}
-
-	if (m_bKey['S'])
-	{
-		m_dir.y = 1;
-		translating = true;
+		jumping = true;
 	}
 
 	if (m_bKey['D'])
@@ -46,24 +43,6 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 	{
 		m_dir.x = -1;
 		translating = true;
-	}
-
-	if (m_bKey['P'])
-	{
-		zoomOut = true;		
-	}
-
-	if (m_bKey['L'])
-	{
-		zoomIn = true;		
-	}
-
-	if (zoomOut || zoomIn)
-	{
-		if ( m_object && m_object->getNodeProps()->getActorId() == INVALID_ACTOR_ID )
-		{
-
-		}
 	}
 
 	if (translating)
@@ -81,7 +60,25 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 		{			
 			//IEventDataStrongPtr pData(GCC_NEW EvtData_Move_SFMLActor(m_object->getNodeProps()->getActorId(), currentPos, rotation));
 			//EventManager::instance()->queueEvent(pData);
-			m_object->getNodeProps()->getActorId();
+			// TODO - how to do with direction?
+			const ActorId actorId = m_object->getNodeProps()->getActorId();			
+			shared_ptr<EvtData_StartAccelerating> pEvent(GCC_NEW EvtData_StartAccelerating(actorId, (m_dir.x > 0 ? ACTOR_ACCELERATION : (-ACTOR_ACCELERATION))));
+			IEventManager::instance()->queueEvent(pEvent);
+		}
+	}
+	else
+	{
+		const ActorId actorId = m_object->getNodeProps()->getActorId();
+		shared_ptr<EvtData_EndAccelerating> pEvent(GCC_NEW EvtData_EndAccelerating(actorId));
+		IEventManager::instance()->queueEvent(pEvent);
+	}
+	if (jumping)
+	{
+		if (m_object->getNodeProps()->getActorId() != INVALID_ACTOR_ID)
+		{
+			const ActorId actorId = m_object->getNodeProps()->getActorId();
+			shared_ptr<EvtData_StartJump> pEvent(GCC_NEW EvtData_StartJump(actorId, -500));
+			IEventManager::instance()->queueEvent(pEvent);
 		}
 	}
 

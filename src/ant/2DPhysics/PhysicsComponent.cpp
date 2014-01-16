@@ -112,14 +112,14 @@ void ant::PhysicsComponent::update( ant::DeltaTime dt )
 	// Handle character acceleration
 	if (m_acceleration != 0)
 	{
-		// Calculate the acceleration affect on the actor
+		// Calculate the acceleration affect on the actor. This is really shitty for now. minus acceleration does nothing!
 		ant::Real dForce = m_acceleration * dt;
 
 		// Get the current velocity of the objects
 		sf::Vector2f velocity = m_pPhysics->getVelocity(m_pOwner->getId());
 
 		/// TODO get the direction of the ACTOR!!! This is probably the most reasonable way for now to do it
-		sf::Vector2f force = sf::Vector2f(pTransform->getDirection().x * dForce,pTransform->getDirection().y * dForce);
+		sf::Vector2f force = sf::Vector2f(std::fabs(pTransform->getDirection().x) * dForce, std::fabs(pTransform->getDirection().y) * dForce);
 
 		// Apply force to actor
 		m_pPhysics->applyForce(force,m_pOwner->getId());
