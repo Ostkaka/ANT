@@ -1,5 +1,5 @@
-#ifndef EVENTS_HPP_
-#define EVENTS_HPP_
+#ifndef PHYSICSEVENTS_HPP_
+	#define PHYSICSEVENTS_HPP_
 
 #include <ant/eventsystem/IEventManager.hpp>
 #include <ant/luascripting/ScriptEvent.hpp>

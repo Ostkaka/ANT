@@ -7,13 +7,13 @@
 #include <ant/eventsystem/Events.hpp>
 #include <SFML/Graphics.hpp>
 #include <ant/interfaces/ISFMLApp.hpp>
+#include <ant/2DPhysics/PhysicsEvents.hpp>
 #include <ant/resources/XmlResource.hpp>
 #include <iostream>
 
 #define M_PI 3.1415926535
 
 using namespace ant;
-
 
 ant::Real convertRadiansToAngle(const ant::Real radians)
 {
@@ -100,6 +100,7 @@ void ant::Box2DPhysics::onUpdate( ant::DeltaTime dt )
 	if (m_PhysicsWorld)
 	{
 		m_PhysicsWorld->Step(dt,DEFAULT_VELOCITY_ITERATIONS,DEFAULT_POSITIONS_ITERATIONS);
+		updateDynamicsInformation();
 	}	
 }
 
@@ -440,7 +441,19 @@ void ant::Box2DPhysics::updateDynamicsInformation()
 
  void ant::Box2DPhysics::sendCollisionRemoveEvent(b2Body const * const b1, b2Body const * const b2)
  {
+	 ActorId const id1 = findActorId(b1);
+	 ActorId const id2 = findActorId(b2);
 
+	 if (id1 == INVALID_ACTOR_ID | id2 == INVALID_ACTOR_ID)
+	 {
+		 GCC_WARNING("Collision between an actor and non actor. What do?");
+		 return;
+	 }
+
+	 // Send collision event for the game
+	 // send the event for the game
+	 shared_ptr<EvtData_PhysSeparation> pEvent(GCC_NEW EvtData_PhysSeparation(id1, id2));
+	 IEventManager::instance()->queueEvent(pEvent);
  }
 
  void ant::Box2DPhysics::sendCollisionAddEvent(b2Manifold const *manifold, b2Body const * const b1, b2Body const * const b2)
@@ -455,7 +468,9 @@ void ant::Box2DPhysics::updateDynamicsInformation()
 	 }
 
 	 // Send collision event for the game
-
+	 // send the event for the game
+	 shared_ptr<EvtData_PhysCollision> pEvent(GCC_NEW EvtData_PhysCollision(id1, id2));
+	 IEventManager::instance()->queueEvent(pEvent);
 
  }
 
