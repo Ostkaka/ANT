@@ -87,7 +87,11 @@ void ant::TestGameLogic::StartJumpDelegate(IEventDataStrongPtr pEventData)
 		shared_ptr<PhysicsComponent> pPhysicalComponent = MakeStrongPtr(pActor->getComponent<PhysicsComponent>(PhysicsComponent::g_Name));
 		if (pPhysicalComponent)
 		{
-			pPhysicalComponent->applyForce(sf::Vector2f(0, pCastEventData->getAcceleration()));
+			// Set condition for jump. Should be in contact with ground really?
+			if (std::fabs(pPhysicalComponent->getVelocity().y) <= 0.01)
+			{
+				pPhysicalComponent->applyForce(sf::Vector2f(0, pCastEventData->getAcceleration()));
+			}			
 		}
 	}
 }

@@ -9,6 +9,7 @@
 using namespace ant;
 
 #define ACTOR_ACCELERATION 5000
+#define ACTOR_JUMP_FORCE 1500
 
 ant::TestController::TestController( SFMLSceneNodeStrongPtr target )
 {
@@ -23,8 +24,6 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 	m_dir.x = 0;
 	m_dir.y = 0;
 	bool translating = false;
-	bool printInformation = false;
-	bool reloadLevel = false;
 	bool jumping = false;
 
 	if (m_bKey['W'])
@@ -58,9 +57,6 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 		}		
 		else
 		{			
-			//IEventDataStrongPtr pData(GCC_NEW EvtData_Move_SFMLActor(m_object->getNodeProps()->getActorId(), currentPos, rotation));
-			//EventManager::instance()->queueEvent(pData);
-			// TODO - how to do with direction?
 			const ActorId actorId = m_object->getNodeProps()->getActorId();			
 			shared_ptr<EvtData_StartAccelerating> pEvent(GCC_NEW EvtData_StartAccelerating(actorId, (m_dir.x > 0 ? ACTOR_ACCELERATION : (-ACTOR_ACCELERATION))));
 			IEventManager::instance()->queueEvent(pEvent);
@@ -77,18 +73,8 @@ void ant::TestController::onUpdate( ant::DeltaTime dt )
 		if (m_object->getNodeProps()->getActorId() != INVALID_ACTOR_ID)
 		{
 			const ActorId actorId = m_object->getNodeProps()->getActorId();
-			shared_ptr<EvtData_StartJump> pEvent(GCC_NEW EvtData_StartJump(actorId, -500));
+			shared_ptr<EvtData_StartJump> pEvent(GCC_NEW EvtData_StartJump(actorId, -ACTOR_JUMP_FORCE));
 			IEventManager::instance()->queueEvent(pEvent);
-		}
-	}
-
-	if (printInformation)
-	{
-		ActorMap* amap = ISFMLApp::getApp()->getGameLogic()->getActiveActors();
-		std::cout << "================ Printing actor information ================" << std::endl;
-		for (auto it = amap->begin() ; it != amap->end() ; ++it)
-		{
-			std::cout << "id:" << it->first << "  name: " << it->second->getType() << std::endl;
 		}
 	}
 }

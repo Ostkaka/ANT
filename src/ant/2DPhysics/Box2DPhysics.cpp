@@ -7,6 +7,7 @@
 #include <ant/eventsystem/Events.hpp>
 #include <SFML/Graphics.hpp>
 #include <ant/interfaces/ISFMLApp.hpp>
+#include <ant/resources/XmlResource.hpp>
 #include <iostream>
 
 #define M_PI 3.1415926535
@@ -21,7 +22,7 @@ ant::Real convertRadiansToAngle(const ant::Real radians)
 
 ant::Real convertAngleToRadians(const ant::Real& angle)
 {
-		return angle * ( M_PI / 180.0 );
+	return angle * ( M_PI / 180.0 );
 }
 
 ant::Box2DPhysics::Box2DPhysics()
@@ -38,7 +39,8 @@ bool ant::Box2DPhysics::initialize()
 {
 	GCC_INFO("Initializing Game Physics");
 
-	// TODO - Load XML for material
+	//Load XML for material
+	loadMaterialXML();
 	
 	// Create physics world
 	m_PhysicsWorld = new b2World(b2Vec2(0,DEFAULT_GRAVITY));
@@ -118,11 +120,8 @@ void ant::Box2DPhysics::addSphere( ant::Real radius, ActorWeakPtr actor,const st
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shape;
 
-	// Add density mass 
-	fixtureDef.density = 0.0; // TODO Fix density
-
 	// Add the sphere
-	addB2Shape( pActor, fixtureDef, material, options );
+	addB2Shape( pActor, fixtureDef, material, density, options );
 }
 
 void ant::Box2DPhysics::addBox( const sf::Vector2f& dimensions, ActorWeakPtr actor, const std::string& density, const std::string& material, const RigidBodyOptions& options ) 
@@ -142,28 +141,28 @@ void ant::Box2DPhysics::addBox( const sf::Vector2f& dimensions, ActorWeakPtr act
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &shape;
 
-	// Add density mass 
-	fixtureDef.density = 5.0; // TODO Fix density
-
 	// Add the sphere
-	addB2Shape( pActor, fixtureDef, material , options);
+	addB2Shape( pActor, fixtureDef, material ,density,  options);
 }
 
-void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureDef,const std::string& material, const RigidBodyOptions& options)
+void ant::Box2DPhysics::addB2Shape(ActorStrongPtr pActor, b2FixtureDef fixtureDef, const std::string& material, const std::string& densityStr, const RigidBodyOptions& options)
 {
 	GCC_ASSERT( pActor );
 
 	ActorId id = pActor->getId();
 	GCC_ASSERT( m_actorIDToRigidBody.find(id) == m_actorIDToRigidBody.end() && "Actor has more than one physics body");
 
-	// Setup material data // TODO
-	//MaterialData material();
+	// Setup material data 
+	MaterialData materialData(lookUpMaterialData(material));
+	ant::Real density = lookUpDensityData(densityStr);
 
-	// Calculate all the mass data such as inertia and total mass
+	// Calculate all the mass data such as inertia and total mass	
+	fixtureDef.restitution = materialData.m_restitution;
+	fixtureDef.friction = materialData.m_friction;
+	fixtureDef.density = density;
 	b2MassData massData;
-	fixtureDef.shape->ComputeMass(&massData,fixtureDef.density);
-	fixtureDef.restitution = 0.5;
-
+	fixtureDef.shape->ComputeMass(&massData, fixtureDef.density);
+		
 	// Synch the transform with this body, Is this a hack? This means we MUST include the transform component first!
 	sf::Vector2f pos(0,0);
 	ant::Real angle = 0;
@@ -190,8 +189,9 @@ void ant::Box2DPhysics::addB2Shape( ActorStrongPtr pActor, b2FixtureDef fixtureD
 		bodyDef.type = b2_kinematicBody;
 	}
 
-	bodyDef.fixedRotation = options.m_lockRotation;
-	
+	bodyDef.fixedRotation  = options.m_lockRotation;
+	bodyDef.linearDamping  = options.m_linearDamping;
+	bodyDef.angularDamping = options.m_angularDamping;
 	bodyDef.position = convertsfVector2fToBox2DVec2f(pos);
 	bodyDef.angle = angle;
 	b2Body * body = m_PhysicsWorld->CreateBody(&bodyDef);	
@@ -348,6 +348,116 @@ void ant::Box2DPhysics::stopActor( const ActorId& id )
 {
 	setVelocity(id, sf::Vector2f(0,0));
 }
+
+ant::MaterialData ant::Box2DPhysics::lookUpMaterialData(const std::string& mat)
+{
+	auto it = m_materialTable.find(mat);
+	if (it != m_materialTable.end())
+	{
+		return it->second;
+	}
+	else
+	{
+		GCC_ERROR("Trying to access material: " + mat + " which does not exits in material database");
+		return MaterialData(0, 0);
+	}	
+}
+
+ant::Real ant::Box2DPhysics::lookUpDensityData(const std::string& densityStr)
+{
+	ant::Real density = 0;
+	auto densityIt = m_densityTable.find(densityStr);
+	if (densityIt != m_densityTable.end())
+		density = densityIt->second;
+	else
+		GCC_ERROR("Trying to access density: " + densityStr + " which does not exits in material database");
+
+	return density;
+}
+
+void ant::Box2DPhysics::loadMaterialXML()
+{	
+	TiXmlElement* pRoot = XmlResourceLoader::loadAndReturnXmlElement("config\\Physics.xml");
+	GCC_ASSERT(pRoot);
+
+	// load all materials
+	TiXmlElement* pParentNode = pRoot->FirstChildElement("PhysicsMaterials");
+	GCC_ASSERT(pParentNode);
+	for (TiXmlElement* pNode = pParentNode->FirstChildElement(); pNode; pNode = pNode->NextSiblingElement())
+	{
+		double restitution = 0;
+		double friction = 0;
+		pNode->Attribute("restitution", &restitution);
+		pNode->Attribute("friction", &friction);
+		m_materialTable.insert(std::make_pair(pNode->Value(), MaterialData((ant::Real)restitution, (ant::Real)friction)));
+	}
+
+	// load all densities
+	pParentNode = pRoot->FirstChildElement("DensityTable");
+	GCC_ASSERT(pParentNode);
+	for (TiXmlElement* pNode = pParentNode->FirstChildElement(); pNode; pNode = pNode->NextSiblingElement())
+	{
+		m_densityTable.insert(std::make_pair(pNode->Value(), (float)atof(pNode->FirstChild()->Value())));
+	}
+}
+
+void ant::Box2DPhysics::updateDynamicsInformation()
+{
+	// This function executes after each world tick. Used to detect and store contacts
+	GCC_ASSERT(m_PhysicsWorld);
+	
+	CollisionPairSet currentTickCollisionPairs;
+
+	b2Contact * c = m_PhysicsWorld->GetContactList();
+	
+	while (c)
+	{
+		CollisionPair p(c->GetFixtureA()->GetBody(), c->GetFixtureB()->GetBody());
+		currentTickCollisionPairs.insert(p);
+		if (m_previousTickCollisionPairs.find(p) == m_previousTickCollisionPairs.end())
+		{
+			sendCollisionAddEvent(p.first, p.second);
+		}
+		c = c->GetNext();
+	}
+
+	CollisionPairSet removedPairs;
+
+	// use the STL set difference function to find collision pairs that existed during the previous tick but not any more
+	std::set_difference(m_previousTickCollisionPairs.begin(), m_previousTickCollisionPairs.end(),
+		currentTickCollisionPairs.begin(), currentTickCollisionPairs.end(),
+		std::inserter(removedPairs, removedPairs.begin()));
+
+	for (auto it = removedPairs.begin(); it != removedPairs.end(); ++it)
+	{
+		sendCollisionRemoveEvent((*it).first, (*it).second);
+	}
+
+	// Replace current with new
+	m_previousTickCollisionPairs = currentTickCollisionPairs;
+}
+
+
+ void ant::Box2DPhysics::sendCollisionRemoveEvent(b2Body const * const b1, b2Body const * const b2)
+ {
+
+ }
+
+ void ant::Box2DPhysics::sendCollisionAddEvent(b2Manifold const *manifold, b2Body const * const b1, b2Body const * const b2);
+ {
+	 ActorId const id1 = findActorId(b1);
+	 ActorId const id2 = findActorId(b2);
+
+	 if (id1 == INVALID_ACTOR_ID | id2 == INVALID_ACTOR_ID)
+	 {
+		 GCC_WARNING("Collision between an actor and non actor. What do?);
+		 return;
+	 }
+
+	 // Send collision event for the game
+
+
+ }
 
 
 

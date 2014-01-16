@@ -8,6 +8,9 @@ using namespace ant;
 
 const char* PhysicsComponent::g_Name = "PhysicsComponent";
 
+const std::string DEFAULT_MATERIAL = "Default";
+const std::string DEFAULT_DENSITY = "water";
+
 // units per second
 const ant::Real DEFAULT_MAX_VELOCITY = 1.0f;
 const ant::Real DEFAULT_MAX_ANGULAR_VELOCITY = 1.0f;
@@ -20,6 +23,10 @@ ant::PhysicsComponent::PhysicsComponent( void )
 	m_maxAngularVelocity  = DEFAULT_MAX_ANGULAR_VELOCITY; 
 	m_maxVelocity         = DEFAULT_MAX_VELOCITY;
 	m_motionState = "DYNAMIC";
+	m_material = DEFAULT_MATERIAL;
+	m_density = DEFAULT_DENSITY;
+	m_angularDamping = 0;
+	m_linearDamping = 0;
 }
 
 ant::PhysicsComponent::~PhysicsComponent( void )
@@ -53,7 +60,7 @@ bool ant::PhysicsComponent::init( TiXmlElement* pData )
 	TiXmlElement *pMaterial = pData->FirstChildElement("PhysicsMaterial");
 	if (pMaterial)
 	{
-		m_density = pMaterial->FirstChild()->Value();
+		m_material = pMaterial->FirstChild()->Value();
 	}
 
 	TiXmlElement *pMotionState = pData->FirstChildElement("MotionState");
@@ -68,6 +75,20 @@ bool ant::PhysicsComponent::init( TiXmlElement* pData )
 		m_lockRotation = (bool)(atoi(pLockRot->FirstChild()->Value()));
 	}
 	
+	// Damping 
+	TiXmlElement *adampNode = pData->FirstChildElement("AngularDamping");
+	if (adampNode)
+	{
+		m_lockRotation = (bool)(atoi(pLockRot->FirstChild()->Value()));
+	}
+
+	// Damping 
+	TiXmlElement *ldampNode = pData->FirstChildElement("LinearDamping");
+	if (ldampNode)
+	{
+		m_lockRotation = (bool)(atoi(pLockRot->FirstChild()->Value()));
+	}
+
 	// Get transformation properties such as scale, position and stuff
 	TiXmlElement *pTranform = pData->FirstChildElement("RigidBodyTransform");
 	if (pTranform)
@@ -86,6 +107,8 @@ void ant::PhysicsComponent::postInit()
 		RigidBodyOptions options;
 		options.m_motionState = m_motionState;
 		options.m_lockRotation = m_lockRotation;
+		options.m_angularDamping = m_angularDamping;
+		options.m_linearDamping = m_linearDamping;
 
 		if (m_shape == "Circle")
 		{
@@ -199,9 +222,9 @@ void ant::PhysicsComponent::handleRigidBodyTransform( TiXmlElement* pData )
 	TiXmlElement* pScaleElement = pData->FirstChildElement("Scale");
 	if (pScaleElement)
 	{
-		ant::Real x = 0;
-		ant::Real y = 0;
-		ant::Real z = 0;
+		ant::Real x  = 0;
+		ant::Real y  = 0;
+		ant::Real z  = 0;
 		pScaleElement->Attribute("x", &x);
 		pScaleElement->Attribute("y", &y);
 		pScaleElement->Attribute("z", &z);

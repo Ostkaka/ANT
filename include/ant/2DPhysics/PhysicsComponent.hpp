@@ -45,21 +45,24 @@ namespace ant
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
 	protected:
-		std::string             m_shape;
-		std::string             m_density;
-		std::string             m_material;
-		std::string             m_motionState;
+		std::string      m_shape;
+		std::string      m_density;
+		std::string      m_material;
+		std::string      m_motionState;
 
-		ant::Real								m_acceleration;		
-		ant::Real								m_maxVelocity;		
+		ant::Real        m_acceleration;
+		ant::Real        m_maxVelocity;
 
-		ant::Real               m_angularAcceleration;
-		ant::Real               m_maxAngularVelocity;
+		ant::Real        m_angularAcceleration;
+		ant::Real        m_maxAngularVelocity;
 
-		sf::Vector3f            m_rigidBodyScale;
-		bool										m_lockRotation;
-				
-		IGamePhysics2D*         m_pPhysics;
+		ant::Real        m_linearDamping;
+		ant::Real        m_angularDamping;
+
+		sf::Vector3f     m_rigidBodyScale;
+		bool		     m_lockRotation;
+
+		IGamePhysics2D*  m_pPhysics;
 	};
 
 }

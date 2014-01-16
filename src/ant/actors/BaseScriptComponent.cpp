@@ -185,6 +185,3 @@ void ant::BaseScriptComponent::unregisterScriptFunctions( void )
 	if (!metaTableObj.IsNil())
 		metaTableObj.AssignNil(LuaStateManager::instance()->getLuaState());
 }
-
-
-

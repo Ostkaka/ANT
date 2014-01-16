@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include <box2d/Box2D.h>
 #include <box2d/common/b2Math.h>
+#include <set>
 
 #define DEFAULT_GRAVITY 9.82
 #define DEFAULT_VELOCITY_ITERATIONS 6 
@@ -19,6 +20,7 @@ namespace ant
 	 */
 	struct MaterialData
 	{
+	public:
 		MaterialData(ant::Real resitution, ant::Real friction)
 		{
 			m_restitution = resitution;
@@ -34,7 +36,7 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
-	protected:
+	public:
 		ant::Real m_restitution;
 		ant::Real m_friction;
 	};
@@ -60,6 +62,8 @@ namespace ant
 		// Typedef stuff
 		typedef std::map<std::string, float> DensityTable;
 		typedef std::map<std::string, MaterialData> MaterialTable;
+		typedef std::pair<b2Body const*, b2Body const*> CollisionPair;
+		typedef std::set<CollisionPair> CollisionPairSet;
 
 	public:
 		Box2DPhysics();
@@ -83,20 +87,24 @@ namespace ant
 		virtual const sf::Vector2f& getVelocity(const ActorId& id) ANT_OVERRIDE;
 		virtual void                setAngularVelocity(const ActorId& id, ant::Real rotVel) ANT_OVERRIDE;
 		virtual const ant::Real&    getAngularVelocity(const ActorId& id) ANT_OVERRIDE;		
-		virtual void								translate(const ActorId& id, const sf::Vector2f& dx) ANT_OVERRIDE;
-		virtual void								rotate(const ActorId& id, ant::Real dr) ANT_OVERRIDE;
-		virtual void								setPosition(const ActorId& id, const sf::Vector2f& pos) ANT_OVERRIDE;
+		virtual void				translate(const ActorId& id, const sf::Vector2f& dx) ANT_OVERRIDE;
+		virtual void				rotate(const ActorId& id, ant::Real dr) ANT_OVERRIDE;
+		virtual void				setPosition(const ActorId& id, const sf::Vector2f& pos) ANT_OVERRIDE;
 		virtual const sf::Vector2f& getPosition(const ActorId& id) ANT_OVERRIDE;
 		virtual void                setRotation(const ActorId& id, ant::Real rot) ANT_OVERRIDE;
 		virtual const ant::Real&    getRotation(const ActorId& id) ANT_OVERRIDE;
 		virtual void                stopActor( const ActorId& id) ANT_OVERRIDE;
 
 	protected:
-		void addB2Shape(ActorStrongPtr pActor, b2FixtureDef fixtureDef,const std::string& material, const RigidBodyOptions& options);
+		void         addB2Shape(ActorStrongPtr pActor, b2FixtureDef fixtureDef, const std::string& material, const std::string& densityStr, const RigidBodyOptions& options);
 		MaterialData lookUpMaterialData(const std::string& mat);
-		MaterialData lookUpDensityData(const std::string& mat); // TODO is this even nessecary?
-		b2Body * findB2Body(const ActorId& id) const;
-		ActorId findActorId(b2Body const * const body) const;
+		ant::Real    lookUpDensityData(const std::string& mat); // TODO is this even nessecary?
+		void         loadMaterialXML();
+		b2Body *     findB2Body(const ActorId& id) const;
+		ActorId      findActorId(b2Body const * const body) const;
+		void         updateDynamicsInformation();
+		void         sendCollisionAddEvent(b2Manifold const *manifold, b2Body const * const b1, b2Body const * const b2);
+		void         sendCollisionRemoveEvent(b2Body const * const b1, b2Body const * const b2);
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
@@ -104,12 +112,17 @@ namespace ant
 	protected:
 		typedef std::map<ActorId, b2Body*> ActorIdToRigidBody;
 		typedef std::map<b2Body const *, ActorId> RigidBodyToActorId;
+		
+		DensityTable  m_densityTable;
+		MaterialTable m_materialTable;
+
 		// TODO material database, density database (Why not density in material database?)
 		// The box2D world 
 		b2World*           m_PhysicsWorld;
 		ActorIdToRigidBody m_actorIDToRigidBody;
 		RigidBodyToActorId m_rigidBodyToActorID;
 		IGameLogic *       m_gameLogic;
+		CollisionPairSet   m_previousTickCollisionPairs;
 	};
 }
 

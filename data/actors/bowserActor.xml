@@ -18,6 +18,9 @@
 		<RigidBodyTransform>
 			<Scale x="13" y="14" z="1"/>
 		</RigidBodyTransform>
+		<PhysicsMaterial>PlayerMaterial</PhysicsMaterial>
+		<Density>player</Density>
+		<LinearDamping>0</LinearDamping>
 	</PhysicsComponent>
 
 	 <BaseScriptComponent>

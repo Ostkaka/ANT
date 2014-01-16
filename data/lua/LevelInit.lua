@@ -27,4 +27,3 @@ function RemoveObject(scriptObject)
 	ActorManagerSingleton:RemoveObject(scriptObject);
 end
 
-print("Levelinit done!")

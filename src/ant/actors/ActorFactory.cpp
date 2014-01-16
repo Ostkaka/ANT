@@ -21,7 +21,6 @@ ant::ActorFactory::ActorFactory( void )
 	m_componentFactory.Register<TransformComponent>(ActorComponent::getIdFromName(TransformComponent::g_Name));	
 	m_componentFactory.Register<PhysicsComponent>(ActorComponent::getIdFromName(PhysicsComponent::g_Name));
 
-	// TODO - Render components	
 	m_componentFactory.Register<SFMLSpriteComponent>(ActorComponent::getIdFromName(SFMLSpriteComponent::g_Name));
 	m_componentFactory.Register<SFMLBackgroundSpriteComponent>(ActorComponent::getIdFromName(SFMLBackgroundSpriteComponent::g_Name));	
 	m_componentFactory.Register<SFMLRectanglePrimitiveComponent>(ActorComponent::getIdFromName(SFMLRectanglePrimitiveComponent::g_Name));	
