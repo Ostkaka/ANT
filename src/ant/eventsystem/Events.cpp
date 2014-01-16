@@ -27,8 +27,3 @@ void ant::registerEngineScriptEvents( void )
 	ANT_REGISTER_SCRIPT_EVENT(EvtData_TestToLua, EvtData_TestToLua::sk_EventType);
 	ANT_REGISTER_SCRIPT_EVENT(EvtData_TestFromLua, EvtData_TestFromLua::sk_EventType);
 }
-
-void ant::EvtData_PhysCollision::buildEventData(void)
-{
-
-}

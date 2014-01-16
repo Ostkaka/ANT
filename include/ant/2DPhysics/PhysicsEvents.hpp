@@ -59,7 +59,7 @@ namespace ant
 
 		virtual void buildEventData(void) ANT_OVERRIDE;
 
-		EXPORT_FOR_SCRIPT_EVENT(EvtData_PhysCollision);
+		ANT_EXPORT_FOR_SCRIPT_EVENT(EvtData_PhysCollision);
 	};
 
 	//////////////////////////////////////////////////////////////////////////

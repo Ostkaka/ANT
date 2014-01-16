@@ -416,7 +416,7 @@ void ant::Box2DPhysics::updateDynamicsInformation()
 		currentTickCollisionPairs.insert(p);
 		if (m_previousTickCollisionPairs.find(p) == m_previousTickCollisionPairs.end())
 		{
-			sendCollisionAddEvent(p.first, p.second);
+			sendCollisionAddEvent(c->GetManifold(), p.first, p.second);
 		}
 		c = c->GetNext();
 	}
@@ -443,14 +443,14 @@ void ant::Box2DPhysics::updateDynamicsInformation()
 
  }
 
- void ant::Box2DPhysics::sendCollisionAddEvent(b2Manifold const *manifold, b2Body const * const b1, b2Body const * const b2);
+ void ant::Box2DPhysics::sendCollisionAddEvent(b2Manifold const *manifold, b2Body const * const b1, b2Body const * const b2)
  {
 	 ActorId const id1 = findActorId(b1);
 	 ActorId const id2 = findActorId(b2);
 
 	 if (id1 == INVALID_ACTOR_ID | id2 == INVALID_ACTOR_ID)
 	 {
-		 GCC_WARNING("Collision between an actor and non actor. What do?);
+		 GCC_WARNING("Collision between an actor and non actor. What do?");
 		 return;
 	 }
 
