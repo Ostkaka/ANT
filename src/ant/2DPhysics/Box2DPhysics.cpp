@@ -28,6 +28,9 @@ ant::Real convertAngleToRadians(const ant::Real& angle)
 ant::Box2DPhysics::Box2DPhysics()
 {
 	m_gameLogic = NULL;
+	REGISTER_EVENT(EvtData_PhysCollision);
+	REGISTER_EVENT(EvtData_PhysSeparation);
+	registerPhysicsScriptEvents();
 }
 
 ant::Box2DPhysics::~Box2DPhysics()
@@ -471,7 +474,6 @@ void ant::Box2DPhysics::updateDynamicsInformation()
 	 // send the event for the game
 	 shared_ptr<EvtData_PhysCollision> pEvent(GCC_NEW EvtData_PhysCollision(id1, id2));
 	 IEventManager::instance()->queueEvent(pEvent);
-
  }
 
 

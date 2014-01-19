@@ -28,11 +28,14 @@ namespace ant
 
 		void StartJumpDelegate(IEventDataStrongPtr pEventData);
 
+		void OnCollisionDelegate(IEventDataStrongPtr pEventData);
+		
+		void OnCollisionRemovedDelegate(IEventDataStrongPtr pEventData);
+
 	protected:
 
 		virtual bool loadGameDelegate(TiXmlElement* levelData) ANT_OVERRIDE;
-
-		
+				
 	private:
 		
 		void registerAllDelegates(void);

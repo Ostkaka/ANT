@@ -51,3 +51,11 @@ function ActorManager:RemoveObject(scriptObject)
 	local actorId = scriptObject:GetActorId();
 	self._objects[actorId] = nil;
 end
+
+function OnPhysicsCollision( scriptObject )
+	print("Got collide event")
+end
+
+function OnPhysicsSeparation( scriptObject )
+	print("Got separate event")
+end

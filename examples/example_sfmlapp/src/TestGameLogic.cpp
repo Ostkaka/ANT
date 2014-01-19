@@ -119,3 +119,13 @@ void ant::TestGameLogic::removeAllDelegates( void )
 	pGlobalEventManager->removeListener(MakeDelegate(this, &TestGameLogic::EndAcceleratingDelegate), EvtData_EndAccelerating::sk_EventType);
 	pGlobalEventManager->removeListener(MakeDelegate(this, &TestGameLogic::StartJumpDelegate), EvtData_StartJump::sk_EventType);
 }
+
+void ant::TestGameLogic::OnCollisionDelegate(IEventDataStrongPtr pEventData)
+{
+
+}
+
+void ant::TestGameLogic::OnCollisionRemovedDelegate(IEventDataStrongPtr pEventData)
+{
+
+}

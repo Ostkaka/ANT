@@ -25,7 +25,7 @@ int main( int argc, char* argv[] ){
 
 	ant::SFMLApp * app = new(std::nothrow) ant::SFMLApp();
 
-	app->m_settings.m_level = "world\\testlevel.xml";
+	app->m_settings.m_level = "world\\physics_test.xml";
 
 	if (!app->init())
 	{
