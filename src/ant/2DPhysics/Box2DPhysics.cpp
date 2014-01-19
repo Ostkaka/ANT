@@ -166,6 +166,7 @@ void ant::Box2DPhysics::addB2Shape(ActorStrongPtr pActor, b2FixtureDef fixtureDe
 	fixtureDef.density = density;
 	b2MassData massData;
 	fixtureDef.shape->ComputeMass(&massData, fixtureDef.density);
+	fixtureDef.isSensor = options.m_isSensor;
 		
 	// Synch the transform with this body, Is this a hack? This means we MUST include the transform component first!
 	sf::Vector2f pos(0,0);
@@ -209,9 +210,8 @@ void ant::Box2DPhysics::addB2Shape(ActorStrongPtr pActor, b2FixtureDef fixtureDe
 void ant::Box2DPhysics::removeActor( const ActorId& id ) 
 {
 	if (b2Body * const body = findB2Body(id))
-	{
-		// Destroy body 
-		m_PhysicsWorld->DestroyBody(body);
+	{		
+		removeCollisionObject(body);
 		m_actorIDToRigidBody.erase(id);
 		m_rigidBodyToActorID.erase(body);
 	}
@@ -474,6 +474,28 @@ void ant::Box2DPhysics::updateDynamicsInformation()
 	 // send the event for the game
 	 shared_ptr<EvtData_PhysCollision> pEvent(GCC_NEW EvtData_PhysCollision(id1, id2));
 	 IEventManager::instance()->queueEvent(pEvent);
+ }
+
+ void ant::Box2DPhysics::removeCollisionObject(b2Body * body)
+ {
+	 // Delete from he collision set
+	 for (CollisionPairSet::iterator it = m_previousTickCollisionPairs.begin();
+		 it != m_previousTickCollisionPairs.end();)
+	 {
+		 CollisionPairSet::iterator next = it;
+		 ++next;
+
+		 if (it->first == body || it->second == body)
+		 {
+			 sendCollisionRemoveEvent(it->first, it->second);
+			 m_previousTickCollisionPairs.erase(it);
+		 }
+
+		 it = next;
+	 }
+	 
+	 // remove body from world
+	 m_PhysicsWorld->DestroyBody(body);
  }
 
 

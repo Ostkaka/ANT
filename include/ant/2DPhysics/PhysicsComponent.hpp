@@ -61,6 +61,7 @@ namespace ant
 
 		sf::Vector3f     m_rigidBodyScale;
 		bool		     m_lockRotation;
+		bool             m_isSensor;
 
 		IGamePhysics2D*  m_pPhysics;
 	};

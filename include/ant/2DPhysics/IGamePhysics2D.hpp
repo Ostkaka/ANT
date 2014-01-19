@@ -17,6 +17,7 @@ namespace ant
 		{
 			m_motionState = "DYNAMIC";
 			m_lockRotation = false;
+			m_isSensor = false;
 			m_linearDamping = 0;
 			m_angularDamping = 0;
 		}
@@ -26,6 +27,7 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 	public:
 		bool m_lockRotation;
+		bool m_isSensor;
 		std::string m_motionState;
 		ant::Real m_linearDamping;
 		ant::Real m_angularDamping;

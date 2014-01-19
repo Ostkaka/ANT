@@ -1,4 +1,6 @@
 #include <ant/actors/BaseScriptComponent.hpp>
+#include <ant/actors/TransformComponent.hpp>
+#include <ant/gccUtils/templates.hpp>
 #include <ant/core_types.hpp>
 #include <ant/gccUtils/String.hpp>
 #include <ant/luascripting/LuaStateManager.hpp>
@@ -177,6 +179,7 @@ void ant::BaseScriptComponent::registerScriptFunctions( void )
 
 	// Do the rest of the registering of the Lua export functions here
 	metaTableObj.RegisterObjectDirect("getActorId",		        (BaseScriptComponent*)0, &BaseScriptComponent::getActorId);
+	metaTableObj.RegisterObjectDirect("getPos",                 (BaseScriptComponent*)0, &BaseScriptComponent::getPos);
 }
 
 void ant::BaseScriptComponent::unregisterScriptFunctions( void )
@@ -184,4 +187,17 @@ void ant::BaseScriptComponent::unregisterScriptFunctions( void )
 	LuaPlus::LuaObject metaTableObj = LuaStateManager::instance()->getGlobalVars().Lookup(BASESCRIPTCOMPONENT_METATABLE_NAME);
 	if (!metaTableObj.IsNil())
 		metaTableObj.AssignNil(LuaStateManager::instance()->getLuaState());
+}
+
+LuaPlus::LuaObject ant::BaseScriptComponent::getPos(void)
+{
+	LuaPlus::LuaObject ret;
+
+	shared_ptr<TransformComponent> pTransformComponent = MakeStrongPtr(m_pOwner->getComponent<TransformComponent>(TransformComponent::g_Name));
+	if (pTransformComponent)
+		LuaStateManager::instance()->convertVec2ToTable(pTransformComponent->getPostion(), ret);
+	else
+		ret.AssignNil(LuaStateManager::instance()->getLuaState());
+
+	return ret;
 }

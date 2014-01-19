@@ -60,6 +60,8 @@ namespace ant
 	class Box2DPhysics : public IGamePhysics2D
 	{
 		// Typedef stuff
+		typedef std::map<ActorId, b2Body*> ActorIdToRigidBody;
+		typedef std::map<b2Body const *, ActorId> RigidBodyToActorId;
 		typedef std::map<std::string, float> DensityTable;
 		typedef std::map<std::string, MaterialData> MaterialTable;
 		typedef std::pair<b2Body const*, b2Body const*> CollisionPair;
@@ -105,19 +107,14 @@ namespace ant
 		void         updateDynamicsInformation();
 		void         sendCollisionAddEvent(b2Manifold const *manifold, b2Body const * const b1, b2Body const * const b2);
 		void         sendCollisionRemoveEvent(b2Body const * const b1, b2Body const * const b2);
+		void         removeCollisionObject(b2Body * body);
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
-	protected:
-		typedef std::map<ActorId, b2Body*> ActorIdToRigidBody;
-		typedef std::map<b2Body const *, ActorId> RigidBodyToActorId;
-		
-		DensityTable  m_densityTable;
-		MaterialTable m_materialTable;
-
-		// TODO material database, density database (Why not density in material database?)
-		// The box2D world 
+	protected:	
+		DensityTable       m_densityTable;
+		MaterialTable      m_materialTable;
 		b2World*           m_PhysicsWorld;
 		ActorIdToRigidBody m_actorIDToRigidBody;
 		RigidBodyToActorId m_rigidBodyToActorID;

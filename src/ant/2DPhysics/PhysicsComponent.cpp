@@ -18,6 +18,7 @@ const ant::Real DEFAULT_MAX_ANGULAR_VELOCITY = 1.0f;
 ant::PhysicsComponent::PhysicsComponent( void )
 {
 	m_lockRotation = false;
+	m_isSensor = false;
 	m_acceleration        = 0;
 	m_angularAcceleration = 0;
 	m_maxAngularVelocity  = DEFAULT_MAX_ANGULAR_VELOCITY; 
@@ -69,6 +70,12 @@ bool ant::PhysicsComponent::init( TiXmlElement* pData )
 		m_motionState = pMotionState->FirstChild()->Value();
 	}
 
+	TiXmlElement *pSensorState = pData->FirstChildElement("IsSensor");
+	if (pSensorState)
+	{
+		m_isSensor = (bool)(atoi(pSensorState->FirstChild()->Value()));
+	}
+
 	TiXmlElement *pLockRot = pData->FirstChildElement("LockRotation");
 	if (pLockRot)
 	{
@@ -109,6 +116,7 @@ void ant::PhysicsComponent::postInit()
 		options.m_lockRotation = m_lockRotation;
 		options.m_angularDamping = m_angularDamping;
 		options.m_linearDamping = m_linearDamping;
+		options.m_isSensor = m_isSensor;
 
 		if (m_shape == "Circle")
 		{

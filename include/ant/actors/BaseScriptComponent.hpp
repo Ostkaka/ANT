@@ -37,8 +37,8 @@ namespace ant
 
 		// Component script functions
 		LuaPlus::LuaObject getActorId(void);
-
-		// TODO - Add physics component interface
+		LuaPlus::LuaObject getPos(void);
+		
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables

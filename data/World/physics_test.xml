@@ -1,0 +1,9 @@
+<World>
+    <StaticActors>
+      <Actor resource="actors\testBackground.xml" /> 
+      <Actor resource="actors\BowserActor.xml" /> 
+      <Actor resource="actors\floorActor.xml" /> 
+      <Actor resource="actors\sensorActor.xml" /> 
+       </StaticActors>
+    <Script preLoad="lua\LevelInit.lua" postLoad="lua\LevelPostInit.lua"/>-->
+</World>

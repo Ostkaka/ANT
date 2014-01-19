@@ -3,6 +3,7 @@
 
 #include <ant/core_types.hpp>
 #include <ant/luascripting/IScriptManager.hpp>
+#include <SFML/Graphics.hpp>
 #include <LuaPlus.h>
 
 namespace ant
@@ -42,6 +43,7 @@ namespace ant
 		LuaPlus::LuaObject createPath(const std::string& path, bool ignoreLastElement = false);
 
 		// TODO - Vec2
+		void convertVec2ToTable(const sf::Vector2f& vec, LuaPlus::LuaObject& vec2Table);
 
 	private:
 		void setError(int errorNum);

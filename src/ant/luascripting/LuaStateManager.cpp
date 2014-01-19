@@ -166,3 +166,11 @@ LuaPlus::LuaState* ant::LuaStateManager::getLuaState( void ) const
 {
 	return m_pLuaState;
 }
+
+
+void ant::LuaStateManager::convertVec2ToTable(const sf::Vector2f& vec, LuaPlus::LuaObject& vec2Table)
+{
+	vec2Table.AssignNewTable(getLuaState());
+	vec2Table.SetNumber("x", vec.x);
+	vec2Table.SetNumber("y", vec.y);
+}
