@@ -5,6 +5,7 @@
 #include "TestApp.hpp"
 
 #include <stdio.h>  /* defines FILENAME_MAX */
+#include <iostream>
 #include <direct.h>
 #define GetCurrentDir _getcwd
 

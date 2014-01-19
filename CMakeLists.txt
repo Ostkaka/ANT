@@ -61,7 +61,6 @@ configure_file (
 
 # Set project targets
 SET( ANTCORE_TARGET_NAME "antCore")
-SET( ANTTILE_TARGET_NAME "antTile")
 
 set(ANT_LIBS ${ANT_LIBS} ${ANTCORE_TARGET_NAME} ${ANTTILE_TARGET_NAME})
 
@@ -187,7 +186,6 @@ ExternalProject_Get_Property(box2d binary_dir)
 set(BOX2D_LIB_DIR ${binary_dir})
 
 get_filename_component(BOX2D_LIB_DIR_ABS ${BOX2D_LIB_DIR} ABSOLUTE)
-message("abs path: " ${BOX2D_LIB_DIR_ABS})
 
 # add the ANT subdirectory
 message("Configuring ANT...")

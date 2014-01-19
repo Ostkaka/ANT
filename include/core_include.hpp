@@ -12,9 +12,6 @@
 //#include <ANT_config.hpp>
 
 // ANT includes
-#include <ant/interfaces/IApp.hpp>
-#include <ant/interfaces/IState.hpp>
-#include <ant/classes/StateManager.hpp>
 
 #endif  // ANT_CORE_INCLUDE_HPP
 

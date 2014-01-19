@@ -34,6 +34,8 @@ ant::SFMLHumanView::SFMLHumanView( ISFMLRendererStrongPtr renderer )
 		m_Scene->addChild(INVALID_ACTOR_ID, m_Camera);	
 		m_Scene->setCamera(m_Camera);
 	}
+
+	m_renderDebug = true;
 }
 
 ant::SFMLHumanView::~SFMLHumanView()
@@ -95,11 +97,12 @@ void ant::SFMLHumanView::onRender(ant::DeltaTime fTime, ant::DeltaTime fElapsedT
 					(*it)->onRender(fTime, fElapsedTime);
 				}
 			}
-
-			renderText();
-
-			// TODO - render console
-
+			
+			if (m_renderDebug)
+			{
+				renderText();
+			}
+			
 			// Record last successfully timestamp
 		}
 		m_renderer->postRender();

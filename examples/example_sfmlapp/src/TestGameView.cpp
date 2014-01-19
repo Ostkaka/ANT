@@ -80,6 +80,10 @@ void ant::TestGameView::handleKeyDown(sf::Keyboard::Key key)
 		m_zoomFactor += dz * ((sf::Keyboard::Key::P == key) ? 1 : -1);
 		m_Camera->setCameraZoom(m_zoomFactor);
 	}	
+	else if (key == sf::Keyboard::Key::B)
+	{
+		toggleDebugRender();
+	}
 }
 
 void ant::TestGameView::onUpdate( ant::DeltaTime dt ) 
@@ -130,6 +134,10 @@ void ant::TestGameView::renderText()
 	// Render the current time in the game
 	std::string t = ToStr(m_currentTime);
 	std::string timeString("Time: " + t + " s");	
-	m_renderer->getTextRenderer()->renderText(timeString);
+
+	// Fps string 
+	std::string fps = "FPS: " + ToStr(float((1.0 / (m_currentTime - m_lastDrawTime))));
+	
+	m_renderer->getTextRenderer()->renderText(timeString + "\n" + fps);
 }
 

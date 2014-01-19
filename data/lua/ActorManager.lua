@@ -52,10 +52,10 @@ function ActorManager:RemoveObject(scriptObject)
 	self._objects[actorId] = nil;
 end
 
-function OnPhysicsCollision( scriptObject )
+function ActorManager:OnPhysicsCollision( scriptObject )
 	print("Got collide event")
 end
 
-function OnPhysicsSeparation( scriptObject )
+function ActorManager:OnPhysicsSeparation( scriptObject )
 	print("Got separate event")
 end

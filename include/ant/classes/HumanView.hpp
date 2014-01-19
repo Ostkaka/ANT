@@ -57,6 +57,8 @@ namespace ant
 
 		virtual GameViewId getId() const ANT_OVERRIDE;
 
+		void toggleDebugRender();
+
 	protected:
 		
 		virtual void renderText(){}
@@ -75,7 +77,7 @@ namespace ant
 
 	protected:
 		GameViewId	                    m_viewId;
-		ActorId			                    m_actorId;		
+		ActorId			                m_actorId;		
 		ScreenElementSFMLSceneStrongPtr m_Scene;			
 		shared_ptr<SFMLCameraNode>      m_Camera;		
 		ProcessManager*                 m_processManager;
@@ -87,6 +89,9 @@ namespace ant
 		ScreenElementList               m_ScreenElements;						// a game screen entity
 		IKeyboardHandlerStrongPtr       m_KeyboardHandler;
 		BaseGameState                   m_BaseGameState;
+
+		// Debug stuff
+		bool							m_renderDebug;
 	};
 
 	// Implementation
@@ -112,6 +117,8 @@ namespace ant
 	ANT_INLINE void SFMLHumanView::pushElement(IScreenElementStrongPtr pElement){ m_ScreenElements.push_front(pElement); }
 
 	ANT_INLINE void SFMLHumanView::removeElement(IScreenElementStrongPtr pElement){ m_ScreenElements.remove(pElement); }
+
+	ANT_INLINE void SFMLHumanView::toggleDebugRender() { m_renderDebug = !m_renderDebug; }
 }
 
 #endif

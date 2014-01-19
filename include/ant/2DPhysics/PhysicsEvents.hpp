@@ -68,7 +68,7 @@ namespace ant
 	//////////////////////////////////////////////////////////////////////////
 	// EvtData_PhysCollision - Event that is sent when a bodies separate
 	//////////////////////////////////////////////////////////////////////////
-	class EvtData_PhysSeparation : public BaseEventData
+	class EvtData_PhysSeparation : public ScriptEvent
 	{
 		ActorId m_ActorA;
 		ActorId m_ActorB;
@@ -111,6 +111,10 @@ namespace ant
 		{
 			return m_ActorB;
 		}
+
+		virtual void buildEventData(void) ANT_OVERRIDE;
+
+		ANT_EXPORT_FOR_SCRIPT_EVENT(EvtData_PhysSeparation);
 	};
 }
 
