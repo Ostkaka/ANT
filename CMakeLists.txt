@@ -71,9 +71,6 @@ include_directories(
 
 # Visual studio specific
 if (MSVC)
-	# This is ugly but set the compiler flags for RelDebInfo -- THIS CANNOT BE SET?!?
-	set ( CMAKE_CXX_FLAGS_RELWITHDEBINFO "/MD /Zi /Od" ) 
-
 	add_definitions(-DUNICODE -D_UNICODE)
 	set(CMAKE_DEBUG_POSTFIX "d")
     add_definitions(-D_CRT_SECURE_NO_DEPRECATE)
