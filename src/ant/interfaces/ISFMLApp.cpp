@@ -338,5 +338,3 @@ IGameLogic * ant::ISFMLApp::getGameLogic()
 {
 	return m_gameLogic;
 }
-
-

@@ -6,6 +6,7 @@
 
 namespace ant
 {
+	class SFMLTextRenderer;
 
 	class IRenderState
 	{
@@ -39,12 +40,14 @@ namespace ant
 		virtual void shutDown()=0;
 		virtual bool preRender()=0;
 		virtual bool postRender()=0;
-		virtual void setView(sf::Vector2f pos, ant::Real angle, ant::Real zoomFactor)=0;
+		virtual void setView(sf::Vector2f pos, ant::Real angle, ant::Real zoomFactor)=0;		
 		// Functions for drawing SFML primitives on the active window
 		virtual bool drawSprite(const sf::Sprite& sprite)=0;
 		virtual bool drawRectangle(const sf::RectangleShape& rectangle)=0;
-		virtual bool drawCircle(const sf::CircleShape& circle)=0;
+		virtual bool drawCircle(const sf::CircleShape& circle) = 0;
+		virtual bool drawText(const sf::Text& text) = 0;
 		virtual const sf::View& getView() = 0;
+		virtual SFMLTextRenderer* getTextRenderer() = 0;
 	};
 }
 

@@ -7,6 +7,25 @@
 
 namespace ant
 {
+
+	/**
+	 * Class for drawing debug data
+	 */ 
+	class DebugHUD : ScreenElementSFMLScene
+	{
+	public:
+
+	protected:
+
+	private:
+
+		//////////////////////////////////////////////////////////////////////////
+		// Variables
+		//////////////////////////////////////////////////////////////////////////
+	protected:
+		
+	};
+
 	/**
 	* Test Game view 
 	*/
@@ -26,11 +45,14 @@ namespace ant
 
 		virtual void onUpdate(ant::DeltaTime dt) ANT_OVERRIDE;
 
+		virtual void setControllerActorDelegate(IEventDataStrongPtr eventPtr);
+
 		/// Delegates
+	protected:
 
 		virtual bool loadGameDelegate(TiXmlElement* levelData) ANT_OVERRIDE;
 
-		virtual void setControllerActorDelegate(IEventDataStrongPtr eventPtr);
+		virtual void renderText();
 
 	private:
 
@@ -45,7 +67,7 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 	protected:
 		TestControllerStrongPtr m_TestController;
-		ant::Real m_zoomFactor;
+		ant::Real               m_zoomFactor;
 	};
 }
 

@@ -1,4 +1,5 @@
 #include <ant/graphicsSFML/SFMLRenderer.hpp>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 
 using namespace ant;
@@ -6,6 +7,7 @@ using namespace ant;
 ant::SFMLRenderer::SFMLRenderer( sf::RenderWindow *window )
 {
 	m_window = window;
+	m_textRenderer.reset(GCC_NEW SFMLTextRenderer(this));
 }
 
 void ant::SFMLRenderer::setBackgroundColor(BYTE bgA, BYTE bgR, BYTE bgG, BYTE bgB )
@@ -75,4 +77,45 @@ bool ant::SFMLRenderer::drawCircle( const sf::CircleShape& circle )
 	GCC_ASSERT(m_window);
 	m_window->draw(circle);
 	return true;
+}
+
+bool ant::SFMLRenderer::drawText(const sf::Text& text) 
+{
+	GCC_ASSERT(m_window);
+	m_window->draw(text);
+	return true;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// SFMLTextRenderer
+//////////////////////////////////////////////////////////////////////////
+ant::SFMLTextRenderer::SFMLTextRenderer(SFMLRenderer* renderer) : m_renderer(renderer)
+{
+	// Create initial font
+	std::string str = ANT_DATA_PATH"/assets/arial.ttf";
+	if (!m_font.loadFromFile(str))
+	{
+		GCC_ERROR("Could not load font: " + str);
+	}	
+	m_fontSize = 30;
+	m_activeColor = sf::Color(255, 255, 255);
+}
+
+ant::SFMLTextRenderer::~SFMLTextRenderer()
+{
+}
+
+void ant::SFMLTextRenderer::renderText(const std::string& str)
+{
+	GCC_ASSERT(m_renderer);
+
+	// Create text
+	sf::String s(str);
+	sf::Text text(s,m_font);
+	text.setCharacterSize(m_fontSize);
+	text.setPosition(m_textPos);
+	text.setStyle(sf::Text::Bold);
+
+	// render it
+	m_renderer->drawText(text);
 }

@@ -96,7 +96,7 @@ void ant::SFMLHumanView::onRender(ant::DeltaTime fTime, ant::DeltaTime fElapsedT
 				}
 			}
 
-			// TODO - render text
+			renderText();
 
 			// TODO - render console
 

@@ -59,7 +59,7 @@ namespace ant
 
 	protected:
 		
-		virtual void renderNext(){}
+		virtual void renderText(){}
 
 		virtual bool loadGameDelegate(TiXmlElement* levelData);
 

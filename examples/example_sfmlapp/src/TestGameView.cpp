@@ -3,6 +3,7 @@
 #include <ant/eventsystem/Events.hpp>
 #include "TestEvents.hpp"
 #include <ant/ant_std.hpp>
+#include <ant/graphicsSFML/SFMLRenderer.hpp>
 
 ant::TestGameView::TestGameView( ISFMLRendererStrongPtr renderer )
 	:SFMLHumanView(renderer)
@@ -118,5 +119,18 @@ void ant::TestGameView::removeAllDelegates( void )
 {
 	IEventManager* pGlobalEventManager = IEventManager::instance();
 	pGlobalEventManager->removeListener(MakeDelegate(this, &TestGameView::setControllerActorDelegate), EvtData_Set_Controlled_Actor::sk_EventType);
+}
+
+void ant::TestGameView::renderText()
+{
+	SFMLHumanView::renderText();
+
+	GCC_ASSERT(m_renderer->getTextRenderer());
+
+	// Render the current time in the game
+	std::string t = ToStr(m_currentTime);
+	//std::string timeString("Time: " + t + " s");
+	std::string timeString("This is a test string");
+	m_renderer->getTextRenderer()->renderText(timeString);
 }
 

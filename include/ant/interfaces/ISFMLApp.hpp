@@ -92,21 +92,21 @@ namespace ant
        */
       virtual void gameLoop();
 
-			/**
-			 * Registers events for the game
-			 */
-			virtual void registerGameEvents(void){}
+	/**
+	* Registers events for the game
+	*/
+	virtual void registerGameEvents(void){}
 
-			/**
-      * ProcessInput is responsible for performing all input processing for
-      * the game loop.
-      */
-      virtual void processInput();
+	/**
+    * ProcessInput is responsible for performing all input processing for
+    * the game loop.
+    */
+    virtual void processInput();
 
-			/**
-			 * Initializes the game logic and views. 
-			 */
-			virtual BaseGameLogic* initGameLogicAndView() = 0;
+	/**
+	* Initializes the game logic and views. 
+	*/
+	virtual BaseGameLogic* initGameLogicAndView() = 0;
 
 	private:
 
