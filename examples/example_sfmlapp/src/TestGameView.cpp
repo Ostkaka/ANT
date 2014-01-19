@@ -129,8 +129,7 @@ void ant::TestGameView::renderText()
 
 	// Render the current time in the game
 	std::string t = ToStr(m_currentTime);
-	//std::string timeString("Time: " + t + " s");
-	std::string timeString("This is a test string");
+	std::string timeString("Time: " + t + " s");	
 	m_renderer->getTextRenderer()->renderText(timeString);
 }
 

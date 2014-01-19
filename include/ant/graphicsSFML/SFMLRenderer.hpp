@@ -87,9 +87,9 @@ namespace ant
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
 	protected:
-		sf::View		      m_centerView;
-		sf::Color		      m_color;
-		sf::RenderWindow *m_window;
+		sf::View		          m_centerView;
+		sf::Color		          m_color;
+		sf::RenderWindow*         m_window;
 		SFMLTextRendererStrongPtr m_textRenderer;
 	};
 

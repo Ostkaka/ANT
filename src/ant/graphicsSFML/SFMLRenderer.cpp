@@ -36,8 +36,7 @@ bool ant::SFMLRenderer::postRender(void)
 	if (m_window)
 	{
 		m_window->display();
-	}
-	 
+	}	 
 	return true;
 }
 
@@ -97,7 +96,7 @@ ant::SFMLTextRenderer::SFMLTextRenderer(SFMLRenderer* renderer) : m_renderer(ren
 	{
 		GCC_ERROR("Could not load font: " + str);
 	}	
-	m_fontSize = 30;
+	m_fontSize = 12;
 	m_activeColor = sf::Color(255, 255, 255);
 }
 
@@ -116,6 +115,10 @@ void ant::SFMLTextRenderer::renderText(const std::string& str)
 	text.setPosition(m_textPos);
 	text.setStyle(sf::Text::Bold);
 
-	// render it
+	// Get the position of the text
+	sf::Vector2f pos = m_renderer->getView().getCenter() - sf::Vector2f(m_renderer->getView().getSize().x / 2.0, m_renderer->getView().getSize().y / 2.0);
+	text.setPosition(pos);
+
+	// Render the text
 	m_renderer->drawText(text);
 }

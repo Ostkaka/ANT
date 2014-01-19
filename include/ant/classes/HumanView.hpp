@@ -79,8 +79,8 @@ namespace ant
 		ScreenElementSFMLSceneStrongPtr m_Scene;			
 		shared_ptr<SFMLCameraNode>      m_Camera;		
 		ProcessManager*                 m_processManager;
-		ant::DeltaTime	                m_currentTime;
-		ant::DeltaTime	                m_lastDrawTime;
+		ant::TimeStamp	                m_currentTime;
+		ant::TimeStamp                  m_lastDrawTime;
 		bool                            m_runfullSpeed;
 		bool                            m_realTime; 
 		ISFMLRendererStrongPtr          m_renderer;
