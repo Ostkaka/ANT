@@ -1,4 +1,4 @@
-<Actor type="spawnSensor" resource="actors\rectangleActor">
+<Actor type="spawnSensor" resource="actors\sensorActor">
 	<TransformComponent>
 		<Position x="-50" y="0"/>
 		<Rotation angle="180"/>
@@ -16,8 +16,9 @@
 			<Scale x="25" y="25" z="1"/>
 		</RigidBodyTransform>
 	</PhysicsComponent>
+
 	<BaseScriptComponent>
         <ScriptObject constructor="AddActor" destructor="RemoveActor" />
-        <ScriptData actorType="spawnActor" />
+        <ScriptData   actorType="spawnActor" />
 	</BaseScriptComponent>		
 </Actor>

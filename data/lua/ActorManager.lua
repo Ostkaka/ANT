@@ -83,7 +83,7 @@ function ActorManager:RemoveObject(scriptObject)
 	self._objects[actorId] = nil;
 end
 
-function ActorManager._handleSpawnerCollision( actorA. actorB )
+function ActorManager:_handleSpawnerCollision( actorA, actorB )
 	-- handle spawn enemies
 	local spawnActor = nil;
 	local actor = nil;
@@ -100,7 +100,7 @@ function ActorManager._handleSpawnerCollision( actorA. actorB )
 	if(actor ~= nil and spawnActor ~= nil) then
 		local pos = spawnActor:getPos();
 		local rot = 0;
-		pos.x += 10;
+		pos.x = pos.x + 10;
 
 		createActor("actors/kamek.xml",pos,rot);  
 
