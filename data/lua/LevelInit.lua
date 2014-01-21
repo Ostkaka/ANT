@@ -19,6 +19,14 @@ function RemovePlayer(scriptObject)
 	ActorManagerSingleton:RemovePlayer(scriptObject);
 end
 
+function AddActor(scriptObject)
+	ActorManagerSingleton:AddActor(scriptObject);
+end
+
+function RemoveActor(scriptObject)
+	ActorManagerSingleton:RemoveActor(scriptObject);
+end
+
 function AddCircle(scriptObject)
 	ActorManagerSingleton:AddCircle(scriptObject);
 end

@@ -4,6 +4,6 @@
       <Actor resource="actors\BowserActor.xml" /> 
       <Actor resource="actors\floorActor.xml" /> 
       <Actor resource="actors\sensorActor.xml" /> 
-       </StaticActors>
+     </StaticActors>
     <Script preLoad="lua\LevelInit.lua" postLoad="lua\LevelPostInit.lua"/>-->
 </World>

@@ -29,13 +29,10 @@ function ActorManager:AddPlayer(scriptObject)
 end
 
 function ActorManager:AddActor(scriptObject)
-	if (self._player ~= nil) then
-		print("Adding player when player is active")
-	end
-
+	local actorId = scriptObject:getActorId();
 	self._actors[actorId] = scriptObject;
 	
-	Utils.DumpObject(EventType);
+	--Utils.DumpObject(scriptObject);
 end
 
 function ActorManager:RemovePlayer( scriptObject )
@@ -66,7 +63,7 @@ function ActorManager:GetActor(actorId)
 end
 
 function ActorManager:RemoveActor(actorId)
-	return self._actors[actorId];
+	self._actors[actorId] = nil
 end
 
 function ActorManager:CreateCircle()
@@ -79,7 +76,7 @@ function ActorManager:CreateCircle()
 end
 
 function ActorManager:RemoveObject(scriptObject)
-	local actorId = scriptObject:GetActorId();
+	local actorId = scriptObject:getActorId();
 	self._objects[actorId] = nil;
 end
 
@@ -120,7 +117,7 @@ function ActorManager:OnPhysicsCollision( scriptObject )
 		return;
 	end
 
-	_handleSpawnerCollision(actorA, actorB);
+	self._handleSpawnerCollision(actorA, actorB);
 	
 end
 
