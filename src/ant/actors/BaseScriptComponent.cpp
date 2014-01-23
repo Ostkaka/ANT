@@ -107,14 +107,14 @@ bool ant::BaseScriptComponent::init( TiXmlElement* pData )
 
 	// Read the <ScriptData> tag
 	TiXmlElement* pDataElement = pData->FirstChildElement("ScriptData");
-	if (pScriptObjectElement)
+	if (pDataElement)
 	{
 		if (m_scriptObject.IsNil())
 		{
 			GCC_ERROR("m_scriptObject cannot be nil when ScriptData is defined");
 		}
 
-		for (TiXmlAttribute* pAttribute = pScriptObjectElement->FirstAttribute(); pAttribute != NULL ; pAttribute = pAttribute->Next())
+		for (TiXmlAttribute* pAttribute = pDataElement->FirstAttribute(); pAttribute != NULL; pAttribute = pAttribute->Next())
 		{
 			m_scriptObject.SetString(pAttribute->Name(), pAttribute->Value());
 		}

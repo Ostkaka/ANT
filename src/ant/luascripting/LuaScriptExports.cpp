@@ -38,6 +38,9 @@ void LuaScriptExports::registerScripts( void )
 	globals.RegisterDirect("queueEvent", &InternalLuaScriptExports::queueEvent);
 	globals.RegisterDirect("triggerEvent", &InternalLuaScriptExports::triggerEvent);
 
+	// Actors
+	globals.RegisterDirect("createActor", &InternalLuaScriptExports::createActor);
+
 	// Lua log
 	globals.RegisterDirect("log",&InternalLuaScriptExports::lualog);
 }

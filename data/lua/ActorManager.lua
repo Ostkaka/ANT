@@ -90,7 +90,7 @@ function ActorManager:_handleSpawnerCollision( actorA, actorB )
 	end
 
 	if(actorA.actorType == "spawnActor" and actorB.actorType == "Player") then
-		actor = actorBB;
+		actor = actorB;
 		spawnActor = actorA;
 	end
 
@@ -100,8 +100,6 @@ function ActorManager:_handleSpawnerCollision( actorA, actorB )
 		pos.x = pos.x + 10;
 
 		createActor("actors/kamek.xml",pos,rot);  
-
-		-- should also remove spawner?
 	end	
 end
 
@@ -117,8 +115,35 @@ function ActorManager:OnPhysicsCollision( scriptObject )
 		return;
 	end
 
-	self._handleSpawnerCollision(actorA, actorB);
-	
+	-- handle spawn enemies
+	local spawnActor = nil;
+	local actor = nil;
+
+	Utils.DumpObject(actorA)
+	Utils.DumpObject(actorB)
+
+	print("actorA  "..actorA.actorType)
+	print("actorB  "..actorB.actorType)
+
+	if(actorA.actorType == "Player" and actorB.actorType == "spawnActor") then
+		actor = actorA;
+		spawnActor = actorB;
+	end
+
+	if(actorA.actorType == "spawnActor" and actorB.actorType == "Player") then
+		actor = actorB;
+		spawnActor = actorA;
+	end
+
+	if(actor ~= nil and spawnActor ~= nil) then
+		local pos = spawnActor:getPos();
+		local rot = 0;
+		pos.x = pos.x + 10;
+
+		createActor("actors/kamek.xml",pos,rot);  
+	end	
+
+	--self._handleSpawnerCollision(actorA, actorB);	
 end
 
 function ActorManager:OnPhysicsSeparation( scriptObject )
