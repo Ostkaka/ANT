@@ -42,7 +42,7 @@ ant::ActorStrongPtr ant::ActorFactory::createActor(const char* actorResource, Ti
 		return ActorStrongPtr();
 	}
 
-	// create the actor instance
+	// Create the actor instance
 	ActorId nextActorId = serversActorId;
 	if (nextActorId == INVALID_ACTOR_ID)
 	{

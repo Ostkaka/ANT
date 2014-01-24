@@ -22,7 +22,7 @@ function ActorManager:AddPlayer(scriptObject)
 	-- add new player
 	self._player = scriptObject;
 
-	Utils.DumpObject(EventType)
+	--Utils.DumpObject(EventType)
 
 	-- Tell the engine we added a player
 	queueEvent(EventType.EvtData_Set_Controlled_Actor, self._player:getActorId());
@@ -75,11 +75,6 @@ function ActorManager:CreateCircle()
 	local sphere = createActor("actors\\circle.xml",pos,rot);
 end
 
-function ActorManager:RemoveObject(scriptObject)
-	local actorId = scriptObject:getActorId();
-	self._objects[actorId] = nil;
-end
-
 function ActorManager:_handleSpawnerCollision( actorA, actorB )
 	-- handle spawn enemies
 	local spawnActor = nil;
@@ -99,7 +94,7 @@ function ActorManager:_handleSpawnerCollision( actorA, actorB )
 		local rot = 0;
 		pos.x = pos.x + 10;
 
-		createActor("actors/kamek.xml",pos,rot);  
+		createActor("actors\\kamek.xml",pos,rot);  
 	end	
 end
 
@@ -115,16 +110,9 @@ function ActorManager:OnPhysicsCollision( scriptObject )
 		return;
 	end
 
-	-- handle spawn enemies
+	--self._handleSpawnerCollision(actorA, actorB);
 	local spawnActor = nil;
 	local actor = nil;
-
-	Utils.DumpObject(actorA)
-	Utils.DumpObject(actorB)
-
-	print("actorA  "..actorA.actorType)
-	print("actorB  "..actorB.actorType)
-
 	if(actorA.actorType == "Player" and actorB.actorType == "spawnActor") then
 		actor = actorA;
 		spawnActor = actorB;
@@ -140,10 +128,10 @@ function ActorManager:OnPhysicsCollision( scriptObject )
 		local rot = 0;
 		pos.x = pos.x + 10;
 
-		createActor("actors/kamek.xml",pos,rot);  
-	end	
-
-	--self._handleSpawnerCollision(actorA, actorB);	
+		createActor("actors\\kamek.xml",pos,rot);  
+		RemoveActor(spawnActor:getActorId())
+		queueEvent(EventType.EvtData_Request_Destroy_Actor, spawnActor:getActorId());
+	end		
 end
 
 function ActorManager:OnPhysicsSeparation( scriptObject )

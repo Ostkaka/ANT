@@ -200,7 +200,7 @@ void ant::InternalLuaScriptExports::removeEventListener( ant::Ulong listenerId )
 	// TODO Err, should not the listener be removed form the global event listener here here?
 }
 
-int ant::InternalLuaScriptExports::createActor( const std::string& actorArchetype, LuaPlus::LuaObject luaPosition, LuaPlus::LuaObject luaRotation )
+int ant::InternalLuaScriptExports::createActor( const char* actorArchetype, LuaPlus::LuaObject luaPosition, LuaPlus::LuaObject luaRotation )
 {
 	if (!luaPosition.IsTable())
 	{
@@ -208,7 +208,7 @@ int ant::InternalLuaScriptExports::createActor( const std::string& actorArchetyp
 		return INVALID_ACTOR_ID;
 	}
 
-	if (!luaRotation.IsTable())
+	if (!luaRotation.IsNumber())
 	{
 		GCC_ERROR("Invalid object passed to createActor(); type = " + std::string(luaRotation.TypeName()));
 		return INVALID_ACTOR_ID;

@@ -38,7 +38,7 @@ namespace ant
 		static void removeEventListener(ant::Ulong listenerId);
 
 		// Actors
-		int createActor(const std::string& actorArchetype, LuaPlus::LuaObject luaPosition, LuaPlus::LuaObject luaRotation);
+		static int createActor(const char* actorArchetype, LuaPlus::LuaObject luaPosition, LuaPlus::LuaObject luaRotation);
 
 		// Lua log
 		static void lualog(LuaPlus::LuaObject text);
