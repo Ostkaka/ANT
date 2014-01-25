@@ -75,29 +75,6 @@ function ActorManager:CreateCircle()
 	local sphere = createActor("actors\\circle.xml",pos,rot);
 end
 
-function ActorManager:_handleSpawnerCollision( actorA, actorB )
-	-- handle spawn enemies
-	local spawnActor = nil;
-	local actor = nil;
-	if(actorA.actorType == "Player" and actorB.actorType == "spawnActor") then
-		actor = actorA;
-		spawnActor = actorB;
-	end
-
-	if(actorA.actorType == "spawnActor" and actorB.actorType == "Player") then
-		actor = actorB;
-		spawnActor = actorA;
-	end
-
-	if(actor ~= nil and spawnActor ~= nil) then
-		local pos = spawnActor:getPos();
-		local rot = 0;
-		pos.x = pos.x + 10;
-
-		createActor("actors\\kamek.xml",pos,rot);  
-	end	
-end
-
 function ActorManager:OnPhysicsCollision( scriptObject )
 	print("Got collide event")
 
@@ -128,9 +105,15 @@ function ActorManager:OnPhysicsCollision( scriptObject )
 		local rot = 0;
 		pos.x = pos.x + 10;
 
-		createActor("actors\\kamek.xml",pos,rot);  
+		local numSpawn = tonumber(spawnActor.spawnNumber);
+		print("numSPaen  "..numSpawn)		
 		RemoveActor(spawnActor:getActorId())
-		queueEvent(EventType.EvtData_Request_Destroy_Actor, spawnActor:getActorId());
+
+		for i=1,numSpawn do			
+			createActor("actors\\kamek.xml",pos,rot)
+		end
+
+		--queueEvent(EventType.EvtData_Request_Destroy_Actor, spawnActor:getActorId());
 	end		
 end
 

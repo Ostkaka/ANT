@@ -22,7 +22,6 @@
 		<Density>player</Density>
 		<LinearDamping>0</LinearDamping>
 	</PhysicsComponent>
-
 	 <BaseScriptComponent>
         <ScriptObject constructor="AddPlayer" destructor="RemovePlayer" />
         <ScriptData actorType="Player" />

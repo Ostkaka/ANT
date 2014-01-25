@@ -16,9 +16,8 @@
 			<Scale x="25" y="25" z="1"/>
 		</RigidBodyTransform>
 	</PhysicsComponent>
-
 	<BaseScriptComponent>
         <ScriptObject constructor="AddActor" destructor="RemoveActor" />
-        <ScriptData   actorType="spawnActor" />
+        <ScriptData   actorType="spawnActor" spawnNumber="10"/>
 	</BaseScriptComponent>		
 </Actor>
