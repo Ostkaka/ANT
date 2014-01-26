@@ -17,6 +17,7 @@
     <DensityTable>
 
         <player>1.000</player>
+        <player2>0.200</player2>
 
         <!--  specific gravity (these numbers are easier to find) -->
         <air>0.0013</air>
