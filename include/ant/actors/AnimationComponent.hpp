@@ -78,17 +78,19 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
-
 	protected:	
 		static const char *g_Name;
-		AnimationMap m_animationMap;
+		AnimationMap   m_animationMap;
 		// Animation data
 		ant::DeltaTime m_currentTime;
 		ant::DeltaTime m_lastAnimTime;
 		Animation *    m_currentAnimation;
 	};
-
-	class EvtData_ChangeAnimation : ScriptEvent
+	
+	//////////////////////////////////////////////////////////////////////////
+	// EvtData_ChangeAnimation - Event that is sent out when an animation should change for an entity with an animation component
+	//////////////////////////////////////////////////////////////////////////
+	class EvtData_ChangeAnimation : public ScriptEvent
 	{
 	public:
 		static const EventType sk_EventType;
@@ -107,39 +109,39 @@ namespace ant
 
 		}
 
-		~EvtData_ChangeAnimation()
+		virtual ~EvtData_ChangeAnimation()
 		{
 
 		}
 
-		virtual IEventDataStrongPtr copy(void) const
+		virtual IEventDataStrongPtr copy(void) const ANT_OVERRIDE
 		{
 			return IEventDataStrongPtr(GCC_NEW EvtData_ChangeAnimation(m_actorId, m_animationId));
 		}
 
-		virtual const EventType& getEventType(void) const
+		virtual const EventType& getEventType(void) const ANT_OVERRIDE
 		{
 			return sk_EventType;
 		}
 
-		virtual void deserialize(std::istrstream& in)
+		virtual void deserialize(std::istrstream& in) ANT_OVERRIDE
 		{
 			in >> m_actorId;
 			in >> m_animationId;
 		}
 
-		virtual void serialize(std::ostrstream& out) const
+		virtual void serialize(std::ostrstream& out) const ANT_OVERRIDE
 		{
 			out << m_actorId << "	";
 			out << m_animationId << "	";
 		}
 
-		virtual std::string getName(void) const
+		virtual std::string getName(void) const ANT_OVERRIDE
 		{
 			return "EvtData_ChangeAnimation";
 		}
 
-		const ActorId getActorId(void) const
+		const ActorId getActorId(void) const 
 		{
 			return m_actorId;
 		}
@@ -149,11 +151,11 @@ namespace ant
 			return m_animationId;
 		}
 
-		virtual bool buildEventFromScript(void);
+		virtual bool buildEventFromScript(void) ANT_OVERRIDE;
 
-		virtual void buildEventData(void);
+		virtual void buildEventData(void) ANT_OVERRIDE;
 
-		ANT_EXPORT_FOR_SCRIPT_EVENT(EvtData_TestExecute);
+		ANT_EXPORT_FOR_SCRIPT_EVENT(EvtData_ChangeAnimation);
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
@@ -164,6 +166,8 @@ namespace ant
 	};
 
 	void registerAnimationScriptEvents(void);
+
+	ANT_DECLARE_POINTER_TYPES(EvtData_ChangeAnimation);
 }
 
 #endif

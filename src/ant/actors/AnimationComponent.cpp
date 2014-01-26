@@ -28,7 +28,7 @@ bool AnimationComponent::init(TiXmlElement* pData)
 
 bool AnimationComponent::delegateInit(TiXmlElement *data)
 {
-
+	return true;
 }
 
 void AnimationComponent::postInit()
@@ -47,8 +47,7 @@ void AnimationComponent::changeAnimationStateDelegate(IEventDataStrongPtr eventD
 void AnimationComponent::update(ant::DeltaTime dt)
 {
 	// Get the current animation and set it to active 
-
-	
+		
 }
 
 void AnimationComponent::onChanged(void)
@@ -60,14 +59,14 @@ void AnimationComponent::onChanged(void)
 // EvtData_ChangeAnimation
 //////////////////////////////////////////////////////////////////////////
 
-const EventType EvtData_ChangeAnimation::sk_EventType(0z53c1a89);
+const EventType EvtData_ChangeAnimation::sk_EventType(0x47a22307);
 
 bool EvtData_ChangeAnimation::buildEventFromScript(void)
 {
 	if (m_eventData.IsTable())
 	{
 		m_actorId     = m_eventData["actorId"].GetInteger();
-		m_animationId = m_eventData["animationId"].GetInteger();
+		m_animationId = m_eventData["animationId"].GetString();
 		return true;
 	}
 	return false;
@@ -77,7 +76,7 @@ void EvtData_ChangeAnimation::buildEventData(void)
 {
 	m_eventData.AssignNewTable(LuaStateManager::instance()->getLuaState());
 	m_eventData.SetInteger("actorId", m_actorId);
-	m_eventData.SetInteger("animationId", m_animationId);
+	m_eventData.SetString("animationId", m_animationId.c_str());
 }
 
 void ant::registerAnimationScriptEvents(void)

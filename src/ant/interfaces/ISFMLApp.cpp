@@ -316,7 +316,7 @@ void ant::ISFMLApp::cleanup()
 bool ant::ISFMLApp::initEventSystem()
 {
 	m_eventManager = GCC_NEW EventManager("SFMLApp Event Mgr", true );
-	return m_eventManager;	
+	return m_eventManager!=NULL;	
 }
 
 void ant::ISFMLApp::registerEngineEvents( void )
