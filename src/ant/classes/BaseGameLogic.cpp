@@ -6,6 +6,7 @@
 #include <ant/resources/ResourceCache.hpp>
 #include <ant/resources/XmlResource.hpp>
 #include <ant/actors/TransformComponent.hpp>
+#include <ant/actors/AnimationComponent.hpp>
 #include <ant/actors/Actor.hpp>
 #include <ant/gccUtils/String.hpp>
 #include <ant/eventsystem/Events.hpp>
@@ -39,6 +40,7 @@ ant::BaseGameLogic::BaseGameLogic()
 	m_gamePhysics = GCC_NEW Box2DPhysics();
 
 	registerEngineScriptEvents();
+	registerAnimationScriptEvents();	
 	registerAllDelegates();
 }
 
@@ -57,8 +59,6 @@ ant::BaseGameLogic::~BaseGameLogic()
 	SAFE_DELETE(m_processManager);
 	SAFE_DELETE(m_actorFactory);
 	SAFE_DELETE(m_gamePhysics);
-
-	
 }
 
 void ant::BaseGameLogic::clearLoadedLevel()

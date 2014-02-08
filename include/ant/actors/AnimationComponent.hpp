@@ -17,76 +17,95 @@ namespace ant
 	{
 		typedef std::vector<int> FrameIndexList;
 	public:
-		Animation();
+	
+		// Creates an animation
+		Animation(const FrameIndexList& list, ant::Real fps, bool shouldLoop = true );
 
 		~Animation();
 
-		bool update(ant::DeltaTime dt);
-
 		ant::Real getFrameRate() const;
 		
-		bool shouldLoop() const;
+		void setShouldLoop(bool shouldLoop);
+
+		bool getShouldLoop() const;
 
 		ant::UInt getCurrentFrameIndex() const;
 
-	private:
+		/// Increment the current frame index and returns it
+		ant::UInt incrementToNextFrame();
+
+	protected:
+		// Default constructor
+		Animation();
+
+	protected:
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
-		ant::Real m_frameRate;	
-		ant::UInt m_currentListIndex;
-		bool m_shouldLoop;
+		ant::Real      m_frameRate;	
+		ant::UInt      m_currentListIndex;
+		bool           m_shouldLoop;
 		FrameIndexList m_frameList;
 	};
-	
+
 	ANT_INLINE ant::Real Animation::getFrameRate() const { return m_frameRate; }
 	
-	ANT_INLINE bool Animation::shouldLoop() const { return m_shouldLoop; }
+	ANT_INLINE bool Animation::getShouldLoop() const { return m_shouldLoop; }
+
+	ANT_INLINE void Animation::setShouldLoop(bool shouldLoop) { m_shouldLoop = shouldLoop; }
 
 	ANT_INLINE ant::UInt Animation::getCurrentFrameIndex() const { GCC_ASSERT(m_currentListIndex < m_frameList.size());  return m_frameList[m_currentListIndex]; }
-		
+
+	ANT_DECLARE_POINTER_TYPES(Animation)
+
 	/**
 	* Base class for handling and updating different animations for an entity. Is known an used by render components that 
 	* support animation, such as AnimatedSprite.
 	*/
-	class AnimationComponent : ActorComponent
+	class AnimationComponent : public ActorComponent
 	{
-		typedef std::map<AnimationId, Animation> AnimationMap;
+		typedef std::map<AnimationId, AnimationStrongPtr> AnimationMap;
+
 	public: 
 		AnimationComponent();
 	
 		virtual ~AnimationComponent();
 
-		virtual bool init(TiXmlElement* pData);
+		virtual bool init(TiXmlElement* pData) ANT_OVERRIDE;
 
-		virtual TiXmlElement* generateXml(void);
+		virtual TiXmlElement* generateXml(void) ANT_OVERRIDE;
 
-		virtual void postInit();
+		virtual void postInit() ANT_OVERRIDE;
 
-		virtual void update(ant::DeltaTime dt);
+		virtual void update(ant::DeltaTime dt) ANT_OVERRIDE;
 
-		virtual void onChanged(void);
+		virtual void onChanged(void) ANT_OVERRIDE;
+
+		virtual const char *getName() const ANT_OVERRIDE { return g_Name; }
+
+		ant::UInt getFrameIndex() const;
 
 		void changeAnimationStateDelegate(IEventDataStrongPtr eventData);
-
-		virtual const char *getName() const { return g_Name; }
 
 	protected:
 
 		virtual bool delegateInit(TiXmlElement *data);
+
+		void setAnimation(AnimationId id);
 
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
 	protected:	
 		static const char *g_Name;
-		AnimationMap   m_animationMap;
-		// Animation data
-		ant::DeltaTime m_currentTime;
-		ant::DeltaTime m_lastAnimTime;
-		Animation *    m_currentAnimation;
+		AnimationMap              m_animationMap;		
+		ant::DeltaTime            m_currentTime;
+		ant::DeltaTime            m_lastAnimTime;
+		AnimationStrongPtr        m_currentAnimation;
 	};
 	
+	ANT_INLINE ant::UInt AnimationComponent::getFrameIndex() const { GCC_ASSERT(m_currentAnimation); return m_currentAnimation->getCurrentFrameIndex(); }
+
 	//////////////////////////////////////////////////////////////////////////
 	// EvtData_ChangeAnimation - Event that is sent out when an animation should change for an entity with an animation component
 	//////////////////////////////////////////////////////////////////////////

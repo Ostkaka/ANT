@@ -24,6 +24,6 @@
 	</PhysicsComponent>
 	 <BaseScriptComponent>
         <ScriptObject constructor="AddPlayer" destructor="RemovePlayer" />
-        <ScriptData actorType="Player" />
+        <ScriptData actorType="Player" state="standing"/>
     </BaseScriptComponent>
 </Actor>
