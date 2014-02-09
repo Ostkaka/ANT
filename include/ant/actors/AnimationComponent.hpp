@@ -15,7 +15,7 @@ namespace ant
 	*/
 	class Animation
 	{
-		typedef std::vector<int> FrameIndexList;
+		typedef std::vector<ant::UInt> FrameIndexList;
 	public:
 	
 		// Creates an animation
@@ -88,8 +88,6 @@ namespace ant
 		void changeAnimationStateDelegate(IEventDataStrongPtr eventData);
 
 	protected:
-
-		virtual bool delegateInit(TiXmlElement *data);
 
 		void setAnimation(AnimationId id);
 
