@@ -4,7 +4,7 @@
 
 using namespace ant;
 
-
+const char* AnimationComponent::g_Name = "AnimationComponent";
 #define ANIMATION_DELIMITER ','
 
 //////////////////////////////////////////////////////////////////////////
@@ -21,7 +21,6 @@ Animation::Animation(const FrameIndexList& list, ant::Real fps, bool shouldLoop)
 
 Animation::~Animation()
 {
-
 }
 
 ant::UInt Animation::incrementToNextFrame()
@@ -44,8 +43,6 @@ ant::UInt Animation::incrementToNextFrame()
 // AnimationComponent
 //////////////////////////////////////////////////////////////////////////
 
-const char* AnimationComponent::g_Name = "AnimationComponent";
-
 AnimationComponent::AnimationComponent()
 {
 	m_currentTime      = 0;
@@ -61,59 +58,62 @@ AnimationComponent::~AnimationComponent()
 
 bool AnimationComponent::init(TiXmlElement* pData)
 {
-
 	// Scan all nodes in the xml data
-	for (TiXmlElement * node = pData->FirstChildElement(); node; node = pData->NextSiblingElement())
+	TiXmlElement * firstChild = pData->FirstChildElement();
+	
+	if (firstChild)
 	{
-		// Is this an animation?
-		if (node->Value() == "Animation")
+		for (TiXmlElement * node = firstChild; node; node = node->NextSiblingElement())
 		{
-			// What is the id of this naimation?
-			std::string id = node->Attribute("id");
-
-			// Try to parse the animation
-			std::string seqstring =  node->Attribute("sequence");
-
-			// Parse ints in the string 
-			std::vector<std::string> intStrings;
-			Split(seqstring, intStrings, ANIMATION_DELIMITER);
-
-			// Convert all strings to ints
-			std::vector<ant::UInt> frameList;
-			for (auto &str : intStrings)
+			// Is this an animation?
+			if (std::string(node->Value()) == std::string("Animation"))
 			{
-				int i = std::stoi(str);
-				// Is the int ok?
-				if (i >= 0)
+				// What is the id of this naimation?
+				std::string id = node->Attribute("id");
+
+				// Try to parse the animation
+				std::string seqstring = node->Attribute("sequence");
+
+				// Parse ints in the string 
+				std::vector<std::string> intStrings;
+				Split(seqstring, intStrings, ANIMATION_DELIMITER);
+
+				// Convert all strings to ints
+				std::vector<ant::UInt> frameList;
+				for (auto &str : intStrings)
 				{
-					frameList.push_back(ant::UInt(i));
-				}		
-				else
-				{
-					GCC_ERROR("Got bad animation data from animation node: " + std::string(node->Attribute("sequence")));
+					int i = std::stoi(str);
+					// Is the int ok?
+					if (i >= 0)
+					{
+						frameList.push_back(ant::UInt(i));
+					}
+					else
+					{
+						GCC_ERROR("Got bad animation data from animation node: " + std::string(node->Attribute("sequence")));
+					}
 				}
-			}
 
-			bool shouldLoop = false;
-			if (node->Attribute("shouldLoop"))
-			{
-				std::string sloop = node->Attribute("shouldLoop");
-				shouldLoop        = (bool)std::stoi(sloop);
+				bool shouldLoop = false;
+				if (node->Attribute("shouldLoop"))
+				{
+					std::string sloop = node->Attribute("shouldLoop");
+					shouldLoop = (bool)std::stoi(sloop);
+				}
+
+				ant::Real fps = 0;
+				if (node->Attribute("fps"))
+				{
+					std::string fpsString = node->Attribute("fps");
+					fps = ant::Real(std::stof(fpsString));
+				}
+
+				// Create Animation and insert in map
+				AnimationStrongPtr anim(GCC_NEW Animation(frameList, fps, shouldLoop));
+				m_animationMap[id] = anim;
 			}
-			
-			ant::Real fps = 0;
-			if (node->Attribute("fps"))
-			{
-				std::string fpsString = node->Attribute("fps");
-				fps                   = ant::Real(std::stof(fpsString));
-			}
-			
-			// Create Animation and insert in map
-			AnimationStrongPtr anim(GCC_NEW Animation(frameList, fps, shouldLoop));			
-			m_animationMap[id] = anim;
 		}
 	}
-
 	return true;
 }
 

@@ -15,8 +15,4 @@ function RegisterListeners()
 	if (EventType.EvtData_PhysSeparation ~= nil) then
 		registerEventListener(EventType.EvtData_PhysSeparation, OnPhysicsSeparation);
 	end	
-
-	if (EventType.EvtData_ChangeAnimState ~= nil)
-
-	end
 end

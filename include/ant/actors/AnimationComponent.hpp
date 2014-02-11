@@ -94,8 +94,10 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
-	protected:	
+	public:
 		static const char *g_Name;
+
+	protected:	
 		AnimationMap              m_animationMap;		
 		ant::DeltaTime            m_currentTime;
 		ant::DeltaTime            m_lastAnimTime;

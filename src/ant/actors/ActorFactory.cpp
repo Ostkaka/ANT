@@ -7,6 +7,7 @@
 #include <ant/actors/TransformComponent.hpp>
 #include <ant/graphicsSFML/SFMLRenderComponent.hpp>
 #include <ant/2DPhysics/PhysicsComponent.hpp>
+#include <ant/actors/AnimationComponent.hpp>
 #include <ant/gccUtils/templates.hpp>
 
 #include <tinyxml.h>
@@ -24,7 +25,8 @@ ant::ActorFactory::ActorFactory( void )
 	m_componentFactory.Register<SFMLSpriteComponent>(ActorComponent::getIdFromName(SFMLSpriteComponent::g_Name));
 	m_componentFactory.Register<SFMLBackgroundSpriteComponent>(ActorComponent::getIdFromName(SFMLBackgroundSpriteComponent::g_Name));	
 	m_componentFactory.Register<SFMLRectanglePrimitiveComponent>(ActorComponent::getIdFromName(SFMLRectanglePrimitiveComponent::g_Name));	
-	m_componentFactory.Register<SFMLCirclePrimitiveComponent>(ActorComponent::getIdFromName(SFMLCirclePrimitiveComponent::g_Name));	
+	m_componentFactory.Register<SFMLCirclePrimitiveComponent>(ActorComponent::getIdFromName(SFMLCirclePrimitiveComponent::g_Name));
+	m_componentFactory.Register<AnimationComponent>(ActorComponent::getIdFromName(AnimationComponent::g_Name));
 }
 
 ant::ActorFactory::~ActorFactory()

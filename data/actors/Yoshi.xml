@@ -12,6 +12,12 @@
 		<Color r="1.0" g="1.0" b="0" a="1"/>
 		<Filled>0</Filled>
 	</SFMLRectanglePrimitiveComponent>
+	<AnimationComponent>
+		<Animation id="walking" sequence="1,2,3,4,5" fps="5" shouldLoop="1"/>
+		<Animation id="standing" sequence="1" fps="0" shouldLoop="0"/>
+		<Animation id="jump" sequence="7" fps="0" shouldLoop="0"/>
+		<Animation id="falling" sequence="7" fps="0" shouldLoop="0"/>
+	</AnimationComponent>
 	<PhysicsComponent>
 		<Shape>Box</Shape>
 		<LockRotation>1</LockRotation>
