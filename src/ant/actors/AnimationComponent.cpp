@@ -167,11 +167,12 @@ void AnimationComponent::update(ant::DeltaTime dt)
 	{
 		// Do we animate now?
 		ant::Real delta = m_currentTime - m_lastAnimTime;
-		ant::Real FPS = m_currentAnimation->getFrameRate();
+		ant::Real FPS   = m_currentAnimation->getFrameRate();
 		if ( delta >  (1.0 / FPS))
 		{
 			// Update the animation
-			int f = m_currentAnimation->incrementToNextFrame();
+			int f          = m_currentAnimation->incrementToNextFrame();
+			m_lastAnimTime = m_currentTime;
 		}
 	}		
 }
