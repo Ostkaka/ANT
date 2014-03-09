@@ -181,7 +181,7 @@ namespace ant
 	ANT_DECLARE_POINTER_TYPES(ISFMLSceneNode)
 	ANT_DECLARE_POINTER_TYPES(SFMLCameraNode)
 	ANT_DECLARE_POINTER_TYPES(ISFMLRenderComponent)
-	ANT_DECLARE_POINTER_TYPES(TransformComponent)
+	ANT_DECLARE_POINTER_TYPES(TransformComponent)	
 	ANT_DECLARE_POINTER_TYPES(IKeyboardHandler)
 	typedef SFMLBaseRenderComponent* SFMLBaseRenderComponentWeakPtr;
 

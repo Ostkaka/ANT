@@ -447,7 +447,7 @@ void ant::Box2DPhysics::updateDynamicsInformation()
 	 ActorId const id1 = findActorId(b1);
 	 ActorId const id2 = findActorId(b2);
 
-	 if (id1 == INVALID_ACTOR_ID | id2 == INVALID_ACTOR_ID)
+	 if (id1 == INVALID_ACTOR_ID || id2 == INVALID_ACTOR_ID)
 	 {
 		 GCC_WARNING("Collision between an actor and non actor. What do?");
 		 return;
@@ -464,7 +464,7 @@ void ant::Box2DPhysics::updateDynamicsInformation()
 	 ActorId const id1 = findActorId(b1);
 	 ActorId const id2 = findActorId(b2);
 
-	 if (id1 == INVALID_ACTOR_ID | id2 == INVALID_ACTOR_ID)
+	 if (id1 == INVALID_ACTOR_ID || id2 == INVALID_ACTOR_ID)
 	 {
 		 GCC_WARNING("Collision between an actor and non actor. What do?");
 		 return;

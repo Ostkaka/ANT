@@ -24,7 +24,7 @@ namespace ant
 		~Animation();
 
 		ant::Real getFrameRate() const;
-		
+
 		void setShouldLoop(bool shouldLoop);
 
 		bool getShouldLoop() const;
@@ -116,7 +116,8 @@ namespace ant
 
 		EvtData_ChangeAnimation() :
 			m_actorId(INVALID_ACTOR_ID),
-			m_animationId(INVALID_ACTOR_ID)
+			m_animationId("")
+
 		{
 
 		}
@@ -183,6 +184,8 @@ namespace ant
 		ActorId     m_actorId;
 		AnimationId m_animationId;
 	};
+
+	ANT_DECLARE_POINTER_TYPES(AnimationComponent);
 
 	void registerAnimationScriptEvents(void);
 

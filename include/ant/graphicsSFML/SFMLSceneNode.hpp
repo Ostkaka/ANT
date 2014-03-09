@@ -6,6 +6,7 @@
 #include <ant/interfaces/IRenderer.hpp>
 #include <SFML/Graphics.hpp>
 #include <ant/graphicsSFML/SFMLRenderComponent.hpp>
+#include <ant/actors/AnimationComponent.hpp>
 
 namespace ant
 {
@@ -252,7 +253,27 @@ namespace ant
 		ant::Real   m_scale;
 	};
 
-		/**
+	/**
+	* Nodes that contains information about a sprite that can be animated
+	*/
+	class SFMLAnimatedSpriteNode : public SFMLSceneNode
+	{
+	public:
+		SFMLAnimatedSpriteNode(ActorId actorId,
+			SFMLBaseRenderComponentWeakPtr renderComponent,
+			AnimationComponent* animationComponent,
+			const std::string& textureName,
+			const ant::Real& scale,
+			SFMLRenderPass renderPass,
+			const sf::Vector2f& pos,
+			const ant::Real& rot);
+
+		virtual bool render(SFMLScene * scene) ANT_OVERRIDE;
+
+		virtual bool onRestore(SFMLScene * scene) ANT_OVERRIDE;
+	};
+
+	/**
 	 * Node that contains and draws a background sprite 
 	 */
 	class SFMLBackgroundSpriteNode : public SFMLSceneNode

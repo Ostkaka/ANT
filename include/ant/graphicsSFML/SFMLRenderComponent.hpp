@@ -84,8 +84,8 @@ namespace ant
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
 	protected:		
-		std::string m_textureResource;	
-		ant::Real   m_scale;
+		std::string  m_textureResource;	
+		ant::Real    m_scale;
 		sf::Vector2f m_textureRectangle;
 		sf::Vector2f m_textureRectanglePos;
 	public:
@@ -119,9 +119,9 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
-	protected:
 		std::string  m_textureResource;
-		ant::Real    m_scale;		
+	protected:
+		
 	public:
 		static const char *g_Name;
 	};

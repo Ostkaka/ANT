@@ -120,3 +120,12 @@ end
 function ActorManager:OnPhysicsSeparation( scriptObject )
 	print("Got separate event")
 end
+
+function ActorManager:OnActorJump( scriptObject )
+	-- Send animation changed event for entity
+	local animationData = {}
+	animationData.actorId = scriptObject.actorId
+	animationData.animationId = "jumping"
+
+	queueEvent(EventType.EvtData_ChangeAnimation, animationData);
+end

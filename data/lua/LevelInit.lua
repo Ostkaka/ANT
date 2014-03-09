@@ -35,3 +35,6 @@ function RemoveObject(scriptObject)
 	ActorManagerSingleton:RemoveObject(scriptObject);
 end
 
+function OnActorJump(scriptObject)
+	ActorManagerSingleton:OnActorJump(scriptObject);
+end

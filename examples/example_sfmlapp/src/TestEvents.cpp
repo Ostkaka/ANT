@@ -46,7 +46,7 @@ bool EvtData_StartAccelerating::buildEventFromScript(void)
 		if (m_eventData.IsTable())
 		{
 			// ID
-			LuaPlus::LuaObject temp = m_eventData.GetByName("id");
+			LuaPlus::LuaObject temp = m_eventData.GetByName("actorId");
 			if (temp.IsInteger())
 			{
 				m_id = temp.GetInteger();
@@ -76,7 +76,7 @@ bool EvtData_StartJump::buildEventFromScript(void)
 	if (m_eventData.IsTable())
 	{
 		// ID
-		LuaPlus::LuaObject temp = m_eventData.GetByName("id");
+		LuaPlus::LuaObject temp = m_eventData.GetByName("actorId");
 		if (temp.IsInteger())
 		{
 			m_id = temp.GetInteger();
@@ -100,6 +100,12 @@ bool EvtData_StartJump::buildEventFromScript(void)
 	return false;
 }
 
+void ant::EvtData_StartJump::buildEventData(void)
+{
+	m_eventData.AssignNewTable(LuaStateManager::instance()->getLuaState());
+	m_eventData.SetInteger("actorId", m_id);
+	m_eventData.SetNumber("acceleration", m_acceleration);		
+}
 
 
 void ant::registerTestEvents()

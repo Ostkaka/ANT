@@ -1,12 +1,12 @@
 <Actor type="Yoshi" resource="actors\Yoshi">
 	<TransformComponent>
-		<Position x="-50" y="-850"/>
+		<Position x="-50" y="-100"/>
 		<Rotation angle="0"/>
-	</TransformComponent>
-	<SFMLSpriteComponent>
+	</TransformComponent>	
+	<SFMLAnimatedSpriteComponent>
 		<Texture>resources\tilesets\yoshi.png</Texture>
-		<TextureRectangleSize w="64" h="64"/>
-	</SFMLSpriteComponent>
+		<SpriteSheetData>actors\YoshiSpriteSheet.xml</SpriteSheetData>
+	</SFMLAnimatedSpriteComponent>
 	<SFMLRectanglePrimitiveComponent>
 		<Size x="64" y="64"/>
 		<Color r="1.0" g="1.0" b="0" a="1"/>

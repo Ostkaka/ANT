@@ -1,12 +1,16 @@
 #include <ant/graphicsSFML/SFMLRenderComponent.hpp>
+#include <ant/resources/XmlResource.hpp>
 #include <ant/graphicsSFML/SFMLSceneNode.hpp>
+#include <ant/graphicsSFML/SpriteUtilities.hpp>
 #include <ant/actors/TransformComponent.hpp>
+#include <ant/actors/AnimationComponent.hpp>
 #include <ant/eventsystem/Events.hpp>
 #include <ant/gccUtils/templates.hpp>
 
 using namespace ant;
 
 const char* SFMLSpriteComponent::g_Name             = "SFMLSpriteComponent";
+const char* SFMLAnimatedSpriteComponent::g_Name		= "SFMLAnimatedSpriteComponent";
 const char* SFMLBackgroundSpriteComponent::g_Name   = "SFMLBackgroundSpriteComponent";
 const char* SFMLRectanglePrimitiveComponent::g_Name = "SFMLRectanglePrimitiveComponent";
 const char* SFMLCirclePrimitiveComponent::g_Name    = "SFMLCirclePrimitiveComponent";
@@ -141,6 +145,58 @@ ant::SFMLSceneNodeStrongPtr ant::SFMLSpriteComponent::createSceneNode( void )
 void ant::SFMLSpriteComponent::createInheritedXmlElements( TiXmlElement* pBaseElement )
 {
 	// TODO create inherited XML stuff in 
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// Animated Sprite Render Component
+//////////////////////////////////////////////////////////////////////////
+
+ant::SFMLAnimatedSpriteComponent::SFMLAnimatedSpriteComponent(void)
+{
+	
+}
+
+SFMLSceneNodeStrongPtr ant::SFMLAnimatedSpriteComponent::createSceneNode(void)
+{
+	// Try to get the transform component here. Is this an ugly hack?
+	TransformComponentStrongPtr pTransformComponent = MakeStrongPtr(m_pOwner->getComponent<TransformComponent>(TransformComponent::g_Name));
+	AnimationComponentStrongPtr pAnimationComponent = MakeStrongPtr(m_pOwner->getComponent<AnimationComponent>(AnimationComponent::g_Name));
+
+	if (pTransformComponent)
+	{
+		SFMLBaseRenderComponentWeakPtr weakThis(this);
+		return SFMLSceneNodeStrongPtr(GCC_NEW SFMLAnimatedSpriteNode(m_pOwner->getId(), weakThis, pAnimationComponent.get(), RenderPass_BackGround, pTransformComponent->getPostion(), pTransformComponent->getRotation()));
+	}
+	return SFMLSceneNodeStrongPtr();
+}
+
+bool ant::SFMLAnimatedSpriteComponent::delegateInit(TiXmlElement *data)
+{
+	// Need to read the following
+	GCC_ASSERT(data);
+
+	// Get texture resource path	
+	TiXmlElement* texNode = data->FirstChildElement("Texture");
+	if (texNode)
+	{
+		m_textureResource = texNode->FirstChild()->Value();
+	}
+
+	TiXmlElement* dataNode = data->FirstChildElement("SpriteSheetData");
+	if (dataNode)
+	{
+		std::string datapath = dataNode->Value();
+		// Load the sprite sheet data from the resource system
+		// Grab the root XML node
+		TiXmlElement* pRoot = XmlResourceLoader::loadAndReturnXmlElement(datapath.c_str());
+		SpriteSheetData sheetData = CreateSheetDataFromXML(pRoot);
+	}
+}
+
+void ant::SFMLAnimatedSpriteComponent::createInheritedXmlElements(TiXmlElement* pBaseElement)
+{
+
 }
 
 //////////////////////////////////////////////////////////////////////////
