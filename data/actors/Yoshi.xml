@@ -5,7 +5,7 @@
 	</TransformComponent>	
 	<SFMLAnimatedSpriteComponent>
 		<Texture>resources\tilesets\yoshi.png</Texture>
-		<SpriteSheetData>actors\YoshiSpriteSheet.xml</SpriteSheetData>
+		<SpriteSheetData>actors\YoshiSpriteData.xml</SpriteSheetData>
 	</SFMLAnimatedSpriteComponent>
 	<SFMLRectanglePrimitiveComponent>
 		<Size x="64" y="64"/>

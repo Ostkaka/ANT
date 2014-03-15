@@ -71,7 +71,7 @@ sf::Color ant::SFMLBaseRenderComponent::loadColor( TiXmlElement * pColorData )
 	pColorData->Attribute("b", &b);
 	pColorData->Attribute("a", &a);
 
-	sf::Color color((int)(r*255),(int)(g*255),(int)(b*255),(float)(a*255));
+	sf::Color color((sf::Uint8)(r * 255), (sf::Uint8)(g * 255), (sf::Uint8)(b * 255), (sf::Uint8)(a * 255));
 
 	return color;
 }
@@ -98,7 +98,7 @@ bool ant::SFMLSpriteComponent::delegateInit( TiXmlElement *data )
 	TiXmlElement* scaleNode = data->FirstChildElement("Scale");
 	if (scaleNode)
 	{
-		m_scale = atoi(scaleNode->FirstChild()->Value());
+		m_scale = ant::Real(std::atof(scaleNode->FirstChild()->Value()));
 	}
 	
 	TiXmlElement* textRectNode = data->FirstChildElement("TextureRectangleSize");
@@ -110,7 +110,7 @@ bool ant::SFMLSpriteComponent::delegateInit( TiXmlElement *data )
 		textRectNode->Attribute("w", &x);
 		textRectNode->Attribute("h", &y);
 
-		m_textureRectangle = sf::Vector2f((float)x,(float)y);
+		m_textureRectangle = sf::Vector2i((int)x,(int)y);
 	}	
 
 	TiXmlElement* textRectPosNode = data->FirstChildElement("TextureRectanglePos");
@@ -122,7 +122,7 @@ bool ant::SFMLSpriteComponent::delegateInit( TiXmlElement *data )
 		textRectPosNode->Attribute("x", &x);
 		textRectPosNode->Attribute("y", &y);
 
-		m_textureRectanglePos = sf::Vector2f(x,y);
+		m_textureRectanglePos = sf::Vector2i((int)x, (int)y);
 	}
 
 	return true;
@@ -154,7 +154,7 @@ void ant::SFMLSpriteComponent::createInheritedXmlElements( TiXmlElement* pBaseEl
 
 ant::SFMLAnimatedSpriteComponent::SFMLAnimatedSpriteComponent(void)
 {
-	
+	m_spriteSheetData = nullptr;
 }
 
 SFMLSceneNodeStrongPtr ant::SFMLAnimatedSpriteComponent::createSceneNode(void)
@@ -186,12 +186,22 @@ bool ant::SFMLAnimatedSpriteComponent::delegateInit(TiXmlElement *data)
 	TiXmlElement* dataNode = data->FirstChildElement("SpriteSheetData");
 	if (dataNode)
 	{
-		std::string datapath = dataNode->Value();
+		std::string datapath = dataNode->FirstChild()->Value();
 		// Load the sprite sheet data from the resource system
 		// Grab the root XML node
 		TiXmlElement* pRoot = XmlResourceLoader::loadAndReturnXmlElement(datapath.c_str());
-		SpriteSheetData sheetData = CreateSheetDataFromXML(pRoot);
+		SpriteSheetDataStrongPtr sheetData = SpriteSheetData::CreateSheetDataFromXML(pRoot);
+		if (sheetData)
+		{
+			m_spriteSheetData = sheetData;
+		}
+		else
+		{
+			GCC_WARNING("Could not load sprite data");
+		}
 	}
+
+	return true;
 }
 
 void ant::SFMLAnimatedSpriteComponent::createInheritedXmlElements(TiXmlElement* pBaseElement)
@@ -235,7 +245,7 @@ bool ant::SFMLBackgroundSpriteComponent::delegateInit( TiXmlElement *data )
 	TiXmlElement* scaleNode = data->FirstChildElement("Scale");
 	if (scaleNode)
 	{
-		m_scale = atoi(scaleNode->FirstChild()->Value());
+		m_scale = ant::Real(std::atof(scaleNode->FirstChild()->Value()));
 	}
 
 	return true;
@@ -275,8 +285,8 @@ bool ant::SFMLRectanglePrimitiveComponent::delegateInit( TiXmlElement *data )
 	TiXmlElement* posElement = data->FirstChildElement("Size");
 	if (posElement)
 	{
-		ant::Real x;
-		ant::Real y;
+		double x;
+		double y;
 
 		posElement->Attribute("x",&x);
 		posElement->Attribute("y",&y);
@@ -327,7 +337,7 @@ bool ant::SFMLCirclePrimitiveComponent::delegateInit( TiXmlElement *data )
 	TiXmlElement* scaleNode = data->FirstChildElement("Radius");
 	if (scaleNode)
 	{
-		m_radius = atoi(scaleNode->FirstChild()->Value());
+		m_radius = ant::Real(std::atof(scaleNode->FirstChild()->Value()));
 	}
 
 	TiXmlElement* texNode = data->FirstChildElement("Filled");

@@ -230,12 +230,12 @@ void ant::PhysicsComponent::handleRigidBodyTransform( TiXmlElement* pData )
 	TiXmlElement* pScaleElement = pData->FirstChildElement("Scale");
 	if (pScaleElement)
 	{
-		ant::Real x  = 0;
-		ant::Real y  = 0;
-		ant::Real z  = 0;
+		double x  = 0;
+		double y = 0;
+		double z = 0;
 		pScaleElement->Attribute("x", &x);
 		pScaleElement->Attribute("y", &y);
 		pScaleElement->Attribute("z", &z);
-		m_rigidBodyScale = sf::Vector3f(x / PIXELS_PER_METER, y / PIXELS_PER_METER, z / PIXELS_PER_METER);
+		m_rigidBodyScale = sf::Vector3f((float)x / PIXELS_PER_METER, (float)y / PIXELS_PER_METER, (float)z / PIXELS_PER_METER);
 	}
 }

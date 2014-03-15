@@ -46,8 +46,8 @@ bool ant::Box2DPhysics::initialize()
 	loadMaterialXML();
 	
 	// Create physics world
-	m_PhysicsWorld = new b2World(b2Vec2(0,DEFAULT_GRAVITY));
-	m_PhysicsWorld->SetGravity(b2Vec2(0,9.82));
+	m_PhysicsWorld = new b2World(b2Vec2(0,float32(DEFAULT_GRAVITY)));
+	m_PhysicsWorld->SetGravity(b2Vec2(float32(0),float32(9.82)));
 
 	// TODO - initialize the debug drawer
 
@@ -102,7 +102,7 @@ void ant::Box2DPhysics::onUpdate( ant::DeltaTime dt )
 	GCC_ASSERT(m_PhysicsWorld);
 	if (m_PhysicsWorld)
 	{
-		m_PhysicsWorld->Step(dt,DEFAULT_VELOCITY_ITERATIONS,DEFAULT_POSITIONS_ITERATIONS);
+		m_PhysicsWorld->Step(float32(dt),DEFAULT_VELOCITY_ITERATIONS,DEFAULT_POSITIONS_ITERATIONS);
 		updateDynamicsInformation();
 	}	
 }

@@ -13,23 +13,25 @@ namespace ant
 	/**
 	* Class that holds information about sprite sheet data
 	*/
+	class SpriteSheetData;
+	ANT_DECLARE_POINTER_TYPES(SpriteSheetData);
 	class SpriteSheetData
 	{
-	public:
-		typedef std::map<ant::UInt, sf::FloatRect> FrameList;
+		public:
+			typedef std::map<ant::UInt, sf::FloatRect> FrameList;
 
-		SpriteSheetData(FrameList list);
+			SpriteSheetData(FrameList list);
 
-		sf::FloatRect getFrame(ant::UInt frame);
+			sf::FloatRect getFrame(ant::UInt frame);
 
-		//////////////////////////////////////////////////////////////////////////
-		// Variables
-		//////////////////////////////////////////////////////////////////////////
-	protected:
-		FrameList m_frameList;
-	};
+			static SpriteSheetDataStrongPtr CreateSheetDataFromXML(TiXmlElement * data);
 
-	SpriteSheetData CreateSheetDataFromXML(TiXmlElement * data);
+			//////////////////////////////////////////////////////////////////////////
+			// Variables
+			//////////////////////////////////////////////////////////////////////////
+		protected:
+			FrameList m_frameList;
+	};	
 }
 
 #endif /*SPRITEUTILITIES_HPP_*/

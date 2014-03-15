@@ -261,9 +261,7 @@ namespace ant
 	public:
 		SFMLAnimatedSpriteNode(ActorId actorId,
 			SFMLBaseRenderComponentWeakPtr renderComponent,
-			AnimationComponent* animationComponent,
-			const std::string& textureName,
-			const ant::Real& scale,
+			AnimationComponent* animationComponent,			
 			SFMLRenderPass renderPass,
 			const sf::Vector2f& pos,
 			const ant::Real& rot);

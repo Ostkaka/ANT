@@ -12,8 +12,8 @@ bool ant::TransformComponent::init( TiXmlElement* data )
 	TiXmlElement* posElement = data->FirstChildElement("Position");
 	if (posElement)
 	{
-		ant::Real x;
-		ant::Real y;
+		double x;
+		double y;
 
 		posElement->Attribute("x",&x);
 		posElement->Attribute("y",&y);
@@ -24,9 +24,9 @@ bool ant::TransformComponent::init( TiXmlElement* data )
 	TiXmlElement* rotElement = data->FirstChildElement("Rotation");
 	if (rotElement)
 	{
-		ant::Real angle;
+		double angle;
 		rotElement->Attribute("angle",&angle);
-		m_rot = angle;
+		m_rot = ant::Real(angle);
 	}
 
 	return true;

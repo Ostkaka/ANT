@@ -4,6 +4,7 @@
 #include <ant/graphicsSFML/ISFMLRenderComponent.hpp>
 #include <SFML/Graphics.hpp>
 #include <ant/core_types.hpp>
+#include <ant\graphicsSFML\SpriteUtilities.hpp>
 
 namespace ant
 {
@@ -86,8 +87,8 @@ namespace ant
 	protected:		
 		std::string  m_textureResource;	
 		ant::Real    m_scale;
-		sf::Vector2f m_textureRectangle;
-		sf::Vector2f m_textureRectanglePos;
+		sf::Vector2i m_textureRectangle;
+		sf::Vector2i m_textureRectanglePos;
 	public:
 		static const char *g_Name;
 	};
@@ -119,7 +120,8 @@ namespace ant
 		//////////////////////////////////////////////////////////////////////////
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
-		std::string  m_textureResource;
+		std::string              m_textureResource;
+		SpriteSheetDataStrongPtr m_spriteSheetData;
 	protected:
 		
 	public:

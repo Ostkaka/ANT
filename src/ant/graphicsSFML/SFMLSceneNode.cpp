@@ -322,11 +322,11 @@ bool ant::SFMLSpriteNode::render( SFMLScene *scene )
 	
 	if (getDirection().x == -1)
 	{
-		m_SFMLSprite.setScale(-1 * m_scale, 1* m_scale);
+		m_SFMLSprite.setScale(-1.0 * (float)m_scale, 1.0* (float)m_scale);
 	}
 	else if (getDirection().x == 1)
 	{
-		m_SFMLSprite.setScale(1* m_scale, 1* m_scale);
+		m_SFMLSprite.setScale(1 * (float)m_scale, 1 * (float)m_scale);
 	}
 	
 	// Tell the renderer to draw the sprite
@@ -337,6 +337,30 @@ bool ant::SFMLSpriteNode::onRestore( SFMLScene *scene )
 {
 	return SFMLSceneNode::onRestore(scene);
 	// TODO - do nothing until I get to know what this is
+}
+
+////////////////////////////////////////////////////
+// SFMLAnimatedSpriteNode
+////////////////////////////////////////////////////
+SFMLAnimatedSpriteNode::SFMLAnimatedSpriteNode(ActorId actorId, 
+	SFMLBaseRenderComponentWeakPtr renderComponent, 
+	AnimationComponent* animationComponent, 
+	SFMLRenderPass renderPass, 
+	sf::Vector2f const& pos, 
+	Real const& rot) : SFMLSceneNode(actorId, renderComponent, renderPass, pos, rot)
+{
+
+}
+
+bool SFMLAnimatedSpriteNode::onRestore(SFMLScene* scene)
+{
+	return SFMLSceneNode::onRestore(scene);
+}
+
+bool SFMLAnimatedSpriteNode::render(SFMLScene* scene)
+{
+	// ???
+	return true;
 }
 
 ////////////////////////////////////////////////////
@@ -459,7 +483,7 @@ ant::SFMLCirclePrimitiveNode::SFMLCirclePrimitiveNode( ActorId actorId,
 	{
 		color = renderComponent->getColor(); 
 	}
-	m_circleShape.setRadius(radius);
+	m_circleShape.setRadius((float)radius);
 	if (m_filled)
 	{
 		m_circleShape.setFillColor(color);	
@@ -477,7 +501,7 @@ bool ant::SFMLCirclePrimitiveNode::render( SFMLScene *scene )
 {
 	m_circleShape.setPosition(getPosition());
 	m_circleShape.setRotation(float(getRotation()));	
-	m_circleShape.setOrigin(m_radius,m_radius);
+	m_circleShape.setOrigin((float)m_radius, (float)m_radius);
 
 	scene->getRenderer()->drawCircle(m_circleShape);
 

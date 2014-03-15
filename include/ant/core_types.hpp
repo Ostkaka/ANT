@@ -78,7 +78,7 @@ namespace ant
   };
 
 	/// Declare data types
-	typedef double Real;
+	typedef float Real;
 	typedef unsigned int UInt;
 	typedef unsigned long Ulong;
 	typedef double DeltaTime;

@@ -1,0 +1,20 @@
+<FrameList spritesheet="actors/Yoshi">
+	<Frame id="0">
+		<x>0</x>
+		<y>0</y>
+		<x1>0</x1>
+		<y2>16</y2>		
+	</Frame>
+		<Frame id="1">
+		<x>0</x>
+		<y>16</y>
+		<x1>16</x1>
+		<y2>32</y2>		
+	</Frame>
+		<Frame id="2">
+		<x>0</x>
+		<y>32</y>
+		<x1>16</x1>
+		<y2>48</y2>		
+	</Frame>
+</Actor>
