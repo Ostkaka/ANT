@@ -121,7 +121,7 @@ namespace ant
 		// Variables
 		//////////////////////////////////////////////////////////////////////////
 		std::string              m_textureResource;
-		SpriteSheetDataStrongPtr m_spriteSheetData;
+		std::string              m_spriteSheetResource;
 	protected:
 		
 	public:

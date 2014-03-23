@@ -261,7 +261,8 @@ namespace ant
 	public:
 		SFMLAnimatedSpriteNode(ActorId actorId,
 			SFMLBaseRenderComponentWeakPtr renderComponent,
-			AnimationComponent* animationComponent,			
+			const std::string& textureName,
+			const std::string& spriteDataName,
 			SFMLRenderPass renderPass,
 			const sf::Vector2f& pos,
 			const ant::Real& rot);
@@ -269,6 +270,13 @@ namespace ant
 		virtual bool render(SFMLScene * scene) ANT_OVERRIDE;
 
 		virtual bool onRestore(SFMLScene * scene) ANT_OVERRIDE;
+
+	protected:
+		std::string              m_textureName;
+		sf::Texture              m_texture;
+		SpriteSheetDataStrongPtr m_spriteSheetData;
+		sf::Sprite               m_SFMLSprite;
+		ant::Real                m_scale;
 	};
 
 	/**

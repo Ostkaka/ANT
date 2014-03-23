@@ -85,6 +85,8 @@ namespace ant
 
 		ant::UInt getFrameIndex() const;
 
+		bool hasActiveAnimation() const;
+
 		void changeAnimationStateDelegate(IEventDataStrongPtr eventData);
 
 	protected:

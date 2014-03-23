@@ -125,6 +125,11 @@ void AnimationComponent::postInit()
 	globalManager->addListener(MakeDelegate(this, &AnimationComponent::changeAnimationStateDelegate), EvtData_ChangeAnimation::sk_EventType);
 }
 
+bool AnimationComponent::hasActiveAnimation() const
+{
+	return m_currentAnimation.get();
+}
+
 void AnimationComponent::changeAnimationStateDelegate(IEventDataStrongPtr eventData)
 {
 	EvtData_ChangeAnimationStrongPtr p = static_pointer_cast<EvtData_ChangeAnimation>(eventData);

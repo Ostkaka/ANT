@@ -10,6 +10,7 @@
 #include <ant/graphicsSFML/SFMLScene.hpp>
 #include <ant/gccUtils/templates.hpp>
 #include <iostream>
+#include <ant\resources\XmlResource.hpp>
 
 using namespace ant;
 
@@ -344,12 +345,40 @@ bool ant::SFMLSpriteNode::onRestore( SFMLScene *scene )
 ////////////////////////////////////////////////////
 SFMLAnimatedSpriteNode::SFMLAnimatedSpriteNode(ActorId actorId, 
 	SFMLBaseRenderComponentWeakPtr renderComponent, 
-	AnimationComponent* animationComponent, 
+	const std::string& textureName,
+	const std::string& spriteDataName,
 	SFMLRenderPass renderPass, 
 	sf::Vector2f const& pos, 
-	Real const& rot) : SFMLSceneNode(actorId, renderComponent, renderPass, pos, rot)
-{
+	Real const& rot) : SFMLSceneNode(actorId, renderComponent, renderPass, pos, rot), m_scale(1.0), m_textureName(textureName)
+{	
+	// Now, get the buffer from the resource cache
+	Resource r(m_textureName);
+	ResourceHandleStrongPtr h = ResourceCacheManager::instance()->getResourceCache()->getResourceHandle(&r);
 
+	// Is the buffer OK?
+	if (!h->getBuffer())
+	{
+		GCC_ERROR("Buffer from texture resource is bad");
+	}
+
+	if (!m_texture.loadFromMemory(h->getBuffer(), h->getSize()))
+	{
+		GCC_ERROR("sf::Texture could not load buffer from memory: " + m_textureName);
+	}
+
+	// Load sprite sheet data
+	TiXmlElement* pRoot = XmlResourceLoader::loadAndReturnXmlElement(spriteDataName.c_str());
+	SpriteSheetDataStrongPtr sheetData = SpriteSheetData::CreateSheetDataFromXML(pRoot);
+	if (sheetData)
+	{
+		m_spriteSheetData = sheetData;
+	}
+	else
+	{
+		GCC_WARNING("Could not load sprite data");
+	}
+
+	m_SFMLSprite.setTexture(m_texture);
 }
 
 bool SFMLAnimatedSpriteNode::onRestore(SFMLScene* scene)
@@ -359,7 +388,39 @@ bool SFMLAnimatedSpriteNode::onRestore(SFMLScene* scene)
 
 bool SFMLAnimatedSpriteNode::render(SFMLScene* scene)
 {
-	// ???
+	// Get Animation components from the actor 
+	ActorStrongPtr p = MakeStrongPtr(m_baseRenderComponent->getOwner());
+	AnimationComponentStrongPtr animComp = MakeStrongPtr(p->getComponent<AnimationComponent>(AnimationComponent::g_Name));
+
+	// Get the current animation frame
+	ant::UInt frame = 0;
+	if (animComp->hasActiveAnimation())
+		frame = animComp->getFrameIndex();
+	
+	// Get the frame from the sprite data
+	sf::IntRect rect = m_spriteSheetData->getFrame(frame);
+
+	// Set the texture rectangle of the sprite
+	m_SFMLSprite.setTextureRect(rect);
+
+	// Flip according to scale
+	if (getDirection().x == -1)
+	{
+		m_SFMLSprite.setScale(-1.0 * (float)m_scale, 1.0* (float)m_scale);
+	}
+	else if (getDirection().x == 1)
+	{
+		m_SFMLSprite.setScale(1 * (float)m_scale, 1 * (float)m_scale);
+	}
+
+	// First, set proper transformation
+	m_SFMLSprite.setOrigin(m_SFMLSprite.getLocalBounds().width / 2, m_SFMLSprite.getLocalBounds().height / 2);
+	m_SFMLSprite.setPosition(getPosition());
+	m_SFMLSprite.setRotation(float(getRotation()));
+
+	// Tell the renderer to draw the sprite
+	return scene->getRenderer()->drawSprite(m_SFMLSprite);
+
 	return true;
 }
 

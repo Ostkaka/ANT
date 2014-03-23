@@ -18,11 +18,11 @@ namespace ant
 	class SpriteSheetData
 	{
 		public:
-			typedef std::map<ant::UInt, sf::FloatRect> FrameList;
+			typedef std::map<ant::UInt, sf::IntRect> FrameList;
 
 			SpriteSheetData(FrameList list);
 
-			sf::FloatRect getFrame(ant::UInt frame);
+			sf::IntRect getFrame(ant::UInt frame);
 
 			static SpriteSheetDataStrongPtr CreateSheetDataFromXML(TiXmlElement * data);
 

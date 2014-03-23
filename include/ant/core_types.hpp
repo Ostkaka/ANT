@@ -4,7 +4,7 @@
  */
 
 #ifndef   ANT_CORE_TYPES_HPP
-	#define   ANT_CORE_TYPES_HPP
+    #define   ANT_CORE_TYPES_HPP
 
 /////////////////////////////////////////////////////////////////////////////
 // Headers
@@ -19,9 +19,9 @@
 //define the resource dir
 //#define _RELEASE_GAME
 #ifndef _RELEASE_GAME
-	#define RESOURCE_DIR "D:/GameProjects/MGE/resources"
+    #define RESOURCE_DIR "D:/GameProjects/MGE/resources"
 #else
-	#define RESOURCE_DIR "resources"
+    #define RESOURCE_DIR "resources"
 #endif
 
 // Todo. this should really be in the renderer, and all transformations should be in physics coordinates
@@ -77,117 +77,117 @@ namespace ant
     // Values from +-100 to +-199 are reserved for File status responses
   };
 
-	/// Declare data types
-	typedef float Real;
-	typedef unsigned int UInt;
-	typedef unsigned long Ulong;
-	typedef double DeltaTime;
-	typedef float TimeStamp;
-	typedef std::vector<std::string> StringVector;
+    /// Declare data types
+    typedef float Real;
+    typedef unsigned int UInt;
+    typedef unsigned long Ulong;
+    typedef double DeltaTime;
+    typedef float TimeStamp;
+    typedef std::vector<std::string> StringVector;
 
-	// Forward declarations for interfaces
-	class IApp;
-	class IState;
-	class IAssetHandler;
+    // Forward declarations for interfaces
+    class IApp;
+    class IState;
+    class IAssetHandler;
 
-	// Forward declaration for classes
-	class AssetManager;
-	class StateManager;
+    // Forward declaration for classes
+    class AssetManager;
+    class StateManager;
 
-	// Forward declaration of core assets
-	class TextureAsset;
-	class TextureHandler;
-	class MusicHandler;
-	class MusicAsset;
-	class SoundAsset;
-	class SoundHandler;
+    // Forward declaration of core assets
+    class TextureAsset;
+    class TextureHandler;
+    class MusicHandler;
+    class MusicAsset;
+    class SoundAsset;
+    class SoundHandler;
 
-	// Loggers 
-	class StringLogger;
-	class ScopeLogger;
-	class FileLogger;
-	class FatalLogger;
-	// TODO format forward declarations
-	// Forward declarations for new framework
-	class Actor;
-	class ActorComponent;
-	class ProcessManager;
-	class IProcess;
-	class Resource;
-	class ResourceHandle;
-	class ResourceCache;
-	class IResourceLoader;
-	class IResourceFile;
-	class IResourceExtraData;
-	class IGameLogic;
-	class BaseGameLogic;
-	class IGamePhysics;
-	class ProcessManager;	
-	class IEventManager;
-	class EventManager;
-	class IEventData;
-	class BaseEventData;
-	class ScriptEvent;
-	class IKeyboardHandler;
+    // Loggers 
+    class StringLogger;
+    class ScopeLogger;
+    class FileLogger;
+    class FatalLogger;
+    // TODO format forward declarations
+    // Forward declarations for new framework
+    class Actor;
+    class ActorComponent;
+    class ProcessManager;
+    class IProcess;
+    class Resource;
+    class ResourceHandle;
+    class ResourceCache;
+    class IResourceLoader;
+    class IResourceFile;
+    class IResourceExtraData;
+    class IGameLogic;
+    class BaseGameLogic;
+    class IGamePhysics;
+    class ProcessManager;	
+    class IEventManager;
+    class EventManager;
+    class IEventData;
+    class BaseEventData;
+    class ScriptEvent;
+    class IKeyboardHandler;
 
-	class IScreenElement;
-	class IGameView;
+    class IScreenElement;
+    class IGameView;
 
-	class ScreenElementSFMLScene;
-	class SFMLScene;
-	class ISFMLRenderer;
-	class SFMLBaseRenderComponent;
-	class ISFMLRenderComponent;
-	class SFMLCameraNode;
-	class ISFMLSceneNode;
-	class SFMLSceneNode;
+    class ScreenElementSFMLScene;
+    class SFMLScene;
+    class ISFMLRenderer;
+    class SFMLBaseRenderComponent;
+    class ISFMLRenderComponent;
+    class SFMLCameraNode;
+    class ISFMLSceneNode;
+    class SFMLSceneNode;
 
-	// Declare id for actors
-	typedef UInt ActorId;
+    // Declare id for actors
+    typedef UInt ActorId;
 
-	// Declare id for actor components
-	typedef UInt ComponentId;
+    // Declare id for actor components
+    typedef UInt ComponentId;
 
-	// Declare default values
-	const ActorId INVALID_ACTOR_ID = 0;
-	const ComponentId INVALID_COMPONENT_ID = 0;
-	typedef UInt GameViewId;
-	const GameViewId ant_InvalidGameViewId = 0xffffffff;
+    // Declare default values
+    const ActorId INVALID_ACTOR_ID = 0;
+    const ComponentId INVALID_COMPONENT_ID = 0;
+    typedef UInt GameViewId;
+    const GameViewId ant_InvalidGameViewId = 0xffffffff;
 
-	typedef std::list<shared_ptr<IScreenElement> > ScreenElementList;
-	typedef std::list<shared_ptr<IGameView> > GameViewList;
+    typedef std::list<shared_ptr<IScreenElement> > ScreenElementList;
+    typedef std::list<shared_ptr<IGameView> > GameViewList;
 
-	// Declare Pointer types
-	ANT_DECLARE_POINTER_TYPES(Actor)
-	ANT_DECLARE_POINTER_TYPES(ActorComponent)
-	ANT_DECLARE_POINTER_TYPES(IProcess)
-	ANT_DECLARE_POINTER_TYPES(ResourceHandle)
-	ANT_DECLARE_POINTER_TYPES(IResourceLoader)
-	ANT_DECLARE_POINTER_TYPES(IResourceExtraData)
-	ANT_DECLARE_POINTER_TYPES(IResourceFile)
-	ANT_DECLARE_POINTER_TYPES(IEventData)
-	ANT_DECLARE_POINTER_TYPES(ScriptEvent)
-	ANT_DECLARE_POINTER_TYPES(IGameLogic)
-	ANT_DECLARE_POINTER_TYPES(BaseGameLogic)
-	ANT_DECLARE_POINTER_TYPES(IGamePhysics2D)
-	ANT_DECLARE_POINTER_TYPES(IGameView)
+    // Declare Pointer types
+    ANT_DECLARE_POINTER_TYPES(Actor)
+    ANT_DECLARE_POINTER_TYPES(ActorComponent)
+    ANT_DECLARE_POINTER_TYPES(IProcess)
+    ANT_DECLARE_POINTER_TYPES(ResourceHandle)
+    ANT_DECLARE_POINTER_TYPES(IResourceLoader)
+    ANT_DECLARE_POINTER_TYPES(IResourceExtraData)
+    ANT_DECLARE_POINTER_TYPES(IResourceFile)
+    ANT_DECLARE_POINTER_TYPES(IEventData)
+    ANT_DECLARE_POINTER_TYPES(ScriptEvent)
+    ANT_DECLARE_POINTER_TYPES(IGameLogic)
+    ANT_DECLARE_POINTER_TYPES(BaseGameLogic)
+    ANT_DECLARE_POINTER_TYPES(IGamePhysics2D)
+    ANT_DECLARE_POINTER_TYPES(IGameView)
 
-	// 2D class pointer
-	ANT_DECLARE_POINTER_TYPES(ISFMLRenderer)
-	ANT_DECLARE_POINTER_TYPES(IScreenElement)
-	ANT_DECLARE_POINTER_TYPES(ScreenElementSFMLScene)
-	ANT_DECLARE_POINTER_TYPES(SFMLScene)
-	ANT_DECLARE_POINTER_TYPES(SFMLSceneNode)
-	ANT_DECLARE_POINTER_TYPES(ISFMLSceneNode)
-	ANT_DECLARE_POINTER_TYPES(SFMLCameraNode)
-	ANT_DECLARE_POINTER_TYPES(ISFMLRenderComponent)
-	ANT_DECLARE_POINTER_TYPES(TransformComponent)	
-	ANT_DECLARE_POINTER_TYPES(IKeyboardHandler)
-	typedef SFMLBaseRenderComponent* SFMLBaseRenderComponentWeakPtr;
+    // 2D class pointer
+    ANT_DECLARE_POINTER_TYPES(ISFMLRenderer)
+    ANT_DECLARE_POINTER_TYPES(IScreenElement)
+    ANT_DECLARE_POINTER_TYPES(ScreenElementSFMLScene)
+    ANT_DECLARE_POINTER_TYPES(SFMLScene)
+    ANT_DECLARE_POINTER_TYPES(SFMLSceneNode)
+    ANT_DECLARE_POINTER_TYPES(ISFMLSceneNode)
+    ANT_DECLARE_POINTER_TYPES(SFMLCameraNode)
+    ANT_DECLARE_POINTER_TYPES(ISFMLRenderComponent)
+    ANT_DECLARE_POINTER_TYPES(TransformComponent)	
+    ANT_DECLARE_POINTER_TYPES(IKeyboardHandler)
+    typedef SFMLBaseRenderComponent* SFMLBaseRenderComponentWeakPtr;
 
-	typedef unsigned long EventType;
+    typedef unsigned long EventType;
 
-	/// Declare Asset ID typedef which is used for identifying Asset objects
+    /// Declare Asset ID typedef which is used for identifying Asset objects
   typedef std::string typeAssetID;
 
   /// Declare Asset Handler ID typedef which is used for identifying Asset Handler objects
@@ -208,7 +208,7 @@ namespace ant
   /// Declare NameValueIter typedef which is used for name,value pair maps
   typedef std::map<const std::string, const std::string>::iterator typeNameValueIter;
 
-	typedef BYTE CharCode;
+    typedef BYTE CharCode;
 }
 
 #endif  //ANT_CORE_TYPES_HPP

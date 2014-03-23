@@ -40,6 +40,12 @@ bool EvtData_EndAccelerating::buildEventFromScript(void)
 	return false;
 }
 
+void EvtData_EndAccelerating::buildEventData()
+{
+	m_eventData.AssignNewTable(LuaStateManager::instance()->getLuaState());
+	m_eventData.SetInteger("actorId", m_id);
+}
+
 bool EvtData_StartAccelerating::buildEventFromScript(void)
 {
 	{
@@ -69,6 +75,13 @@ bool EvtData_StartAccelerating::buildEventFromScript(void)
 
 		return false;
 	}
+}
+
+void EvtData_StartAccelerating::buildEventData()
+{
+	m_eventData.AssignNewTable(LuaStateManager::instance()->getLuaState());
+	m_eventData.SetInteger("actorId", m_id);
+	m_eventData.SetNumber("acceleration", m_acceleration);
 }
 
 bool EvtData_StartJump::buildEventFromScript(void)

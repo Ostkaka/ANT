@@ -47,14 +47,14 @@ SpriteSheetDataStrongPtr SpriteSheetData::CreateSheetDataFromXML(TiXmlElement* d
 				bool succ = false;
 				// Get childs 
 				Real x = 0, y = 0, x1 = 0, y1 = 0;
-				succ = parseXMLReal(node, "x", x);
-				succ = parseXMLReal(node, "y", y);
-				succ = parseXMLReal(node, "x1", x1);
-				succ = parseXMLReal(node, "y1", y1);
+				succ = parseXMLReal(node, "x1", x);
+				succ = parseXMLReal(node, "y1", y);
+				succ = parseXMLReal(node, "x2", x1);
+				succ = parseXMLReal(node, "y2", y1);
 
 				if (succ)
 				{
-					sf::FloatRect rect(x, y, x1 - x, y1 - y);
+					sf::IntRect rect((int)x, (int)y, (int)(x1 - x), (int)(y1 - y));
 					frameList[id] = rect;
 				}
 				else
@@ -73,7 +73,7 @@ SpriteSheetDataStrongPtr SpriteSheetData::CreateSheetDataFromXML(TiXmlElement* d
 	return nullptr;
 }
 
-sf::FloatRect SpriteSheetData::getFrame(ant::UInt frame)
+sf::IntRect SpriteSheetData::getFrame(ant::UInt frame)
 {
 	if (m_frameList.find(frame) != m_frameList.end())
 	{
@@ -82,7 +82,7 @@ sf::FloatRect SpriteSheetData::getFrame(ant::UInt frame)
 	else
 	{
 		GCC_WARNING("Could not find frame: " + ToStr(frame) + " in framelist");
-		return sf::FloatRect();
+		return sf::IntRect();
 	}
 }
 

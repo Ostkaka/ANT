@@ -10,6 +10,14 @@ function OnActorJump( eventData )
 	ActorManagerSingleton:OnActorJump(eventData);
 end
 
+function OnActorStartWalking(scriptObject)
+	ActorManagerSingleton:OnActorStartWalking(scriptObject);
+end
+
+function OnActorStopWalking(scriptObject)
+	ActorManagerSingleton:OnActorStopWalking(scriptObject);
+end
+
 function RegisterListeners()
 	print("Registering listeners")
 	if (EventType.EvtData_PhysCollision ~= nil) then
@@ -22,5 +30,13 @@ function RegisterListeners()
 
 	if (EventType.EvtData_StartJump ~= nil) then
 		registerEventListener(EventType.EvtData_StartJump, OnActorJump);
+	end	
+
+	if (EventType.EvtData_StartAccelerating ~= nil) then
+		registerEventListener(EventType.EvtData_StartAccelerating, OnActorStartWalking);
+	end	
+
+	if (EventType.EvtData_EndAccelerating ~= nil) then
+		registerEventListener(EventType.EvtData_EndAccelerating, OnActorStopWalking);
 	end	
 end

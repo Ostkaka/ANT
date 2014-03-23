@@ -13,7 +13,7 @@
 		<Filled>0</Filled>
 	</SFMLRectanglePrimitiveComponent>
 	<AnimationComponent>
-		<Animation id="walking" sequence="1,2,3,4,5" fps="5" shouldLoop="1"/>
+		<Animation id="walking" sequence="0,1,2,3,4,5" fps="15" shouldLoop="1"/>
 		<Animation id="standing" sequence="1" fps="0" shouldLoop="0"/>
 		<Animation id="jump" sequence="7" fps="0" shouldLoop="0"/>
 		<Animation id="falling" sequence="7" fps="0" shouldLoop="0"/>

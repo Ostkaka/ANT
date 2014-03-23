@@ -125,6 +125,7 @@ namespace ant
 
 		virtual bool buildEventFromScript(void) ANT_OVERRIDE;
 
+		virtual void buildEventData(void) ANT_OVERRIDE;
 
 		ANT_EXPORT_FOR_SCRIPT_EVENT(EvtData_StartAccelerating);
 	};
@@ -187,6 +188,8 @@ namespace ant
 		}
 
 		virtual bool buildEventFromScript(void) ANT_OVERRIDE;
+
+		virtual void buildEventData(void) ANT_OVERRIDE;
 
 		ANT_EXPORT_FOR_SCRIPT_EVENT(EvtData_EndAccelerating);
 	};

@@ -154,21 +154,6 @@ void ant::SFMLSpriteComponent::createInheritedXmlElements( TiXmlElement* pBaseEl
 
 ant::SFMLAnimatedSpriteComponent::SFMLAnimatedSpriteComponent(void)
 {
-	m_spriteSheetData = nullptr;
-}
-
-SFMLSceneNodeStrongPtr ant::SFMLAnimatedSpriteComponent::createSceneNode(void)
-{
-	// Try to get the transform component here. Is this an ugly hack?
-	TransformComponentStrongPtr pTransformComponent = MakeStrongPtr(m_pOwner->getComponent<TransformComponent>(TransformComponent::g_Name));
-	AnimationComponentStrongPtr pAnimationComponent = MakeStrongPtr(m_pOwner->getComponent<AnimationComponent>(AnimationComponent::g_Name));
-
-	if (pTransformComponent)
-	{
-		SFMLBaseRenderComponentWeakPtr weakThis(this);
-		return SFMLSceneNodeStrongPtr(GCC_NEW SFMLAnimatedSpriteNode(m_pOwner->getId(), weakThis, pAnimationComponent.get(), RenderPass_BackGround, pTransformComponent->getPostion(), pTransformComponent->getRotation()));
-	}
-	return SFMLSceneNodeStrongPtr();
 }
 
 bool ant::SFMLAnimatedSpriteComponent::delegateInit(TiXmlElement *data)
@@ -186,22 +171,24 @@ bool ant::SFMLAnimatedSpriteComponent::delegateInit(TiXmlElement *data)
 	TiXmlElement* dataNode = data->FirstChildElement("SpriteSheetData");
 	if (dataNode)
 	{
-		std::string datapath = dataNode->FirstChild()->Value();
-		// Load the sprite sheet data from the resource system
-		// Grab the root XML node
-		TiXmlElement* pRoot = XmlResourceLoader::loadAndReturnXmlElement(datapath.c_str());
-		SpriteSheetDataStrongPtr sheetData = SpriteSheetData::CreateSheetDataFromXML(pRoot);
-		if (sheetData)
-		{
-			m_spriteSheetData = sheetData;
-		}
-		else
-		{
-			GCC_WARNING("Could not load sprite data");
-		}
+		m_spriteSheetResource= dataNode->FirstChild()->Value();	
 	}
 
 	return true;
+}
+
+SFMLSceneNodeStrongPtr ant::SFMLAnimatedSpriteComponent::createSceneNode(void)
+{
+	// Try to get the transform component here. Is this an ugly hack?
+	TransformComponentStrongPtr pTransformComponent = MakeStrongPtr(m_pOwner->getComponent<TransformComponent>(TransformComponent::g_Name));
+	//AnimationComponentStrongPtr pAnimationComponent = MakeStrongPtr(m_pOwner->getComponent<AnimationComponent>(AnimationComponent::g_Name));
+
+	if (pTransformComponent)
+	{
+		SFMLBaseRenderComponentWeakPtr weakThis(this);
+		return SFMLSceneNodeStrongPtr(GCC_NEW SFMLAnimatedSpriteNode(m_pOwner->getId(), weakThis,m_textureResource, m_spriteSheetResource, RenderPass_BackGround, pTransformComponent->getPostion(), pTransformComponent->getRotation()));
+	}
+	return SFMLSceneNodeStrongPtr();
 }
 
 void ant::SFMLAnimatedSpriteComponent::createInheritedXmlElements(TiXmlElement* pBaseElement)
